@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Nosco\Ryft\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class RyftCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'laravel-ryft';
 
     public $description = 'My command';
 

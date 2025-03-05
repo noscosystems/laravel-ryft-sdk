@@ -1,0 +1,27 @@
+preset: package
+
+namespace: Nosco\Ryft
+user-auth-model: App\Models\User
+
+paths:
+  src: src
+  resource: resources
+
+factory:
+  path: database/factories
+
+migration:
+  path: database/migrations
+  prefix: ''
+
+console:
+  namespace: Nosco\Ryft\Console
+
+model:
+  namespace: Nosco\Ryft\Models
+
+provider:
+  namespace: Nosco\Ryft\Providers
+
+testing:
+  namespace: Nosco\Ryft\Tests
