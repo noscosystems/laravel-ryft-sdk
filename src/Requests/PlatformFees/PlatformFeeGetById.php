@@ -2,8 +2,8 @@
 
 namespace Nosco\Ryft\Requests\PlatformFees;
 
+use Nosco\Ryft\Request;
 use Saloon\Enums\Method;
-use Saloon\Http\Request;
 
 /**
  * platformFeeGetById.

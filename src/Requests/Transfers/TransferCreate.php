@@ -2,9 +2,9 @@
 
 namespace Nosco\Ryft\Requests\Transfers;
 
+use Nosco\Ryft\Request;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
-use Saloon\Http\Request;
 use Saloon\Traits\Body\HasJsonBody;
 
 /**

@@ -2,8 +2,8 @@
 
 namespace Nosco\Ryft\Requests\Disputes;
 
+use Nosco\Ryft\Request;
 use Saloon\Enums\Method;
-use Saloon\Http\Request;
 
 /**
  * disputeGetById.

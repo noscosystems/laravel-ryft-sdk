@@ -3,8 +3,8 @@
 namespace Nosco\Ryft\Requests\Payments;
 
 use DateTimeInterface;
+use Nosco\Ryft\Request;
 use Saloon\Enums\Method;
-use Saloon\Http\Request;
 
 /**
  * paymentSessionGetBetweenTimestamps.

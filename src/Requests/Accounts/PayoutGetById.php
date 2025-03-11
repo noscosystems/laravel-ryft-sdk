@@ -2,8 +2,8 @@
 
 namespace Nosco\Ryft\Requests\Accounts;
 
+use Nosco\Ryft\Request;
 use Saloon\Enums\Method;
-use Saloon\Http\Request;
 
 /**
  * payoutGetById.

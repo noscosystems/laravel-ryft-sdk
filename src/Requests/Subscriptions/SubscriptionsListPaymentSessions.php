@@ -2,8 +2,8 @@
 
 namespace Nosco\Ryft\Requests\Subscriptions;
 
+use Nosco\Ryft\Request;
 use Saloon\Enums\Method;
-use Saloon\Http\Request;
 
 /**
  * subscriptionsListPaymentSessions.
