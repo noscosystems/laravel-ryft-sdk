@@ -8,10 +8,10 @@ use Nosco\Ryft\Dto;
 readonly class OrderDetails extends Dto
 {
     /**
-     * @param OrderLineItem[]|null $items
+     * @param Collection<OrderLineItem>|null $items
      */
     public function __construct(
-        public ?array $items = null,
+        public ?Collection $items = null,
     ) {}
 
     public static function fromArray(array|Collection|null $data): ?static
@@ -21,9 +21,7 @@ readonly class OrderDetails extends Dto
         }
 
         $data = $data->merge([
-            'items' => collect($data->get('items'))
-                ->map(fn (array $item): OrderLineItem => OrderLineItem::fromArray($item))
-                ->all(),
+            'items' => OrderLineItem::multipleFromArray($data->get('items')),
         ]);
 
         return parent::fromArray($data);

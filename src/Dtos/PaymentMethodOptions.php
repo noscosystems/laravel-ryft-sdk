@@ -2,11 +2,15 @@
 
 namespace Nosco\Ryft\Dtos;
 
+use Illuminate\Support\Collection;
 use Nosco\Ryft\Dto;
 
 readonly class PaymentMethodOptions extends Dto
 {
+    /**
+     * @param Collection<string>|null $disabled
+     */
     public function __construct(
-        public ?array $disabled = null,
+        public ?Collection $disabled = null,
     ) {}
 }

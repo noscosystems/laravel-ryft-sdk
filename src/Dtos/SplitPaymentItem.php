@@ -2,7 +2,6 @@
 
 namespace Nosco\Ryft\Dtos;
 
-use Illuminate\Support\Collection;
 use Nosco\Ryft\Dto;
 
 readonly class SplitPaymentItem extends Dto
@@ -15,17 +14,4 @@ readonly class SplitPaymentItem extends Dto
         public ?ValueAmount $fee = null,
         public ?array $metadata = null,
     ) {}
-
-    public static function fromArray(array|Collection|null $data): ?static
-    {
-        if (!$data = static::wrap($data)) {
-            return null;
-        }
-
-        $data = $data->merge([
-            'fee' => ValueAmount::fromArray($data->get('fee')),
-        ]);
-
-        return parent::fromArray($data);
-    }
 }

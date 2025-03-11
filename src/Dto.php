@@ -9,6 +9,7 @@ use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Collection;
 use JsonSerializable;
+use Nosco\Ryft\Contracts\Enums\HasFallback;
 use ReflectionClass;
 use ReflectionException;
 
@@ -25,7 +26,42 @@ abstract readonly class Dto implements Arrayable, Jsonable, JsonSerializable
 
         $reflection = new ReflectionClass(static::class);
 
+        $data->transform(function (mixed $value, string $name) use ($reflection): mixed {
+            if ($value === null) {
+                return null;
+            }
+
+            $requiredType = $reflection->getProperty($name)->getType()?->getName();
+
+            if (!is_subclass_of($value, Dto::class) && is_subclass_of($requiredType, Dto::class)) {
+                return $requiredType::fromArray($value);
+            }
+            if (!$value instanceof BackedEnum && is_subclass_of($requiredType, BackedEnum::class)) {
+                return is_subclass_of($requiredType, HasFallback::class)
+                    ? $requiredType::tryFromWithFallback($value)
+                    : $requiredType::tryFrom($value);
+            }
+            if (!$value instanceof DateTimeInterface && $requiredType === DateTimeInterface::class) {
+                return static::dateTime($value);
+            }
+            if (!$value instanceof Collection && $requiredType === Collection::class) {
+                return Collection::make($value);
+            }
+
+            return $value;
+        });
+
         return $reflection->newInstanceArgs($data->all());
+    }
+
+    /**
+     * @return Collection<static>
+     */
+    public static function multipleFromArray(Collection|array|null $data): Collection
+    {
+        return collect($data)
+            ->map(fn (Collection|array|null $item): ?static => static::fromArray($item))
+            ->filter();
     }
 
     public function toArray(): array
