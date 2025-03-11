@@ -4,6 +4,7 @@ namespace Nosco\Ryft\Dtos;
 
 use DateTimeInterface;
 use Nosco\Ryft\Dto;
+use Nosco\Ryft\Support\Helpers;
 
 readonly class RebillingDetail extends Dto
 {
@@ -18,7 +19,7 @@ readonly class RebillingDetail extends Dto
     public function toArray(): array
     {
         $properties = get_object_vars($this);
-        $properties['expiry'] = $this->expiry?->getTimestamp();
+        $properties['expiry'] = Helpers::timestamp($this?->expiry);
 
         return array_filter($properties);
     }

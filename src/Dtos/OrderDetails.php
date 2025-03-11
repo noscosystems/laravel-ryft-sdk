@@ -4,6 +4,7 @@ namespace Nosco\Ryft\Dtos;
 
 use Illuminate\Support\Collection;
 use Nosco\Ryft\Dto;
+use Nosco\Ryft\Support\Helpers;
 
 readonly class OrderDetails extends Dto
 {
@@ -16,7 +17,7 @@ readonly class OrderDetails extends Dto
 
     public static function fromArray(array|Collection|null $data): ?static
     {
-        if (!$data = static::wrap($data)) {
+        if (!$data = Helpers::wrap($data)) {
             return null;
         }
 
