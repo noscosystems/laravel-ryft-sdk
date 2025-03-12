@@ -17,15 +17,26 @@ use Nosco\Ryft\Resource\PlatformFees;
 use Nosco\Ryft\Resource\Subscriptions;
 use Nosco\Ryft\Resource\Transfers;
 use Nosco\Ryft\Resource\Webhooks;
+use Nosco\Ryft\Traits\HasCursorPagination;
+use Saloon\Contracts\Authenticator;
+use Saloon\Http\Auth\TokenAuthenticator;
 use Saloon\Http\Connector;
+use Saloon\PaginationPlugin\Contracts\HasPagination;
 
-class Ryft extends Connector
+class Ryft extends Connector implements HasPagination
 {
+    use HasCursorPagination;
+
     public function resolveBaseUrl(): string
     {
         return $this->sandboxed()
             ? $this->sandboxBaseUrl()
             : $this->productionBaseUrl();
+    }
+
+    protected function defaultAuth(): ?Authenticator
+    {
+        return new TokenAuthenticator($this->secretKey(), prefix: '');
     }
 
     protected function sandboxed(): bool
@@ -41,6 +52,11 @@ class Ryft extends Connector
     protected function sandboxBaseUrl(): string
     {
         return 'https://sandbox-api.ryftpay.com/v1';
+    }
+
+    protected function secretKey(): string
+    {
+        return config('ryft.auth.secret', '');
     }
 
     /**

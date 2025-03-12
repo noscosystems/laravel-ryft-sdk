@@ -2,9 +2,11 @@
 
 namespace Nosco\Ryft\Requests\Payments;
 
+use Nosco\Ryft\Dtos\PaymentSession;
 use Nosco\Ryft\Request;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
+use Saloon\Http\Response;
 use Saloon\Traits\Body\HasJsonBody;
 
 /**
@@ -25,5 +27,19 @@ class PaymentSessionCreate extends Request implements HasBody
         return '/payment-sessions';
     }
 
-    public function __construct() {}
+    public function __construct(protected readonly PaymentSession $paymentSession) {}
+
+    protected function defaultBody(): array
+    {
+        return $this->paymentSession->toArray();
+    }
+
+    public function createDtoFromResponse(Response $response): ?PaymentSession
+    {
+        if ($response->failed()) {
+            return null;
+        }
+
+        return PaymentSession::fromArray($response->json());
+    }
 }

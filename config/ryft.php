@@ -4,7 +4,7 @@
 return [
     'auth' => [
         'public' => env('RYFT_PUBLIC_KEY'),
-        'private' => env('RYFT_PRIVATE_KEY'),
+        'secret' => env('RYFT_SECRET_KEY'),
     ],
 
     'sandbox' => env('RYFT_SANDBOX', false),

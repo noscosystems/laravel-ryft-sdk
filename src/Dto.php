@@ -3,6 +3,7 @@
 namespace Nosco\Ryft;
 
 use BackedEnum;
+use DateTimeInterface;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Collection;
@@ -51,9 +52,13 @@ abstract readonly class Dto implements Arrayable, Jsonable, JsonSerializable
                 if ($property instanceof BackedEnum) {
                     return $property->value;
                 }
+                if ($property instanceof DateTimeInterface) {
+                    return Helpers::timestamp($property);
+                }
 
                 return $property;
             })
+            ->filter()
             ->toArray();
     }
 
@@ -65,5 +70,17 @@ abstract readonly class Dto implements Arrayable, Jsonable, JsonSerializable
     public function toJson($options = 0): false|string
     {
         return json_encode($this->jsonSerialize(), $options);
+    }
+
+    public function dd(): never
+    {
+        dd($this);
+    }
+
+    public function dump(): static
+    {
+        dump($this);
+
+        return $this;
     }
 }

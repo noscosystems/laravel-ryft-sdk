@@ -2,16 +2,19 @@
 
 namespace Nosco\Ryft\Requests\Payments;
 
-use DateTimeInterface;
+use Illuminate\Support\Collection;
+use Nosco\Ryft\Dtos\PaymentSession;
 use Nosco\Ryft\Request;
 use Saloon\Enums\Method;
+use Saloon\Http\Response;
+use Saloon\PaginationPlugin\Contracts\Paginatable;
 
 /**
  * paymentSessionGetBetweenTimestamps.
  *
  * This is used to fetch payment sessions within a timestamp range, paginated
  */
-class PaymentSessionGetBetweenTimestamps extends Request
+class PaymentSessionGetBetweenTimestamps extends Request implements Paginatable
 {
     protected Method $method = Method::GET;
 
@@ -28,8 +31,8 @@ class PaymentSessionGetBetweenTimestamps extends Request
      * @param null|string $startsAfter    A token to identify the payment session to start querying after. This is most commonly used to get the next page of results after a previous response did not return all payment sessions, due to the imposed `limit`. The value of the `paginationToken` field from that response should be supplied here, to retrieve the next page of results for that timestamp range.
      */
     public function __construct(
-        protected DateTimeInterface|int|null $startTimestamp = null,
-        protected DateTimeInterface|int|null $endTimestamp = null,
+        protected ?int $startTimestamp = null,
+        protected ?int $endTimestamp = null,
         protected ?bool $ascending = null,
         protected ?int $limit = null,
         protected ?string $startsAfter = null,
@@ -44,5 +47,10 @@ class PaymentSessionGetBetweenTimestamps extends Request
             'limit' => $this->limit,
             'startsAfter' => $this->startsAfter,
         ]);
+    }
+
+    public function createDtoFromResponse(Response $response): Collection
+    {
+        return PaymentSession::multipleFromArray($response->json('items'));
     }
 }

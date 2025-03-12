@@ -3,6 +3,7 @@
 namespace Nosco\Ryft\Resource;
 
 use DateTimeInterface;
+use Nosco\Ryft\Dtos\PaymentSession;
 use Nosco\Ryft\Requests\Payments\PaymentSessionAttemptPayment;
 use Nosco\Ryft\Requests\Payments\PaymentSessionCaptureById;
 use Nosco\Ryft\Requests\Payments\PaymentSessionContinuePayment;
@@ -51,9 +52,9 @@ class Payments extends Resource
      * @see attempt() attempt-payment endpoint
      * @link https://api-reference.ryftpay.com/#tag/Payments/operation/paymentSessionCreate Documentation
      */
-    public function create(): Response
+    public function create(PaymentSession $paymentSession): Response
     {
-        return $this->connector->send(new PaymentSessionCreate);
+        return $this->connector->send(new PaymentSessionCreate($paymentSession));
     }
 
     /**
