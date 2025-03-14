@@ -2,6 +2,7 @@
 
 namespace Nosco\Ryft\Resource;
 
+use App\Dtos\Webhooks\WebhookEndpoint;
 use Nosco\Ryft\Requests\Webhooks\WebhookCreate;
 use Nosco\Ryft\Requests\Webhooks\WebhookDeleteById;
 use Nosco\Ryft\Requests\Webhooks\WebhookGetById;
@@ -33,9 +34,9 @@ class Webhooks extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Webhooks/operation/webhookCreate Documentation
      */
-    public function create(): Response
+    public function create(WebhookEndpoint $webhookEndpoint): Response
     {
-        return $this->connector->send(new WebhookCreate);
+        return $this->connector->send(new WebhookCreate($webhookEndpoint));
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace Nosco\Ryft\Requests\Webhooks;
 
 use Nosco\Ryft\Request;
+use Nosco\Ryft\Traits\Requests\Webhooks\ReturnsWebhookEndpoint;
 use Saloon\Enums\Method;
 
 /**
@@ -12,6 +13,8 @@ use Saloon\Enums\Method;
  */
 class WebhookDeleteById extends Request
 {
+    use ReturnsWebhookEndpoint;
+
     protected Method $method = Method::DELETE;
 
     public function resolveEndpoint(): string
