@@ -30,7 +30,7 @@ class WebhookUpdateById extends Request implements HasBody
      * @param string $webhookId Webhook Id to update
      */
     public function __construct(
-        protected string  $webhookId,
+        protected string $webhookId,
         protected Webhook $webhookEndpoint,
     ) {}
 

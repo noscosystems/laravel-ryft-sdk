@@ -2,8 +2,8 @@
 
 namespace Nosco\Ryft\Requests\Webhooks;
 
-use Nosco\Ryft\Dtos\Webhooks\Webhook;
 use Illuminate\Support\Collection;
+use Nosco\Ryft\Dtos\Webhooks\Webhook;
 use Nosco\Ryft\Request;
 use Saloon\Enums\Method;
 use Saloon\Http\Response;
