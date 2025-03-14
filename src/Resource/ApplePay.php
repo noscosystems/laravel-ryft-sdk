@@ -15,13 +15,13 @@ class ApplePay extends Resource
     /**
      * List the web domains you have registered for Apple Pay.
      *
-     * @param bool        $ascending   Control the order (newest or oldest) in which the payment sessions are returned. `false` will arrange the results with newest first, whereas `true` shows oldest first. The default is `false`.
+     * @param bool|null   $ascending   Control the order (newest or oldest) in which the payment sessions are returned. `false` will arrange the results with newest first, whereas `true` shows oldest first. The default is `false`.
      * @param int|null    $limit       Control how many items are return in a given page The max limit Ryft allow is `50`. The default is `20`.
      * @param string|null $startsAfter A token to identify where to resume a subsequent paginated query. The value of the `paginationToken` field from that response should be supplied here, to retrieve the next page of results for that timestamp range.
      *
      * @link https://api-reference.ryftpay.com/#tag/Apple-Pay/operation/applePayWebDomainsList Documentation
      */
-    public function listWebDomains(?bool $ascending, ?int $limit, ?string $startsAfter): Response
+    public function listWebDomains(?bool $ascending = null, ?int $limit = null, ?string $startsAfter = null): Response
     {
         return $this->connector->send(new ApplePayWebDomainsList($ascending, $limit, $startsAfter));
     }

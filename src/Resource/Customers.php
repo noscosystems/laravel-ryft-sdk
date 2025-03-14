@@ -19,19 +19,19 @@ class Customers extends Resource
      * @param string|null $email          A case insensitive email to search by. Note that emails are unique per `Customer` so you can expect a single item within the response. Any other query parameters will be ignored if this is provided.
      * @param int|null    $startTimestamp The start timestamp (inclusive), it must be before the endTimestamp.
      * @param int|null    $endTimestamp   The timestamp when to return payment sessions up to (inclusive), it must be after the startTimestamp.
-     * @param bool        $ascending      Control the order (newest or oldest) in which the items are returned. `false` will arrange the results with newest first, whereas `true` shows oldest first. The default is `false`.
+     * @param bool|null   $ascending      Control the order (newest or oldest) in which the items are returned. `false` will arrange the results with newest first, whereas `true` shows oldest first. The default is `false`.
      * @param int|null    $limit          Control how many items are return in a given page The max limit we allow is `25`. The default is `10`.
      * @param string|null $startsAfter    A token to identify where to resume a subsequent paginated query. The value of the `paginationToken` field from that response should be supplied here, to retrieve the next page of results for that timestamp range.
      *
      * @link https://api-reference.ryftpay.com/#tag/Customers/operation/customersList Documentation
      */
     public function list(
-        ?string $email,
-        ?int $startTimestamp,
-        ?int $endTimestamp,
-        ?bool $ascending,
-        ?int $limit,
-        ?string $startsAfter,
+        ?string $email = null,
+        ?int $startTimestamp = null,
+        ?int $endTimestamp = null,
+        ?bool $ascending = null,
+        ?int $limit = null,
+        ?string $startsAfter = null,
     ): Response {
         return $this->connector->send(new CustomersList($email, $startTimestamp, $endTimestamp, $ascending, $limit, $startsAfter));
     }

@@ -17,11 +17,11 @@ class PlatformFees extends Resource
      *
      * They are returned in sorted (by epoch) order (default is newest first).
      *
-     * @param bool $ascending Control the order (newest or oldest) in which the platform fees are returned. `false` will arrange the results with newest first whereas `true` shows oldest first
+     * @param bool|null $ascending Control the order (newest or oldest) in which the platform fees are returned. `false` will arrange the results with newest first whereas `true` shows oldest first
      *
      * @link https://api-reference.ryftpay.com/#tag/Platform-Fees/operation/platformFeeGetList Documentation
      */
-    public function list(?bool $ascending, ?int $limit): Response
+    public function list(?bool $ascending = null, ?int $limit = null): Response
     {
         return $this->connector->send(new PlatformFeeGetList($ascending, $limit));
     }

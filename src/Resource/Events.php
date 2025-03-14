@@ -15,11 +15,11 @@ class Events extends Resource
      * Retrieves a list of events. They are returned in sorted (by epoch) order (default is newest first).
      * You can query one of your sub-account's events buy using the `Account` header.
      *
-     * @param bool $ascending Control the order (newest or oldest) in which the events are returned. `false` will arrange the results with newest first whereas `true` shows oldest first.
+     * @param bool|null $ascending Control the order (newest or oldest) in which the events are returned. `false` will arrange the results with newest first whereas `true` shows oldest first.
      *
      * @link https://api-reference.ryftpay.com/#tag/Events/operation/eventGetList Documentation
      */
-    public function list(?bool $ascending, ?int $limit): Response
+    public function list(?bool $ascending = null, ?int $limit = null): Response
     {
         return $this->connector->send(new EventGetList($ascending, $limit));
     }

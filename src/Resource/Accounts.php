@@ -92,13 +92,13 @@ class Accounts extends Resource
      */
     public function listPayouts(
         string $id,
-        ?bool $ascending,
-        ?int $limit,
-        ?string $startsAfter,
-        ?string $startDate,
-        ?string $endDate,
-        ?int $startTimestamp,
-        ?int $endTimestamp,
+        ?bool $ascending = null,
+        ?int $limit = null,
+        ?string $startsAfter = null,
+        ?string $startDate = null,
+        ?string $endDate = null,
+        ?int $startTimestamp = null,
+        ?int $endTimestamp = null,
     ): Response {
         return $this->connector->send(new PayoutsList(
             $id,

@@ -16,13 +16,13 @@ class Files extends Resource
      * Used to fetch a paginated list of files under your account
      *
      * @param string|null $category    Filter for files in a specific category.
-     * @param bool        $ascending   Control the order (newest or oldest) in which the files are returned. `false` will arrange the results with newest first, whereas `true` shows oldest first. The default is `false`.
+     * @param bool|null   $ascending   Control the order (newest or oldest) in which the files are returned. `false` will arrange the results with newest first, whereas `true` shows oldest first. The default is `false`.
      * @param int|null    $limit       Control how many items are return in a given page The max limit we allow is `25`. The default is `10`.
      * @param string|null $startsAfter A token to identify where to resume a subsequent paginated query. The value of the `paginationToken` field from that response should be supplied here, to retrieve the next page of results for that timestamp range.
      *
      * @link https://api-reference.ryftpay.com/#tag/Files/operation/filesList Documentation
      */
-    public function list(?string $category, ?bool $ascending, ?int $limit, ?string $startsAfter): Response
+    public function list(?string $category = null, ?bool $ascending = null, ?int $limit = null, ?string $startsAfter = null): Response
     {
         return $this->connector->send(new FilesList($category, $ascending, $limit, $startsAfter));
     }

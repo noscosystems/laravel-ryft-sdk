@@ -22,18 +22,18 @@ class Subscriptions extends Resource
      *
      * @param int|null    $startTimestamp The start timestamp (inclusive), it must be before the endTimestamp. If not provided will default to midnight on the current date (UTC).
      * @param int|null    $endTimestamp   The timestamp when to return payment sessions up to (inclusive), it must be after the startTimestamp. If not provided it will default to the current time (UTC).
-     * @param bool        $ascending      Control the order (newest or oldest) in which the subscriptions are returned. `false` will arrange the results with newest first, whereas `true` shows oldest first. The default is `false`.
+     * @param bool|null   $ascending      Control the order (newest or oldest) in which the subscriptions are returned. `false` will arrange the results with newest first, whereas `true` shows oldest first. The default is `false`.
      * @param int|null    $limit          Control how many items are return in a given page The max limit we allow is `25`. The default is `10`.
      * @param string|null $startsAfter    A token to identify where to resume a subsequent paginated query. The value of the `paginationToken` field from that response should be supplied here, to retrieve the next page of results for that timestamp range.
      *
      * @link https://api-reference.ryftpay.com/#tag/Subscriptions/operation/subscriptionsList Documentation
      */
     public function list(
-        ?int $startTimestamp,
-        ?int $endTimestamp,
-        ?bool $ascending,
-        ?int $limit,
-        ?string $startsAfter,
+        ?int $startTimestamp = null,
+        ?int $endTimestamp = null,
+        ?bool $ascending = null,
+        ?int $limit = null,
+        ?string $startsAfter = null,
     ): Response {
         return $this->connector->send(new SubscriptionsList($startTimestamp, $endTimestamp, $ascending, $limit, $startsAfter));
     }
@@ -139,7 +139,7 @@ class Subscriptions extends Resource
      * @param string      $subscriptionId Subscription to retrieve
      * @param int|null    $startTimestamp The timestamp when to return payment sessions from (inclusive), it must be before the endTimestamp. If not provided it will default to 0
      * @param int|null    $endTimestamp   The timestamp when to return payment sessions up to (inclusive), it must be after the startTimestamp. If not provided it will default to the current time (UTC).
-     * @param bool        $ascending      Control the order (newest or oldest) in which the payment sessions are returned. `false` will arrange the results with newest first, whereas `true` shows oldest first. The default is `false`.
+     * @param bool|null   $ascending      Control the order (newest or oldest) in which the payment sessions are returned. `false` will arrange the results with newest first, whereas `true` shows oldest first. The default is `false`.
      * @param int|null    $limit          Control how many items are return in a given page The max limit we allow is `25`. The default is `10`.
      * @param string|null $startsAfter    A token to identify where to resume a subsequent paginated query. The value of the `paginationToken` field from that response should be supplied here, to retrieve the next page of results.
      *
@@ -147,11 +147,11 @@ class Subscriptions extends Resource
      */
     public function listPaymentSessions(
         string $subscriptionId,
-        ?int $startTimestamp,
-        ?int $endTimestamp,
-        ?bool $ascending,
-        ?int $limit,
-        ?string $startsAfter,
+        ?int $startTimestamp = null,
+        ?int $endTimestamp = null,
+        ?bool $ascending = null,
+        ?int $limit = null,
+        ?string $startsAfter = null,
     ): Response {
         return $this->connector->send(new SubscriptionsListPaymentSessions($subscriptionId, $startTimestamp, $endTimestamp, $ascending, $limit, $startsAfter));
     }
