@@ -1,18 +1,18 @@
 <?php
 
-namespace Nosco\Ryft\Dtos;
+namespace Nosco\Ryft\Dtos\Payments;
 
 use Illuminate\Support\Collection;
 use Nosco\Ryft\Dto;
 use Nosco\Ryft\Support\Helpers;
 
-readonly class SplitPaymentDetail extends Dto
+readonly class OrderDetails extends Dto
 {
     /**
-     * @param Collection<SplitPaymentItem>|null $items
+     * @param Collection<OrderLineItem>|null $items
      */
     public function __construct(
-        public ?Collection $items = null
+        public ?Collection $items = null,
     ) {}
 
     public static function fromArray(array|Collection|null $data): ?static
@@ -22,7 +22,7 @@ readonly class SplitPaymentDetail extends Dto
         }
 
         $data = $data->merge([
-            'items' => SplitPaymentItem::multipleFromArray($data->get('items')),
+            'items' => OrderLineItem::multipleFromArray($data->get('items')),
         ]);
 
         return parent::fromArray($data);

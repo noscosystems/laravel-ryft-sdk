@@ -3,8 +3,10 @@
 namespace Nosco\Ryft\Resource;
 
 use DateTimeInterface;
-use Nosco\Ryft\Dtos\PaymentSession;
-use Nosco\Ryft\Dtos\PaymentSessionAttempt;
+use Nosco\Ryft\Dtos\Payments\PaymentSession;
+use Nosco\Ryft\Dtos\Payments\PaymentSessionAttempt;
+use Nosco\Ryft\Dtos\Payments\PaymentSessionContinue;
+use Nosco\Ryft\Dtos\Payments\PaymentTransaction;
 use Nosco\Ryft\Requests\Payments\PaymentSessionAttemptPayment;
 use Nosco\Ryft\Requests\Payments\PaymentSessionCaptureById;
 use Nosco\Ryft\Requests\Payments\PaymentSessionContinuePayment;
@@ -119,9 +121,9 @@ class Payments extends Resource
      * @see attempt() attempt-payment endpoint
      * @link https://api-reference.ryftpay.com/#tag/Payments/operation/paymentSessionContinuePayment Documentation
      */
-    public function continue(): Response
+    public function continue(PaymentSessionContinue $paymentSessionContinue): Response
     {
-        return $this->connector->send(new PaymentSessionContinuePayment);
+        return $this->connector->send(new PaymentSessionContinuePayment($paymentSessionContinue));
     }
 
     /**
@@ -171,9 +173,9 @@ class Payments extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Payments/operation/paymentSessionCaptureById Documentation
      */
-    public function capture(string $paymentSessionId): Response
+    public function capture(string $paymentSessionId, PaymentTransaction $paymentTransaction): Response
     {
-        return $this->connector->send(new PaymentSessionCaptureById($paymentSessionId));
+        return $this->connector->send(new PaymentSessionCaptureById($paymentSessionId, $paymentTransaction));
     }
 
     /**
@@ -205,8 +207,8 @@ class Payments extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Payments/operation/paymentSessionCreateRefund Documentation
      */
-    public function createRefund(string $paymentSessionId): Response
+    public function createRefund(string $paymentSessionId, PaymentTransaction $paymentTransaction): Response
     {
-        return $this->connector->send(new PaymentSessionCreateRefund($paymentSessionId));
+        return $this->connector->send(new PaymentSessionCreateRefund($paymentSessionId, $paymentTransaction));
     }
 }

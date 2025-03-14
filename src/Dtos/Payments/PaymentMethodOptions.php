@@ -1,6 +1,6 @@
 <?php
 
-namespace Nosco\Ryft\Dtos;
+namespace Nosco\Ryft\Dtos\Payments;
 
 use Illuminate\Support\Collection;
 use Nosco\Ryft\Dto;

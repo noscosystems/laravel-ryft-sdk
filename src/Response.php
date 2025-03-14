@@ -3,7 +3,7 @@
 namespace Nosco\Ryft;
 
 use Illuminate\Support\Collection;
-use Nosco\Ryft\Dtos\Error;
+use Nosco\Ryft\Dtos\Payments\Error;
 use Saloon\Http\Response as SaloonResponse;
 
 class Response extends SaloonResponse

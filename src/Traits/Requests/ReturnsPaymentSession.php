@@ -2,7 +2,7 @@
 
 namespace Nosco\Ryft\Traits\Requests;
 
-use Nosco\Ryft\Dtos\PaymentSession;
+use Nosco\Ryft\Dtos\Payments\PaymentSession;
 use Saloon\Http\Response;
 
 trait ReturnsPaymentSession

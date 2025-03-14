@@ -3,7 +3,7 @@
 namespace Nosco\Ryft\Requests\Payments;
 
 use Illuminate\Support\Collection;
-use Nosco\Ryft\Dtos\PaymentSession;
+use Nosco\Ryft\Dtos\Payments\PaymentSession;
 use Nosco\Ryft\Request;
 use Saloon\Enums\Method;
 use Saloon\Http\Response;
