@@ -4,7 +4,7 @@ namespace Nosco\Ryft\Requests\Payments;
 
 use Nosco\Ryft\Dtos\Payments\PaymentSession;
 use Nosco\Ryft\Request;
-use Nosco\Ryft\Traits\Requests\ReturnsPaymentSession;
+use Nosco\Ryft\Traits\Requests\Payments\ReturnsPaymentSession;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Traits\Body\HasJsonBody;
