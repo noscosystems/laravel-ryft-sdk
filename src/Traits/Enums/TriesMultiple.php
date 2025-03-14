@@ -18,7 +18,13 @@ trait TriesMultiple
      */
     public static function tryFromArray(array|Collection $values): Collection
     {
-        return collect($values)->map(fn (int|string $value) => static::tryFrom($value));
+        return collect($values)
+            ->map(
+                fn (int|string|BackedEnum $value) => $value instanceof BackedEnum
+                    ? $value
+                    : static::tryFrom($value)
+            )
+            ->ensure(static::class);
     }
 
     /**
@@ -30,6 +36,12 @@ trait TriesMultiple
      */
     public static function fromArray(array|Collection $values): Collection
     {
-        return collect($values)->map(fn (int|string $value) => static::from($value));
+        return collect($values)
+            ->map(
+                fn (int|string|BackedEnum $value) => $value instanceof BackedEnum
+                    ? $value
+                    : static::from($value)
+            )
+            ->ensure(static::class);
     }
 }

@@ -15,10 +15,12 @@ readonly class Webhook extends Dto
      */
     public function __construct(
         public ?string $id = null,
+        public ?string $secret = null,
         public ?string $url = null,
         public ?bool $active = null,
         public ?Collection $eventTypes = null,
-        public ?DateTimeInterface $createdTimeStamp = null,
+        public ?DateTimeInterface $createdTimestamp = null,
+        public ?DateTimeInterface $lastUpdatedTimestamp = null,
     ) {}
 
     public static function fromArray(array|Collection|null $data): ?static
