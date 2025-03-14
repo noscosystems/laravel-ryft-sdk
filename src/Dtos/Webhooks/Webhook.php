@@ -8,7 +8,7 @@ use Nosco\Ryft\Dto;
 use Nosco\Ryft\Enums\EventType;
 use Nosco\Ryft\Support\Helpers;
 
-readonly class WebhookEndpoint extends Dto
+readonly class Webhook extends Dto
 {
     /**
      * @param Collection<>|null $eventTypes

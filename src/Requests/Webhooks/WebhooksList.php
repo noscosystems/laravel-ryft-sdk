@@ -2,7 +2,7 @@
 
 namespace Nosco\Ryft\Requests\Webhooks;
 
-use Nosco\Ryft\Dtos\Webhooks\WebhookEndpoint;
+use Nosco\Ryft\Dtos\Webhooks\Webhook;
 use Illuminate\Support\Collection;
 use Nosco\Ryft\Request;
 use Saloon\Enums\Method;
@@ -27,6 +27,6 @@ class WebhooksList extends Request
 
     public function createDtoFromResponse(Response $response): Collection
     {
-        return WebhookEndpoint::fromPaginatedResponse($response);
+        return Webhook::fromPaginatedResponse($response);
     }
 }

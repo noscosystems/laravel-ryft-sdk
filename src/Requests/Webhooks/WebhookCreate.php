@@ -2,9 +2,9 @@
 
 namespace Nosco\Ryft\Requests\Webhooks;
 
-use Nosco\Ryft\Dtos\Webhooks\WebhookEndpoint;
+use Nosco\Ryft\Dtos\Webhooks\Webhook;
 use Nosco\Ryft\Request;
-use Nosco\Ryft\Traits\Requests\Webhooks\ReturnsWebhookEndpoint;
+use Nosco\Ryft\Traits\Requests\Webhooks\ReturnsWebhook;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Traits\Body\HasJsonBody;
@@ -17,7 +17,7 @@ use Saloon\Traits\Body\HasJsonBody;
 class WebhookCreate extends Request implements HasBody
 {
     use HasJsonBody;
-    use ReturnsWebhookEndpoint;
+    use ReturnsWebhook;
 
     protected Method $method = Method::POST;
 
@@ -26,7 +26,7 @@ class WebhookCreate extends Request implements HasBody
         return '/webhooks';
     }
 
-    public function __construct(protected WebhookEndpoint $webhookEndpoint) {}
+    public function __construct(protected Webhook $webhookEndpoint) {}
 
     protected function defaultBody(): array
     {
