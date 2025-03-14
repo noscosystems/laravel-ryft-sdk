@@ -11,6 +11,7 @@ use JsonSerializable;
 use Nosco\Ryft\Support\Cast;
 use Nosco\Ryft\Support\Helpers;
 use ReflectionClass;
+use Saloon\Http\Response;
 
 abstract readonly class Dto implements Arrayable, Jsonable, JsonSerializable
 {
@@ -39,6 +40,27 @@ abstract readonly class Dto implements Arrayable, Jsonable, JsonSerializable
         return collect($data)
             ->map(fn (Collection|array|null $item): ?static => static::fromArray($item))
             ->filter();
+    }
+
+    public static function fromResponse(Response $response): ?static
+    {
+        if ($response->failed()) {
+            return null;
+        }
+
+        return static::fromArray($response->json());
+    }
+
+    /**
+     * @return Collection<static>
+     */
+    public static function fromPaginatedResponse(Response $response, string $itemsKey = 'items'): Collection
+    {
+        if ($response->failed()) {
+            return collect();
+        }
+
+        return static::multipleFromArray($response->json($itemsKey));
     }
 
     public function toArray(): array
