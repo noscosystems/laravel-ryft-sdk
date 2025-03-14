@@ -76,8 +76,8 @@ class Webhooks extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Webhooks/operation/webhookUpdateById Documentation
      */
-    public function update(string $webhookId): Response
+    public function update(string $webhookId, WebhookEndpoint $webhookEndpoint): Response
     {
-        return $this->connector->send(new WebhookUpdateById($webhookId));
+        return $this->connector->send(new WebhookUpdateById($webhookId, $webhookEndpoint));
     }
 }
