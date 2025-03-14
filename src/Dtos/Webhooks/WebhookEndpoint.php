@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Dtos\Webhooks;
+namespace Nosco\Ryft\Dtos\Webhooks;
 
 use DateTimeInterface;
 use Illuminate\Support\Collection;

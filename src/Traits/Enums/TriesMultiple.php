@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traits\Enums;
+namespace Nosco\Ryft\Traits\Enums;
 
 use BackedEnum;
 use Illuminate\Support\Collection;

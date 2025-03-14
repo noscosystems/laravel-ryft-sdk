@@ -2,7 +2,7 @@
 
 namespace Nosco\Ryft\Traits\Requests\Webhooks;
 
-use App\Dtos\Webhooks\WebhookEndpoint;
+use Nosco\Ryft\Dtos\Webhooks\WebhookEndpoint;
 use Saloon\Http\Response;
 
 trait ReturnsWebhookEndpoint

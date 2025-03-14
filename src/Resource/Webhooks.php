@@ -2,7 +2,7 @@
 
 namespace Nosco\Ryft\Resource;
 
-use App\Dtos\Webhooks\WebhookEndpoint;
+use Nosco\Ryft\Dtos\Webhooks\WebhookEndpoint;
 use Nosco\Ryft\Requests\Webhooks\WebhookCreate;
 use Nosco\Ryft\Requests\Webhooks\WebhookDeleteById;
 use Nosco\Ryft\Requests\Webhooks\WebhookGetById;

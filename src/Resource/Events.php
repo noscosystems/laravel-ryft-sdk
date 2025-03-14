@@ -16,6 +16,7 @@ class Events extends Resource
      * You can query one of your sub-account's events buy using the `Account` header.
      *
      * @param bool|null $ascending Control the order (newest or oldest) in which the events are returned. `false` will arrange the results with newest first whereas `true` shows oldest first.
+     * @param int|null  $limit     Control how many items are returned in the result list. The max limit we allow is `50`.
      *
      * @link https://api-reference.ryftpay.com/#tag/Events/operation/eventGetList Documentation
      */

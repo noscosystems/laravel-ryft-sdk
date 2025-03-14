@@ -2,7 +2,7 @@
 
 namespace Nosco\Ryft\Requests\Webhooks;
 
-use App\Dtos\Webhooks\WebhookEndpoint;
+use Nosco\Ryft\Dtos\Webhooks\WebhookEndpoint;
 use Illuminate\Support\Collection;
 use Nosco\Ryft\Request;
 use Saloon\Enums\Method;

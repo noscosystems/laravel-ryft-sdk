@@ -2,7 +2,7 @@
 
 namespace Nosco\Ryft\Enums\Webhooks;
 
-use App\Traits\Enums\TriesMultiple;
+use Nosco\Ryft\Traits\Enums\TriesMultiple;
 
 enum EventType: string
 {

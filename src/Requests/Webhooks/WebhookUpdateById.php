@@ -2,7 +2,7 @@
 
 namespace Nosco\Ryft\Requests\Webhooks;
 
-use App\Dtos\Webhooks\WebhookEndpoint;
+use Nosco\Ryft\Dtos\Webhooks\WebhookEndpoint;
 use Nosco\Ryft\Request;
 use Nosco\Ryft\Traits\Requests\Webhooks\ReturnsWebhookEndpoint;
 use Saloon\Contracts\Body\HasBody;
