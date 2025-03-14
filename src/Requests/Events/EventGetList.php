@@ -2,8 +2,11 @@
 
 namespace Nosco\Ryft\Requests\Events;
 
+use Illuminate\Support\Collection;
+use Nosco\Ryft\Dtos\Events\Event;
 use Nosco\Ryft\Request;
 use Saloon\Enums\Method;
+use Saloon\Http\Response;
 
 /**
  * eventGetList.
@@ -30,6 +33,14 @@ class EventGetList extends Request
 
     public function defaultQuery(): array
     {
-        return array_filter(['ascending' => $this->ascending, 'limit' => $this->limit]);
+        return array_filter([
+            'ascending' => $this->ascending,
+            'limit' => $this->limit,
+        ]);
+    }
+
+    public function createDtoFromResponse(Response $response): Collection
+    {
+        return Event::fromPaginatedResponse($response);
     }
 }

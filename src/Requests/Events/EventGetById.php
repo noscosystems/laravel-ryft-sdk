@@ -2,8 +2,10 @@
 
 namespace Nosco\Ryft\Requests\Events;
 
+use Nosco\Ryft\Dtos\Events\Event;
 use Nosco\Ryft\Request;
 use Saloon\Enums\Method;
+use Saloon\Http\Response;
 
 /**
  * eventGetById.
@@ -25,4 +27,9 @@ class EventGetById extends Request
     public function __construct(
         protected string $eventId,
     ) {}
+
+    public function createDtoFromResponse(Response $response): ?Event
+    {
+        return Event::fromResponse($response);
+    }
 }
