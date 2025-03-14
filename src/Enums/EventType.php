@@ -1,6 +1,6 @@
 <?php
 
-namespace Nosco\Ryft\Enums\Webhooks;
+namespace Nosco\Ryft\Enums;
 
 use Nosco\Ryft\Traits\Enums\TriesMultiple;
 

@@ -5,7 +5,7 @@ namespace Nosco\Ryft\Dtos\Webhooks;
 use DateTimeInterface;
 use Illuminate\Support\Collection;
 use Nosco\Ryft\Dto;
-use Nosco\Ryft\Enums\Webhooks\EventType;
+use Nosco\Ryft\Enums\EventType;
 use Nosco\Ryft\Support\Helpers;
 
 readonly class WebhookEndpoint extends Dto
