@@ -3,8 +3,8 @@
 namespace Nosco\Ryft\Dtos\Payments;
 
 use Nosco\Ryft\Dto;
-use Nosco\Ryft\Enums\Initiator;
-use Nosco\Ryft\Enums\Sequence;
+use Nosco\Ryft\Enums\Payments\Initiator;
+use Nosco\Ryft\Enums\Payments\Sequence;
 
 readonly class CredentialOnFileUsage extends Dto
 {

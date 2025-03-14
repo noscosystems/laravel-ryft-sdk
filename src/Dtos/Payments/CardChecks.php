@@ -3,8 +3,8 @@
 namespace Nosco\Ryft\Dtos\Payments;
 
 use Nosco\Ryft\Dto;
-use Nosco\Ryft\Enums\AvsResponseCode;
-use Nosco\Ryft\Enums\CvvResponseCode;
+use Nosco\Ryft\Enums\Payments\AvsResponseCode;
+use Nosco\Ryft\Enums\Payments\CvvResponseCode;
 
 readonly class CardChecks extends Dto
 {

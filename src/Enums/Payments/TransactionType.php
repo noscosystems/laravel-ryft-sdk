@@ -1,6 +1,6 @@
 <?php
 
-namespace Saloon\Enums;
+namespace Nosco\Ryft\Enums\Payments;
 
 enum TransactionType: string
 {

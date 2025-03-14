@@ -4,9 +4,9 @@ namespace Nosco\Ryft\Dtos\Payments;
 
 use DateTimeInterface;
 use Nosco\Ryft\Dto;
-use Nosco\Ryft\Enums\CaptureType;
-use Nosco\Ryft\Enums\TransactionStatus;
-use Saloon\Enums\TransactionType;
+use Nosco\Ryft\Enums\Payments\CaptureType;
+use Nosco\Ryft\Enums\Payments\TransactionStatus;
+use Nosco\Ryft\Enums\Payments\TransactionType;
 
 readonly class PaymentTransaction extends Dto
 {

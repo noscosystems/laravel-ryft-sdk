@@ -3,7 +3,7 @@
 namespace Nosco\Ryft\Dtos\Payments;
 
 use Nosco\Ryft\Dto;
-use Nosco\Ryft\Enums\CardScheme;
+use Nosco\Ryft\Enums\Payments\CardScheme;
 
 readonly class Card extends Dto
 {

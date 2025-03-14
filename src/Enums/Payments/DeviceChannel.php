@@ -1,6 +1,6 @@
 <?php
 
-namespace Nosco\Ryft\Enums;
+namespace Nosco\Ryft\Enums\Payments;
 
 enum DeviceChannel: string
 {

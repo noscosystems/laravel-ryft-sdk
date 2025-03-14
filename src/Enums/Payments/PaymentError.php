@@ -1,6 +1,6 @@
 <?php
 
-namespace Nosco\Ryft\Enums;
+namespace Nosco\Ryft\Enums\Payments;
 
 use Nosco\Ryft\Contracts\Enums\HasFallback;
 use Nosco\Ryft\Contracts\Enums\HasLabel;

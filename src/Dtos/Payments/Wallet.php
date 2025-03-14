@@ -3,7 +3,7 @@
 namespace Nosco\Ryft\Dtos\Payments;
 
 use Nosco\Ryft\Dto;
-use Nosco\Ryft\Enums\WalletType;
+use Nosco\Ryft\Enums\Payments\WalletType;
 
 readonly class Wallet extends Dto
 {

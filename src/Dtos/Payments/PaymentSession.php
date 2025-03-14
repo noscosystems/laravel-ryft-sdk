@@ -5,12 +5,12 @@ namespace Nosco\Ryft\Dtos\Payments;
 use DateTimeInterface;
 use Illuminate\Support\Collection;
 use Nosco\Ryft\Dto;
-use Nosco\Ryft\Enums\AuthorizationType;
-use Nosco\Ryft\Enums\CaptureFlow;
-use Nosco\Ryft\Enums\EntryMode;
-use Nosco\Ryft\Enums\PaymentError;
-use Nosco\Ryft\Enums\PaymentStatus;
-use Nosco\Ryft\Enums\PaymentType;
+use Nosco\Ryft\Enums\Payments\AuthorizationType;
+use Nosco\Ryft\Enums\Payments\CaptureFlow;
+use Nosco\Ryft\Enums\Payments\EntryMode;
+use Nosco\Ryft\Enums\Payments\PaymentError;
+use Nosco\Ryft\Enums\Payments\PaymentStatus;
+use Nosco\Ryft\Enums\Payments\PaymentType;
 
 readonly class PaymentSession extends Dto
 {

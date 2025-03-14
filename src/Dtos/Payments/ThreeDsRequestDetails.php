@@ -3,7 +3,7 @@
 namespace Nosco\Ryft\Dtos\Payments;
 
 use Nosco\Ryft\Dto;
-use Nosco\Ryft\Enums\DeviceChannel;
+use Nosco\Ryft\Enums\Payments\DeviceChannel;
 
 readonly class ThreeDsRequestDetails extends Dto
 {
