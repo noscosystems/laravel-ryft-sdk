@@ -29,8 +29,12 @@ class Helpers
         return Carbon::parse($timestamp);
     }
 
-    public static function timestamp(?DateTimeInterface $date): ?int
+    public static function timestamp(DateTimeInterface|int|null $date): ?int
     {
+        if (is_int($date)) {
+            return $date;
+        }
+
         return $date?->getTimestamp();
     }
 }

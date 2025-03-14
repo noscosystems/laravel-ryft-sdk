@@ -51,6 +51,6 @@ class PaymentSessionGetBetweenTimestamps extends Request implements Paginatable
 
     public function createDtoFromResponse(Response $response): Collection
     {
-        return PaymentSession::multipleFromArray($response->json('items'));
+        return PaymentSession::fromPaginatedResponse($response);
     }
 }

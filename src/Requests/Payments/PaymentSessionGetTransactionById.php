@@ -2,8 +2,10 @@
 
 namespace Nosco\Ryft\Requests\Payments;
 
+use Nosco\Ryft\Dtos\PaymentTransaction;
 use Nosco\Ryft\Request;
 use Saloon\Enums\Method;
+use Saloon\Http\Response;
 
 /**
  * paymentSessionGetTransactionById.
@@ -27,4 +29,9 @@ class PaymentSessionGetTransactionById extends Request
         protected string $paymentSessionId,
         protected string $paymentTransactionId,
     ) {}
+
+    public function createDtoFromResponse(Response $response): ?PaymentTransaction
+    {
+        return PaymentTransaction::fromResponse($response);
+    }
 }

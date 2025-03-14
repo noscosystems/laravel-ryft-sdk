@@ -12,5 +12,6 @@ readonly class PaymentMethodOptions extends Dto
      */
     public function __construct(
         public ?Collection $disabled = null,
+        public ?bool $store = null,
     ) {}
 }

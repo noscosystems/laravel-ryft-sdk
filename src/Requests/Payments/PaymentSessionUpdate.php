@@ -2,7 +2,9 @@
 
 namespace Nosco\Ryft\Requests\Payments;
 
+use Nosco\Ryft\Dtos\PaymentSession;
 use Nosco\Ryft\Request;
+use Nosco\Ryft\Traits\Requests\ReturnsPaymentSession;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Traits\Body\HasJsonBody;
@@ -16,6 +18,7 @@ use Saloon\Traits\Body\HasJsonBody;
 class PaymentSessionUpdate extends Request implements HasBody
 {
     use HasJsonBody;
+    use ReturnsPaymentSession;
 
     protected Method $method = Method::PATCH;
 
@@ -29,5 +32,6 @@ class PaymentSessionUpdate extends Request implements HasBody
      */
     public function __construct(
         protected string $paymentSessionId,
+        protected PaymentSession $paymentSession,
     ) {}
 }

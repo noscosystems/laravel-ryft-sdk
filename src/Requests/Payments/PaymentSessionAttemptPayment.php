@@ -2,7 +2,9 @@
 
 namespace Nosco\Ryft\Requests\Payments;
 
+use Nosco\Ryft\Dtos\PaymentSessionAttempt;
 use Nosco\Ryft\Request;
+use Nosco\Ryft\Traits\Requests\ReturnsPaymentSession;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Traits\Body\HasJsonBody;
@@ -21,6 +23,7 @@ use Saloon\Traits\Body\HasJsonBody;
 class PaymentSessionAttemptPayment extends Request implements HasBody
 {
     use HasJsonBody;
+    use ReturnsPaymentSession;
 
     protected Method $method = Method::POST;
 
@@ -29,5 +32,12 @@ class PaymentSessionAttemptPayment extends Request implements HasBody
         return '/payment-sessions/attempt-payment';
     }
 
-    public function __construct() {}
+    public function __construct(
+        protected PaymentSessionAttempt $attempt
+    ) {}
+
+    protected function defaultBody(): array
+    {
+        return $this->attempt->toArray();
+    }
 }

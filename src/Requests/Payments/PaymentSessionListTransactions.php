@@ -2,8 +2,11 @@
 
 namespace Nosco\Ryft\Requests\Payments;
 
+use Illuminate\Support\Collection;
+use Nosco\Ryft\Dtos\PaymentTransaction;
 use Nosco\Ryft\Request;
 use Saloon\Enums\Method;
+use Saloon\Http\Response;
 
 /**
  * paymentSessionListTransactions.
@@ -34,6 +37,15 @@ class PaymentSessionListTransactions extends Request
 
     public function defaultQuery(): array
     {
-        return array_filter(['ascending' => $this->ascending, 'limit' => $this->limit, 'startsAfter' => $this->startsAfter]);
+        return array_filter([
+            'ascending' => $this->ascending,
+            'limit' => $this->limit,
+            'startsAfter' => $this->startsAfter,
+        ]);
+    }
+
+    public function createDtoFromResponse(Response $response): Collection
+    {
+        return PaymentTransaction::fromPaginatedResponse($response);
     }
 }

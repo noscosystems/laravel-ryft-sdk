@@ -2,7 +2,9 @@
 
 namespace Nosco\Ryft\Requests\Payments;
 
+use Nosco\Ryft\Dtos\PaymentSessionContinue;
 use Nosco\Ryft\Request;
+use Nosco\Ryft\Traits\Requests\ReturnsPaymentSession;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Traits\Body\HasJsonBody;
@@ -17,6 +19,7 @@ use Saloon\Traits\Body\HasJsonBody;
 class PaymentSessionContinuePayment extends Request implements HasBody
 {
     use HasJsonBody;
+    use ReturnsPaymentSession;
 
     protected Method $method = Method::POST;
 
@@ -25,5 +28,10 @@ class PaymentSessionContinuePayment extends Request implements HasBody
         return '/payment-sessions/continue-payment';
     }
 
-    public function __construct() {}
+    public function __construct(protected PaymentSessionContinue $paymentSessionContinue) {}
+
+    protected function defaultBody(): array
+    {
+        return $this->paymentSessionContinue->toArray();
+    }
 }

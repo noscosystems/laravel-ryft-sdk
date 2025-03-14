@@ -8,7 +8,12 @@ use Nosco\Ryft\Enums\CardScheme;
 readonly class Card extends Dto
 {
     public function __construct(
-        public ?CardScheme $scheme = null,
+        public ?string $cvc = null,
+        public ?string $expiryMonth = null,
+        public ?string $expiryYear = null,
         public ?string $last4 = null,
+        public ?string $name = null,
+        public ?string $number = null,
+        public ?CardScheme $scheme = null,
     ) {}
 }

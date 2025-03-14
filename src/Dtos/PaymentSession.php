@@ -52,36 +52,4 @@ readonly class PaymentSession extends Dto
         public ?PaymentStatus $status = null,
         public ?bool $verifyAccount = null,
     ) {}
-
-    //    public static function fromArray(Collection|array|null $data): ?static
-    //    {
-    //        if (!$data = static::wrap($data)) {
-    //            return null;
-    //        }
-    //
-    //        $data = $data->merge([
-    //            'attemptPayment' => PaymentSessionAttempt::fromArray($data->get('attemptPayment')),
-    //            'authorizationType' => AuthorizationType::tryFrom($data->get('authorizationType', '')),
-    //            'captureFlow' => CaptureFlow::tryFrom($data->get('captureFlow', '')),
-    //            'createdTimestamp' => static::dateTime($data->get('createdTimestamp')),
-    //            'credentialOnFileUsage' => CredentialOnFileUsage::fromArray($data->get('credentialOnFileUsage')),
-    //            'customerDetails' => CustomerDetails::fromArray($data->get('customerDetails')),
-    //            'entryMode' => EntryMode::tryFrom($data->get('entryMode', '')),
-    //            'lastError' => PaymentError::tryFromWithFallback($data->get('lastError', '')),
-    //            'lastUpdatedTimestamp' => static::dateTime($data->get('lastUpdatedTimestamp')),
-    //            'orderDetails' => OrderDetails::fromArray($data->get('orderDetails')),
-    //            'paymentMethod' => PaymentMethod::fromArray($data->get('paymentMethod')),
-    //            'paymentSettings' => PaymentSettings::fromArray($data->get('paymentSettings')),
-    //            'paymentType' => PaymentType::tryFrom($data->get('paymentType', '')),
-    //            'previousPayment' => static::fromArray($data->get('previousPayment')),
-    //            'rebillingDetail' => RebillingDetail::fromArray($data->get('rebillingDetail')),
-    //            'requiredAction' => RequiredAction::fromArray($data->get('requiredAction')),
-    //            'shippingDetails' => ShippingDetails::fromArray($data->get('shippingDetails')),
-    //            'splits' => SplitPaymentDetail::fromArray($data->get('splits')),
-    //            'statementDescriptor' => StatementDescriptor::fromArray($data->get('statementDescriptor')),
-    //            'status' => PaymentStatus::tryFrom($data->get('status', '')),
-    //        ]);
-    //
-    //        return parent::fromArray($data);
-    //    }
 }

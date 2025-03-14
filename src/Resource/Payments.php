@@ -4,6 +4,7 @@ namespace Nosco\Ryft\Resource;
 
 use DateTimeInterface;
 use Nosco\Ryft\Dtos\PaymentSession;
+use Nosco\Ryft\Dtos\PaymentSessionAttempt;
 use Nosco\Ryft\Requests\Payments\PaymentSessionAttemptPayment;
 use Nosco\Ryft\Requests\Payments\PaymentSessionCaptureById;
 use Nosco\Ryft\Requests\Payments\PaymentSessionContinuePayment;
@@ -16,6 +17,7 @@ use Nosco\Ryft\Requests\Payments\PaymentSessionListTransactions;
 use Nosco\Ryft\Requests\Payments\PaymentSessionUpdate;
 use Nosco\Ryft\Requests\Payments\PaymentSessionVoidById;
 use Nosco\Ryft\Resource;
+use Nosco\Ryft\Support\Helpers;
 use Saloon\Http\Response;
 
 class Payments extends Resource
@@ -40,6 +42,9 @@ class Payments extends Resource
         ?int $limit = null,
         ?string $startsAfter = null,
     ): Response {
+        $startTimestamp = Helpers::timestamp($startTimestamp);
+        $endTimestamp = Helpers::timestamp($endTimestamp);
+
         return $this->connector->send(new PaymentSessionGetBetweenTimestamps($startTimestamp, $endTimestamp, $ascending, $limit, $startsAfter));
     }
 
@@ -83,9 +88,9 @@ class Payments extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Payments/operation/paymentSessionUpdate Documentation
      */
-    public function update(string $paymentSessionId): Response
+    public function update(string $paymentSessionId, PaymentSession $paymentSession): Response
     {
-        return $this->connector->send(new PaymentSessionUpdate($paymentSessionId));
+        return $this->connector->send(new PaymentSessionUpdate($paymentSessionId, $paymentSession));
     }
 
     /**
@@ -100,9 +105,9 @@ class Payments extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Payments/operation/paymentSessionAttemptPayment Documentation
      */
-    public function attempt(): Response
+    public function attempt(PaymentSessionAttempt $attempt): Response
     {
-        return $this->connector->send(new PaymentSessionAttemptPayment);
+        return $this->connector->send(new PaymentSessionAttemptPayment($attempt));
     }
 
     /**

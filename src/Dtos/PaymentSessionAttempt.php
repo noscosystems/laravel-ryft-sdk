@@ -7,6 +7,14 @@ use Nosco\Ryft\Dto;
 readonly class PaymentSessionAttempt extends Dto
 {
     public function __construct(
+        public ?string $clientSecret = null,
+        public ?string $paymentMethodType = null,
+        public ?Card $cardDetails = null,
+        public ?Wallet $walletDetails = null,
         public ?PaymentMethod $paymentMethod = null,
+        public ?PaymentMethodOptions $paymentMethodOptions = null,
+        public ?CustomerAddress $billingAddress = null,
+        public ?CustomerDetails $customerDetails = null,
+        public ?ThreeDsRequestDetails $threeDsRequestDetails = null,
     ) {}
 }
