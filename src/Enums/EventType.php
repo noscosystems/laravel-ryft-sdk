@@ -2,6 +2,8 @@
 
 namespace Nosco\Ryft\Enums;
 
+use Nosco\Ryft\Dtos\Accounts\Account;
+use Nosco\Ryft\Dtos\Payments\PaymentSession;
 use Nosco\Ryft\Traits\Enums\TriesMultiple;
 
 enum EventType: string
@@ -48,4 +50,15 @@ enum EventType: string
     case DISPUTE_CREATED = 'Dispute.created';
     case DISPUTE_CLOSED = 'Dispute.closed';
     case DISPUTE_CHALLENGED = 'Dispute.challenged';
+
+    public function dtoClass(): ?string
+    {
+        $resource = str($this->value)->before('.')->toString();
+
+        return match ($resource) {
+            'PaymentSession' => PaymentSession::class,
+            'Account' => Account::class,
+            default => null,
+        };
+    }
 }

@@ -16,7 +16,7 @@ readonly class Event extends Dto
     public function __construct(
         public ?string $id = null,
         public ?EventType $eventType = null,
-        public ?EventData $data = null,
+        public Dto|Collection|null $data = null,
         public ?Collection $endpoints = null,
         public ?string $accountId = null,
         public ?DateTimeInterface $createdTimestamp = null,
@@ -28,10 +28,17 @@ readonly class Event extends Dto
             return null;
         }
 
-        $data = $data->merge([
+        $event = parent::fromArray($data->merge([
+            'data' => collect($data->get('data', [])),
             'endpoints' => EventEndpoint::multipleFromArray($data->get('endpoints', [])),
-        ]);
+        ]));
 
-        return parent::fromArray($data);
+        $detailsClass = $event->eventType?->dtoClass();
+
+        if ($detailsClass && is_subclass_of($detailsClass, Dto::class)) {
+            $event->data = $detailsClass::fromArray($event->data);
+        }
+
+        return $event;
     }
 }

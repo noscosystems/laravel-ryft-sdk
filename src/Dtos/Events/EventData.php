@@ -24,6 +24,7 @@ readonly class EventData extends Dto
         public ?CustomerDetails $customer = null,
         public ?PaymentMethod $paymentMethod = null,
         public ?PausedPaymentDetails $pausePaymentDetail = null,
-
+        public ?string $type = null,
+        public ?string $status = null,
     ) {}
 }

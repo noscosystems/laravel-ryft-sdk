@@ -9,15 +9,16 @@ use Illuminate\Support\Collection;
 use Nosco\Ryft\Contracts\Enums\HasFallback;
 use Nosco\Ryft\Dto;
 use ReflectionNamedType;
+use ReflectionType;
 
 class Cast
 {
-    public static function match(mixed $value, ReflectionNamedType $requiredType): mixed
+    public static function match(mixed $value, ReflectionType $requiredType): mixed
     {
         if ($value === null) {
             return null;
         }
-        if ($requiredType->isBuiltin()) {
+        if (!$requiredType instanceof ReflectionNamedType || $requiredType->isBuiltin()) {
             return $value;
         }
 
