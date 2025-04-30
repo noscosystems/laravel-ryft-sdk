@@ -1,0 +1,12 @@
+<?php
+
+namespace Nosco\Ryft\Dtos\ApplePay;
+
+use Nosco\Ryft\Dto;
+
+readonly class ApplePaySession extends Dto
+{
+    public function __construct(
+        public ?string $sessionObject = null,
+    ) {}
+}
