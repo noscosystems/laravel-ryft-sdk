@@ -3,7 +3,14 @@
 namespace Nosco\Ryft\Enums;
 
 use Nosco\Ryft\Dtos\Accounts\Account;
+use Nosco\Ryft\Dtos\Customers\Customer;
+use Nosco\Ryft\Dtos\Disputes\Dispute;
 use Nosco\Ryft\Dtos\Payments\PaymentSession;
+use Nosco\Ryft\Dtos\PayoutMethods\PayoutMethod;
+use Nosco\Ryft\Dtos\Payouts\Payout;
+use Nosco\Ryft\Dtos\Persons\Person;
+use Nosco\Ryft\Dtos\Subscriptions\Subscription;
+use Nosco\Ryft\Dtos\Transfers\Transfer;
 use Nosco\Ryft\Traits\Enums\TriesMultiple;
 
 enum EventType: string
@@ -58,6 +65,13 @@ enum EventType: string
         return match ($resource) {
             'PaymentSession' => PaymentSession::class,
             'Account' => Account::class,
+            'Person' => Person::class,
+            'PayoutMethod' => PayoutMethod::class,
+            'Payout' => Payout::class,
+            'Customer' => Customer::class,
+            'Subscription' => Subscription::class,
+            'Transfer' => Transfer::class,
+            'Dispute' => Dispute::class,
             default => null,
         };
     }
