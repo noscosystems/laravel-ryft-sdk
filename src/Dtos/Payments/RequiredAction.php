@@ -11,5 +11,6 @@ readonly class RequiredAction extends Dto
         public ?RequiredActionType $type = null,
         public ?string $url = null,
         public ?RequiredActionIdentify $identify = null,
+        public ?RequiredActionChallenge $challenge = null,
     ) {}
 }

@@ -6,6 +6,7 @@ use Illuminate\Support\Collection;
 use Nosco\Ryft\Dto;
 use Nosco\Ryft\Dtos\Payments\CustomerDetails;
 use Nosco\Ryft\Dtos\Payments\PaymentMethod;
+use Nosco\Ryft\Dtos\Subscriptions\PausedPaymentDetails;
 
 readonly class EventData extends Dto
 {

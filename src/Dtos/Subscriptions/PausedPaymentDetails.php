@@ -1,6 +1,6 @@
 <?php
 
-namespace Nosco\Ryft\Dtos\Events;
+namespace Nosco\Ryft\Dtos\Subscriptions;
 
 use DateTimeInterface;
 use Nosco\Ryft\Dto;
