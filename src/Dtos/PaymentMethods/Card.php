@@ -1,6 +1,6 @@
 <?php
 
-namespace Nosco\Ryft\Dtos\Payments;
+namespace Nosco\Ryft\Dtos\PaymentMethods;
 
 use Nosco\Ryft\Dto;
 use Nosco\Ryft\Enums\Payments\CardScheme;

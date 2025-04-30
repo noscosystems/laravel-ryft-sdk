@@ -3,6 +3,9 @@
 namespace Nosco\Ryft\Dtos\Payments;
 
 use Nosco\Ryft\Dto;
+use Nosco\Ryft\Dtos\PaymentMethods\Card;
+use Nosco\Ryft\Dtos\PaymentMethods\PaymentMethodChecks;
+use Nosco\Ryft\Dtos\PaymentMethods\Wallet;
 
 readonly class PaymentMethod extends Dto
 {
@@ -14,6 +17,6 @@ readonly class PaymentMethod extends Dto
         public ?Card $card = null,
         public ?Wallet $wallet = null,
         public ?CustomerAddress $billingAddress = null,
-        public ?CardChecks $checks = null,
+        public ?PaymentMethodChecks $checks = null,
     ) {}
 }
