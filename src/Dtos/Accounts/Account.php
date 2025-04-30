@@ -7,17 +7,19 @@ use Illuminate\Support\Collection;
 use Nosco\Ryft\Dto;
 use Nosco\Ryft\Enums\Accounts\AccountEntityType;
 use Nosco\Ryft\Enums\Accounts\AccountOnboardingFlow;
-use Nosco\Ryft\Enums\AccountStatus;
+use Nosco\Ryft\Enums\Accounts\AccountStatus;
+use Nosco\Ryft\Enums\Accounts\AccountType;
 use Nosco\Ryft\Support\Helpers;
 
 readonly class Account extends Dto
 {
     public function __construct(
-        public ?string $id,
-        public ?AccountStatus $status,
-        public ?Collection $actionsRequired,
-        public ?bool $frozen,
-        public ?AccountOnboardingFlow $onboardingFlow,
+        public ?string $id = null,
+        public ?AccountType $type = null,
+        public ?AccountStatus $status = null,
+        public ?Collection $actionsRequired = null,
+        public ?bool $frozen = null,
+        public ?AccountOnboardingFlow $onboardingFlow = null,
         public ?string $email = null,
         public ?AccountEntityType $entityType = null,
         public ?Business $business = null,

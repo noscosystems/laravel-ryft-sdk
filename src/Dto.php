@@ -84,6 +84,11 @@ abstract readonly class Dto implements Arrayable, Jsonable, JsonSerializable
             ->toArray();
     }
 
+    public function toCollection(): Collection
+    {
+        return collect($this->toArray());
+    }
+
     public function jsonSerialize(): array
     {
         return $this->toArray();

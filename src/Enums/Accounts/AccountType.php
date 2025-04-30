@@ -1,11 +1,10 @@
 <?php
 
-namespace Nosco\Ryft\Enums;
+namespace Nosco\Ryft\Enums\Accounts;
 
-enum AccountStatus: string
+enum AccountType: string
 {
-    case ACTION_REQUIRED = 'ActionRequired';
-    case UNVERIFIED = 'Unverified';
-    case VERIFICATION_PENDING = 'VerificationPending';
-    case VERIFIED = 'Verified';
+    case STANDARD = 'Standard';
+
+    case SUB_ACCOUNT = 'Sub';
 }
