@@ -3,6 +3,7 @@
 namespace Nosco\Ryft\Traits\Requests\Transfers;
 
 use Nosco\Ryft\Dtos\Transfers\Transfer;
+use Saloon\Http\Response;
 
 trait ReturnsTransfer
 {

@@ -5,6 +5,7 @@ namespace Nosco\Ryft\Requests\Accounts;
 use Nosco\Ryft\Dtos\Payouts\Payout;
 use Nosco\Ryft\Request;
 use Saloon\Enums\Method;
+use Saloon\Http\Response;
 
 /**
  * payoutsList.

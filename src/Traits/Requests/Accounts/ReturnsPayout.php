@@ -3,6 +3,7 @@
 namespace Nosco\Ryft\Traits\Requests\Accounts;
 
 use Nosco\Ryft\Dtos\Payouts\Payout;
+use Nosco\Ryft\Response;
 
 trait ReturnsPayout
 {
