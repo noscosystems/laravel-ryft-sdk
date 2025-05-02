@@ -7,7 +7,7 @@ use Nosco\Ryft\Dto;
 use Nosco\Ryft\Enums\PayoutMethods\PayoutMethodStatus;
 use Nosco\Ryft\Enums\PayoutMethods\PayoutMethodType;
 
-readonly class PayoutMethod extends Dto
+class PayoutMethod extends Dto
 {
     public function __construct(
         public ?string $id = null,

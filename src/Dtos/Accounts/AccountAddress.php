@@ -4,7 +4,7 @@ namespace Nosco\Ryft\Dtos\Accounts;
 
 use Nosco\Ryft\Dto;
 
-readonly class AccountAddress extends Dto
+class AccountAddress extends Dto
 {
     public function __construct(
         public ?string $lineOne = null,

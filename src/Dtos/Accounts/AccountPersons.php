@@ -7,7 +7,7 @@ use Nosco\Ryft\Dto;
 use Nosco\Ryft\Enums\Accounts\VerificationStatus;
 use Nosco\Ryft\Support\Helpers;
 
-readonly class AccountPersons extends Dto
+class AccountPersons extends Dto
 {
     /**
      * @param Collection<RequiredRole>|null $required

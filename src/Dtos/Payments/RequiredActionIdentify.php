@@ -4,7 +4,7 @@ namespace Nosco\Ryft\Dtos\Payments;
 
 use Nosco\Ryft\Dto;
 
-readonly class RequiredActionIdentify extends Dto
+class RequiredActionIdentify extends Dto
 {
     public function __construct(
         public ?string $uniqueId = null,

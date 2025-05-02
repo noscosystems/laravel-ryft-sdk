@@ -6,7 +6,7 @@ use DateTimeInterface;
 use Illuminate\Support\Collection;
 use Nosco\Ryft\Dto;
 
-readonly class Customer extends Dto
+class Customer extends Dto
 {
     public function __construct(
         public ?string $id = null,

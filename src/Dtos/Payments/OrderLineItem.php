@@ -4,7 +4,7 @@ namespace Nosco\Ryft\Dtos\Payments;
 
 use Nosco\Ryft\Dto;
 
-readonly class OrderLineItem extends Dto
+class OrderLineItem extends Dto
 {
     public function __construct(
         public ?string $reference = null,

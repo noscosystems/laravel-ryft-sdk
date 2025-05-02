@@ -4,7 +4,7 @@ namespace Nosco\Ryft\Dtos\Payments;
 
 use Nosco\Ryft\Dto;
 
-readonly class ThreeDsRequestContinue extends Dto
+class ThreeDsRequestContinue extends Dto
 {
     public function __construct(
         public ?string $fingerprint = null,

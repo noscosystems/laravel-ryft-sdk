@@ -2,8 +2,11 @@
 
 namespace Nosco\Ryft\Requests\PlatformFees;
 
+use Illuminate\Support\Collection;
+use Nosco\Ryft\Dtos\PlatformFees\PlatformFeeRefund;
 use Nosco\Ryft\Request;
 use Saloon\Enums\Method;
+use Saloon\Http\Response;
 
 /**
  * platformFeeGetRefunds.
@@ -25,4 +28,9 @@ class PlatformFeeGetRefunds extends Request
     public function __construct(
         protected string $platformFeeId,
     ) {}
+
+    public function createDtoFromResponse(Response $response): Collection
+    {
+        return PlatformFeeRefund::fromPaginatedResponse($response);
+    }
 }

@@ -3,6 +3,7 @@
 namespace Nosco\Ryft\Requests\Subscriptions;
 
 use Nosco\Ryft\Request;
+use Nosco\Ryft\Traits\Requests\Subscriptions\ReturnsSubscription;
 use Saloon\Enums\Method;
 
 /**
@@ -12,6 +13,8 @@ use Saloon\Enums\Method;
  */
 class SubscriptionGetById extends Request
 {
+    use ReturnsSubscription;
+
     protected Method $method = Method::GET;
 
     public function resolveEndpoint(): string

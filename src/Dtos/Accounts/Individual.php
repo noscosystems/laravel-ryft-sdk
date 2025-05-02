@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 use Nosco\Ryft\Dto;
 use Nosco\Ryft\Enums\Gender;
 
-readonly class Individual extends Dto
+class Individual extends Dto
 {
     /**
      * @param Collection<string>|null $nationalities

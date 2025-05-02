@@ -5,7 +5,7 @@ namespace Nosco\Ryft\Dtos\Payments;
 use Nosco\Ryft\Dto;
 use Stringable;
 
-readonly class Error extends Dto implements Stringable
+class Error extends Dto implements Stringable
 {
     public function __construct(
         public ?string $code = null,

@@ -2,9 +2,11 @@
 
 namespace Nosco\Ryft\Requests\AccountLinks;
 
+use Nosco\Ryft\Dtos\Accounts\AccountAuthorizationUrl;
 use Nosco\Ryft\Request;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
+use Saloon\Http\Response;
 use Saloon\Traits\Body\HasJsonBody;
 
 /**
@@ -24,5 +26,21 @@ class AccountLinksCreate extends Request implements HasBody
         return '/account-links';
     }
 
-    public function __construct() {}
+    public function __construct(
+        protected string $accountId,
+        protected string $redirectUrl,
+    ) {}
+
+    protected function defaultBody(): array
+    {
+        return [
+            'accountId' => $this->accountId,
+            'redirectUrl' => $this->redirectUrl,
+        ];
+    }
+
+    public function createDtoFromResponse(Response $response): AccountAuthorizationUrl
+    {
+        return AccountAuthorizationUrl::fromResponse($response);
+    }
 }

@@ -5,7 +5,7 @@ namespace Nosco\Ryft\Dtos\PlatformFees;
 use DateTimeInterface;
 use Nosco\Ryft\Dto;
 
-readonly class PlatformFee extends Dto
+class PlatformFee extends Dto
 {
     public function __construct(
         public ?string $id = null,

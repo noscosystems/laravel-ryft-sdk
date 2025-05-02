@@ -11,7 +11,7 @@ use Nosco\Ryft\Dtos\Payments\PaymentSettings;
 use Nosco\Ryft\Dtos\Payments\ShippingDetails;
 use Nosco\Ryft\Enums\Subscriptions\SubscriptionStatus;
 
-readonly class Subscription extends Dto
+class Subscription extends Dto
 {
     public function __construct(
         public ?string $id = null,

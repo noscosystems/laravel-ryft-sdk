@@ -2,7 +2,9 @@
 
 namespace Nosco\Ryft\Requests\Accounts;
 
+use Nosco\Ryft\Dtos\Accounts\Account;
 use Nosco\Ryft\Request;
+use Nosco\Ryft\Traits\Requests\Accounts\ReturnsAccount;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Traits\Body\HasJsonBody;
@@ -15,6 +17,7 @@ use Saloon\Traits\Body\HasJsonBody;
 class SubAccountCreate extends Request implements HasBody
 {
     use HasJsonBody;
+    use ReturnsAccount;
 
     protected Method $method = Method::POST;
 
@@ -23,5 +26,10 @@ class SubAccountCreate extends Request implements HasBody
         return '/accounts';
     }
 
-    public function __construct() {}
+    public function __construct(protected Account $account) {}
+
+    protected function defaultBody(): array
+    {
+        return $this->account->toArray();
+    }
 }

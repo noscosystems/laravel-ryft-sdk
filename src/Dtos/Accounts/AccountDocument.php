@@ -5,7 +5,7 @@ namespace Nosco\Ryft\Dtos\Accounts;
 use Nosco\Ryft\Dto;
 use Nosco\Ryft\Enums\Accounts\AccountDocumentType;
 
-readonly class AccountDocument extends Dto
+class AccountDocument extends Dto
 {
     public function __construct(
         public ?AccountDocumentType $type,

@@ -6,7 +6,7 @@ use Nosco\Ryft\Dto;
 use Nosco\Ryft\Dtos\PaymentMethods\Card;
 use Nosco\Ryft\Dtos\PaymentMethods\Wallet;
 
-readonly class PaymentSessionAttempt extends Dto
+class PaymentSessionAttempt extends Dto
 {
     public function __construct(
         public ?string $clientSecret = null,

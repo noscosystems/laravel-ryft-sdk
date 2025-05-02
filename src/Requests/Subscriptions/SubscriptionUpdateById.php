@@ -2,7 +2,9 @@
 
 namespace Nosco\Ryft\Requests\Subscriptions;
 
+use Nosco\Ryft\Dtos\Subscriptions\Subscription;
 use Nosco\Ryft\Request;
+use Nosco\Ryft\Traits\Requests\Subscriptions\ReturnsSubscription;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Traits\Body\HasJsonBody;
@@ -15,6 +17,7 @@ use Saloon\Traits\Body\HasJsonBody;
 class SubscriptionUpdateById extends Request implements HasBody
 {
     use HasJsonBody;
+    use ReturnsSubscription;
 
     protected Method $method = Method::PATCH;
 
@@ -28,5 +31,11 @@ class SubscriptionUpdateById extends Request implements HasBody
      */
     public function __construct(
         protected string $subscriptionId,
+        protected Subscription $subscription,
     ) {}
+
+    protected function defaultBody(): array
+    {
+        return $this->subscription->toArray();
+    }
 }

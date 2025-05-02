@@ -2,8 +2,11 @@
 
 namespace Nosco\Ryft\Requests\Subscriptions;
 
+use Illuminate\Support\Collection;
+use Nosco\Ryft\Dtos\Payments\PaymentSession;
 use Nosco\Ryft\Request;
 use Saloon\Enums\Method;
+use Saloon\Http\Response;
 
 /**
  * subscriptionsListPaymentSessions.
@@ -45,5 +48,10 @@ class SubscriptionsListPaymentSessions extends Request
             'limit' => $this->limit,
             'startsAfter' => $this->startsAfter,
         ]);
+    }
+
+    public function createDtoFromResponse(Response $response): Collection
+    {
+        return PaymentSession::fromPaginatedResponse($response);
     }
 }

@@ -8,7 +8,7 @@ use Nosco\Ryft\Dto;
 use Nosco\Ryft\Enums\Files\FileCategory;
 use Nosco\Ryft\Enums\Files\FileType;
 
-readonly class File extends Dto
+class File extends Dto
 {
     public function __construct(
         public ?string $id = null,

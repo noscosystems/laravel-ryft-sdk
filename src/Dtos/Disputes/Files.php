@@ -5,7 +5,7 @@ namespace Nosco\Ryft\Dtos\Disputes;
 use Nosco\Ryft\Dto;
 use Nosco\Ryft\Dtos\Files\File;
 
-readonly class Files extends Dto
+class Files extends Dto
 {
     public function __construct(
         public ?File $proofOfDelivery = null,

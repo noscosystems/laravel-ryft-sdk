@@ -2,7 +2,9 @@
 
 namespace Nosco\Ryft\Requests\Customers;
 
+use Nosco\Ryft\Dtos\Customers\Customer;
 use Nosco\Ryft\Request;
+use Nosco\Ryft\Traits\Requests\Customers\ReturnsCustomer;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Traits\Body\HasJsonBody;
@@ -16,6 +18,7 @@ use Saloon\Traits\Body\HasJsonBody;
 class CustomerCreate extends Request implements HasBody
 {
     use HasJsonBody;
+    use ReturnsCustomer;
 
     protected Method $method = Method::POST;
 
@@ -24,5 +27,10 @@ class CustomerCreate extends Request implements HasBody
         return '/customers';
     }
 
-    public function __construct() {}
+    public function __construct(protected Customer $customer) {}
+
+    protected function defaultBody(): array
+    {
+        return $this->customer->toArray();
+    }
 }

@@ -6,7 +6,7 @@ use DateTimeInterface;
 use Nosco\Ryft\Dto;
 use Nosco\Ryft\Enums\PlatformFees\PlatformFeeRefundStatus;
 
-readonly class PlatformFeeRefund extends Dto
+class PlatformFeeRefund extends Dto
 {
     public function __construct(
         public ?string $id = null,

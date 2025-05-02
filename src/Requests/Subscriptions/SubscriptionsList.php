@@ -2,8 +2,11 @@
 
 namespace Nosco\Ryft\Requests\Subscriptions;
 
+use Illuminate\Support\Collection;
+use Nosco\Ryft\Dtos\Subscriptions\Subscription;
 use Nosco\Ryft\Request;
 use Saloon\Enums\Method;
+use Saloon\Http\Response;
 
 /**
  * subscriptionsList.
@@ -43,5 +46,9 @@ class SubscriptionsList extends Request
             'limit' => $this->limit,
             'startsAfter' => $this->startsAfter,
         ]);
+    }
+    public function createDtoFromResponse(Response $response): Collection
+    {
+        return Subscription::fromPaginatedResponse($response);
     }
 }

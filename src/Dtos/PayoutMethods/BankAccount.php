@@ -7,7 +7,7 @@ use Nosco\Ryft\Dtos\Accounts\AccountAddress;
 use Nosco\Ryft\Enums\PayoutMethods\BankAccountNumberType;
 use Nosco\Ryft\Enums\PayoutMethods\BankIdType;
 
-readonly class BankAccount extends Dto
+class BankAccount extends Dto
 {
     public function __construct(
         public ?BankIdType $bankIdType = null,

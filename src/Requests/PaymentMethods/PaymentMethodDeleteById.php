@@ -3,6 +3,7 @@
 namespace Nosco\Ryft\Requests\PaymentMethods;
 
 use Nosco\Ryft\Request;
+use Nosco\Ryft\Traits\Requests\PaymentMethods\ReturnsPaymentMethod;
 use Saloon\Enums\Method;
 
 /**
@@ -14,6 +15,8 @@ use Saloon\Enums\Method;
  */
 class PaymentMethodDeleteById extends Request
 {
+    use ReturnsPaymentMethod;
+
     protected Method $method = Method::DELETE;
 
     public function resolveEndpoint(): string

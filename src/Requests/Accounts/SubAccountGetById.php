@@ -2,7 +2,9 @@
 
 namespace Nosco\Ryft\Requests\Accounts;
 
+use Nosco\Ryft\Dtos\Accounts\Account;
 use Nosco\Ryft\Request;
+use Nosco\Ryft\Traits\Requests\Accounts\ReturnsAccount;
 use Saloon\Enums\Method;
 
 /**
@@ -12,6 +14,8 @@ use Saloon\Enums\Method;
  */
 class SubAccountGetById extends Request
 {
+    use ReturnsAccount;
+
     protected Method $method = Method::GET;
 
     public function resolveEndpoint(): string

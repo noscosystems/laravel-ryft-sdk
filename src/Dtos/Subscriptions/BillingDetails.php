@@ -5,7 +5,7 @@ namespace Nosco\Ryft\Dtos\Subscriptions;
 use DateTimeInterface;
 use Nosco\Ryft\Dto;
 
-readonly class BillingDetails extends Dto
+class BillingDetails extends Dto
 {
     public function __construct(
         public ?int $totalCycles = null,

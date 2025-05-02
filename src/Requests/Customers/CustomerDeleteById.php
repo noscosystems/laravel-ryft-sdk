@@ -2,7 +2,9 @@
 
 namespace Nosco\Ryft\Requests\Customers;
 
+use Nosco\Ryft\Dtos\Customers\Customer;
 use Nosco\Ryft\Request;
+use Nosco\Ryft\Traits\Requests\Customers\ReturnsCustomer;
 use Saloon\Enums\Method;
 
 /**
@@ -12,6 +14,8 @@ use Saloon\Enums\Method;
  */
 class CustomerDeleteById extends Request
 {
+    use ReturnsCustomer;
+
     protected Method $method = Method::DELETE;
 
     public function resolveEndpoint(): string

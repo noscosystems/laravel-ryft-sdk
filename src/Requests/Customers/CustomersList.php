@@ -2,8 +2,10 @@
 
 namespace Nosco\Ryft\Requests\Customers;
 
+use Nosco\Ryft\Dtos\Customers\Customer;
 use Nosco\Ryft\Request;
 use Saloon\Enums\Method;
+use Saloon\Http\Response;
 
 /**
  * customersList.
@@ -46,5 +48,10 @@ class CustomersList extends Request
             'limit' => $this->limit,
             'startsAfter' => $this->startsAfter,
         ]);
+    }
+
+    public function createDtoFromResponse(Response $response): mixed
+    {
+        return Customer::fromPaginatedResponse($response);
     }
 }

@@ -2,8 +2,11 @@
 
 namespace Nosco\Ryft\Requests\Transfers;
 
+use Illuminate\Support\Collection;
+use Nosco\Ryft\Dtos\Transfers\Transfer;
 use Nosco\Ryft\Request;
 use Saloon\Enums\Method;
+use Saloon\Http\Response;
 
 /**
  * transfersList.
@@ -33,5 +36,10 @@ class TransfersList extends Request
     public function defaultQuery(): array
     {
         return array_filter(['ascending' => $this->ascending, 'limit' => $this->limit, 'startsAfter' => $this->startsAfter]);
+    }
+
+    public function createDtoFromResponse(Response $response): Collection
+    {
+        return Transfer::fromPaginatedResponse($response);
     }
 }

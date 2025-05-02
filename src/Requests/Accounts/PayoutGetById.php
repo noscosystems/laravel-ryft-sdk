@@ -2,7 +2,9 @@
 
 namespace Nosco\Ryft\Requests\Accounts;
 
+use Nosco\Ryft\Dtos\Payouts\Payout;
 use Nosco\Ryft\Request;
+use Nosco\Ryft\Traits\Requests\Accounts\ReturnsPayout;
 use Saloon\Enums\Method;
 
 /**
@@ -12,6 +14,8 @@ use Saloon\Enums\Method;
  */
 class PayoutGetById extends Request
 {
+    use ReturnsPayout;
+
     protected Method $method = Method::GET;
 
     public function resolveEndpoint(): string

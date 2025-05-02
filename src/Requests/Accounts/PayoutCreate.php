@@ -2,7 +2,9 @@
 
 namespace Nosco\Ryft\Requests\Accounts;
 
+use Nosco\Ryft\Dtos\Payouts\Payout;
 use Nosco\Ryft\Request;
+use Nosco\Ryft\Traits\Requests\Accounts\ReturnsPayout;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Traits\Body\HasJsonBody;
@@ -26,6 +28,7 @@ use Saloon\Traits\Body\HasJsonBody;
 class PayoutCreate extends Request implements HasBody
 {
     use HasJsonBody;
+    use ReturnsPayout;
 
     protected Method $method = Method::POST;
 
@@ -39,5 +42,11 @@ class PayoutCreate extends Request implements HasBody
      */
     public function __construct(
         protected string $id,
+        protected Payout $payout,
     ) {}
+
+    protected function defaultBody(): array
+    {
+        return $this->payout->toArray();
+    }
 }

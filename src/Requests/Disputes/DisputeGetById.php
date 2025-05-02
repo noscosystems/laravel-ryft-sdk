@@ -2,7 +2,9 @@
 
 namespace Nosco\Ryft\Requests\Disputes;
 
+use Nosco\Ryft\Dtos\Disputes\Dispute;
 use Nosco\Ryft\Request;
+use Nosco\Ryft\Traits\Requests\Disputes\ReturnsDispute;
 use Saloon\Enums\Method;
 
 /**
@@ -12,6 +14,8 @@ use Saloon\Enums\Method;
  */
 class DisputeGetById extends Request
 {
+    use ReturnsDispute;
+
     protected Method $method = Method::GET;
 
     public function resolveEndpoint(): string

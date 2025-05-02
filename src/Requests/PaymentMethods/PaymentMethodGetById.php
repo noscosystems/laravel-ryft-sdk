@@ -3,6 +3,7 @@
 namespace Nosco\Ryft\Requests\PaymentMethods;
 
 use Nosco\Ryft\Request;
+use Nosco\Ryft\Traits\Requests\PaymentMethods\ReturnsPaymentMethod;
 use Saloon\Enums\Method;
 
 /**
@@ -12,6 +13,8 @@ use Saloon\Enums\Method;
  */
 class PaymentMethodGetById extends Request
 {
+    use ReturnsPaymentMethod;
+
     protected Method $method = Method::GET;
 
     public function resolveEndpoint(): string

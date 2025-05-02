@@ -4,7 +4,7 @@ namespace Nosco\Ryft\Dtos\Payments;
 
 use Nosco\Ryft\Dto;
 
-readonly class BrowserDetails extends Dto
+class BrowserDetails extends Dto
 {
     public function __construct(
         public ?string $acceptHeader = null,

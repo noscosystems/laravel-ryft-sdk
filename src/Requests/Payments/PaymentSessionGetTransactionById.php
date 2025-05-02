@@ -2,10 +2,9 @@
 
 namespace Nosco\Ryft\Requests\Payments;
 
-use Nosco\Ryft\Dtos\Payments\PaymentTransaction;
 use Nosco\Ryft\Request;
+use Nosco\Ryft\Traits\Requests\Payments\ReturnsPaymentTransaction;
 use Saloon\Enums\Method;
-use Saloon\Http\Response;
 
 /**
  * paymentSessionGetTransactionById.
@@ -14,6 +13,8 @@ use Saloon\Http\Response;
  */
 class PaymentSessionGetTransactionById extends Request
 {
+    use ReturnsPaymentTransaction;
+
     protected Method $method = Method::GET;
 
     public function resolveEndpoint(): string
@@ -29,9 +30,4 @@ class PaymentSessionGetTransactionById extends Request
         protected string $paymentSessionId,
         protected string $paymentTransactionId,
     ) {}
-
-    public function createDtoFromResponse(Response $response): ?PaymentTransaction
-    {
-        return PaymentTransaction::fromResponse($response);
-    }
 }

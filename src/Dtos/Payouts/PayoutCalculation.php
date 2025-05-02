@@ -4,7 +4,7 @@ namespace Nosco\Ryft\Dtos\Payouts;
 
 use Nosco\Ryft\Dto;
 
-readonly class PayoutCalculation extends Dto
+class PayoutCalculation extends Dto
 {
     public function __construct(
         public ?int $paymentsCapturedAmount = null,

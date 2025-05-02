@@ -5,7 +5,7 @@ namespace Nosco\Ryft\Dtos\Payments;
 use Illuminate\Support\Collection;
 use Nosco\Ryft\Dto;
 
-readonly class PaymentMethodOptions extends Dto
+class PaymentMethodOptions extends Dto
 {
     /**
      * @param Collection<string>|null $disabled

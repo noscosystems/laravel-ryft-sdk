@@ -2,7 +2,9 @@
 
 namespace Nosco\Ryft\Requests\Disputes;
 
+use Nosco\Ryft\Dtos\Disputes\Dispute;
 use Nosco\Ryft\Request;
+use Nosco\Ryft\Traits\Requests\Disputes\ReturnsDispute;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Traits\Body\HasJsonBody;
@@ -17,6 +19,7 @@ use Saloon\Traits\Body\HasJsonBody;
 class DisputeChallengeById extends Request implements HasBody
 {
     use HasJsonBody;
+    use ReturnsDispute;
 
     protected Method $method = Method::POST;
 

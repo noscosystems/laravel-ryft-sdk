@@ -2,11 +2,10 @@
 
 namespace Nosco\Ryft\Requests\Payments;
 
-use Nosco\Ryft\Dtos\Payments\PaymentTransaction;
 use Nosco\Ryft\Request;
+use Nosco\Ryft\Traits\Requests\Payments\ReturnsPaymentTransaction;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
-use Saloon\Http\Response;
 use Saloon\Traits\Body\HasJsonBody;
 
 /**
@@ -22,6 +21,7 @@ use Saloon\Traits\Body\HasJsonBody;
 class PaymentSessionVoidById extends Request implements HasBody
 {
     use HasJsonBody;
+    use ReturnsPaymentTransaction;
 
     protected Method $method = Method::POST;
 
@@ -36,9 +36,4 @@ class PaymentSessionVoidById extends Request implements HasBody
     public function __construct(
         protected string $paymentSessionId,
     ) {}
-
-    public function createDtoFromResponse(Response $response): ?PaymentTransaction
-    {
-        return PaymentTransaction::fromResponse($response);
-    }
 }

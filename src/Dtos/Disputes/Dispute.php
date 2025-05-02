@@ -11,7 +11,7 @@ use Nosco\Ryft\Enums\Disputes\DisputeCategory;
 use Nosco\Ryft\Enums\Disputes\DisputeStatus;
 use Nosco\Ryft\Enums\Disputes\EvidenceType;
 
-readonly class Dispute extends Dto
+class Dispute extends Dto
 {
     public function __construct(
         public ?string $id = null,

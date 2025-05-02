@@ -7,7 +7,7 @@ use Nosco\Ryft\Dtos\PaymentMethods\Card;
 use Nosco\Ryft\Dtos\PaymentMethods\PaymentMethodChecks;
 use Nosco\Ryft\Dtos\PaymentMethods\Wallet;
 
-readonly class PaymentMethod extends Dto
+class PaymentMethod extends Dto
 {
     public function __construct(
         public ?string $id = null,

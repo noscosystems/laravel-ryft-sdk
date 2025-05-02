@@ -8,7 +8,7 @@ use Nosco\Ryft\Enums\Accounts\AccountDocumentCategory;
 use Nosco\Ryft\Enums\Accounts\AccountDocumentType;
 use Nosco\Ryft\Support\Helpers;
 
-readonly class RequiredDocument extends Dto
+class RequiredDocument extends Dto
 {
     /**
      * @param Collection<AccountDocumentType>|null $accountDocumentTypes

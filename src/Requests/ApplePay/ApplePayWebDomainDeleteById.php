@@ -3,6 +3,7 @@
 namespace Nosco\Ryft\Requests\ApplePay;
 
 use Nosco\Ryft\Request;
+use Nosco\Ryft\Traits\Requests\ApplePay\ReturnsApplePayDomain;
 use Saloon\Enums\Method;
 
 /**
@@ -12,6 +13,8 @@ use Saloon\Enums\Method;
  */
 class ApplePayWebDomainDeleteById extends Request
 {
+    use ReturnsApplePayDomain;
+
     protected Method $method = Method::DELETE;
 
     public function resolveEndpoint(): string

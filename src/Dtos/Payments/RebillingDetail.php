@@ -6,7 +6,7 @@ use DateTimeInterface;
 use Nosco\Ryft\Dto;
 use Nosco\Ryft\Support\Helpers;
 
-readonly class RebillingDetail extends Dto
+class RebillingDetail extends Dto
 {
     public function __construct(
         public ?string $amountVariance = null,

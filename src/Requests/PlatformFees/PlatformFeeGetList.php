@@ -2,8 +2,11 @@
 
 namespace Nosco\Ryft\Requests\PlatformFees;
 
+use Illuminate\Support\Collection;
+use Nosco\Ryft\Dtos\PlatformFees\PlatformFee;
 use Nosco\Ryft\Request;
 use Saloon\Enums\Method;
+use Saloon\Http\Response;
 
 /**
  * platformFeeGetList.
@@ -30,6 +33,14 @@ class PlatformFeeGetList extends Request
 
     public function defaultQuery(): array
     {
-        return array_filter(['ascending' => $this->ascending, 'limit' => $this->limit]);
+        return array_filter([
+            'ascending' => $this->ascending,
+            'limit' => $this->limit,
+        ]);
+    }
+
+    public function createDtoFromResponse(Response $response): Collection
+    {
+        return PlatformFee::fromPaginatedResponse($response);
     }
 }

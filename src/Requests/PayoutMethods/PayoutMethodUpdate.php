@@ -2,7 +2,9 @@
 
 namespace Nosco\Ryft\Requests\PayoutMethods;
 
+use Nosco\Ryft\Dtos\PayoutMethods\PayoutMethod;
 use Nosco\Ryft\Request;
+use Nosco\Ryft\Traits\Requests\PayoutMethods\ReturnsPayoutMethod;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Traits\Body\HasJsonBody;
@@ -15,6 +17,7 @@ use Saloon\Traits\Body\HasJsonBody;
 class PayoutMethodUpdate extends Request implements HasBody
 {
     use HasJsonBody;
+    use ReturnsPayoutMethod;
 
     protected Method $method = Method::PATCH;
 
@@ -30,5 +33,11 @@ class PayoutMethodUpdate extends Request implements HasBody
     public function __construct(
         protected string $id,
         protected string $payoutMethodId,
+        protected PayoutMethod $payoutMethod,
     ) {}
+
+    protected function defaultBody(): array
+    {
+        return $this->payoutMethod->toArray();
+    }
 }

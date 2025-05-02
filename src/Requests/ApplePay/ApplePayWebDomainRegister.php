@@ -3,6 +3,7 @@
 namespace Nosco\Ryft\Requests\ApplePay;
 
 use Nosco\Ryft\Request;
+use Nosco\Ryft\Traits\Requests\ApplePay\ReturnsApplePayDomain;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Traits\Body\HasJsonBody;
@@ -25,6 +26,7 @@ use Saloon\Traits\Body\HasJsonBody;
 class ApplePayWebDomainRegister extends Request implements HasBody
 {
     use HasJsonBody;
+    use ReturnsApplePayDomain;
 
     protected Method $method = Method::POST;
 
@@ -33,5 +35,12 @@ class ApplePayWebDomainRegister extends Request implements HasBody
         return '/apple-pay/web-domains';
     }
 
-    public function __construct() {}
+    public function __construct(protected string $domainName) {}
+
+    protected function defaultBody(): array
+    {
+        return [
+            'domainName' => $this->domainName,
+        ];
+    }
 }

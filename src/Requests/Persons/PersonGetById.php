@@ -3,6 +3,7 @@
 namespace Nosco\Ryft\Requests\Persons;
 
 use Nosco\Ryft\Request;
+use Nosco\Ryft\Traits\Requests\Persons\ReturnsPerson;
 use Saloon\Enums\Method;
 
 /**
@@ -12,6 +13,8 @@ use Saloon\Enums\Method;
  */
 class PersonGetById extends Request
 {
+    use ReturnsPerson;
+
     protected Method $method = Method::GET;
 
     public function resolveEndpoint(): string

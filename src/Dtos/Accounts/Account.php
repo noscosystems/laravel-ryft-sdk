@@ -11,7 +11,7 @@ use Nosco\Ryft\Enums\Accounts\AccountStatus;
 use Nosco\Ryft\Enums\Accounts\AccountType;
 use Nosco\Ryft\Support\Helpers;
 
-readonly class Account extends Dto
+class Account extends Dto
 {
     public function __construct(
         public ?string $id = null,

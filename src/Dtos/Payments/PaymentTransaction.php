@@ -8,7 +8,7 @@ use Nosco\Ryft\Enums\Payments\CaptureType;
 use Nosco\Ryft\Enums\Payments\TransactionStatus;
 use Nosco\Ryft\Enums\Payments\TransactionType;
 
-readonly class PaymentTransaction extends Dto
+class PaymentTransaction extends Dto
 {
     public function __construct(
         public ?int $amount = null,

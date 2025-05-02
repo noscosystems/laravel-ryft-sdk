@@ -2,7 +2,10 @@
 
 namespace Nosco\Ryft\Requests\Disputes;
 
+use Nosco\Ryft\Dtos\Disputes\Dispute;
+use Nosco\Ryft\Dtos\Disputes\DisputeEvidence;
 use Nosco\Ryft\Request;
+use Nosco\Ryft\Traits\Requests\Disputes\ReturnsDispute;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Traits\Body\HasJsonBody;
@@ -18,6 +21,7 @@ use Saloon\Traits\Body\HasJsonBody;
 class DisputeAddEvidenceById extends Request implements HasBody
 {
     use HasJsonBody;
+    use ReturnsDispute;
 
     protected Method $method = Method::PATCH;
 
@@ -31,5 +35,11 @@ class DisputeAddEvidenceById extends Request implements HasBody
      */
     public function __construct(
         protected string $disputeId,
+        protected DisputeEvidence $evidence,
     ) {}
+
+    protected function defaultBody(): array
+    {
+        return $this->evidence->toArray();
+    }
 }

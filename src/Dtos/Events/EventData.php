@@ -8,7 +8,7 @@ use Nosco\Ryft\Dtos\Payments\CustomerDetails;
 use Nosco\Ryft\Dtos\Payments\PaymentMethod;
 use Nosco\Ryft\Dtos\Subscriptions\PausedPaymentDetails;
 
-readonly class EventData extends Dto
+class EventData extends Dto
 {
     public function __construct(
         public ?string $id = null,

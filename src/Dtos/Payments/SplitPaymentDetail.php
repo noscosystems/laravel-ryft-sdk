@@ -6,7 +6,7 @@ use Illuminate\Support\Collection;
 use Nosco\Ryft\Dto;
 use Nosco\Ryft\Support\Helpers;
 
-readonly class SplitPaymentDetail extends Dto
+class SplitPaymentDetail extends Dto
 {
     /**
      * @param Collection<SplitPaymentItem>|null $items

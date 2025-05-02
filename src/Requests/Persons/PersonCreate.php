@@ -3,6 +3,7 @@
 namespace Nosco\Ryft\Requests\Persons;
 
 use Nosco\Ryft\Request;
+use Nosco\Ryft\Traits\Requests\Persons\ReturnsPerson;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Traits\Body\HasJsonBody;
@@ -18,6 +19,7 @@ use Saloon\Traits\Body\HasJsonBody;
 class PersonCreate extends Request implements HasBody
 {
     use HasJsonBody;
+    use ReturnsPerson;
 
     protected Method $method = Method::POST;
 

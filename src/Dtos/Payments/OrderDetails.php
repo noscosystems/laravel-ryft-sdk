@@ -6,7 +6,7 @@ use Illuminate\Support\Collection;
 use Nosco\Ryft\Dto;
 use Nosco\Ryft\Support\Helpers;
 
-readonly class OrderDetails extends Dto
+class OrderDetails extends Dto
 {
     /**
      * @param Collection<OrderLineItem>|null $items

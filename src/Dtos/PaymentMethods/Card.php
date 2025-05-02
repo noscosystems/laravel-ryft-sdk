@@ -5,7 +5,7 @@ namespace Nosco\Ryft\Dtos\PaymentMethods;
 use Nosco\Ryft\Dto;
 use Nosco\Ryft\Enums\Payments\CardScheme;
 
-readonly class Card extends Dto
+class Card extends Dto
 {
     public function __construct(
         public ?string $cvc = null,

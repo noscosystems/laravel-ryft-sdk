@@ -3,7 +3,9 @@
 namespace Nosco\Ryft\Requests\PayoutMethods;
 
 use Nosco\Ryft\Request;
+use Nosco\Ryft\Traits\Requests\PayoutMethods\ReturnsPayoutMethod;
 use Saloon\Enums\Method;
+use Saloon\Http\Response;
 
 /**
  * payoutMethodsList.
@@ -13,6 +15,8 @@ use Saloon\Enums\Method;
  */
 class PayoutMethodsList extends Request
 {
+    use ReturnsPayoutMethod;
+
     protected Method $method = Method::GET;
 
     public function resolveEndpoint(): string
@@ -35,6 +39,10 @@ class PayoutMethodsList extends Request
 
     public function defaultQuery(): array
     {
-        return array_filter(['ascending' => $this->ascending, 'limit' => $this->limit, 'startsAfter' => $this->startsAfter]);
+        return array_filter([
+            'ascending' => $this->ascending,
+            'limit' => $this->limit,
+            'startsAfter' => $this->startsAfter,
+        ]);
     }
 }

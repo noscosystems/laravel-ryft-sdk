@@ -4,7 +4,7 @@ namespace Nosco\Ryft\Dtos\Disputes;
 
 use Nosco\Ryft\Dto;
 
-readonly class DisputeReason extends Dto
+class DisputeReason extends Dto
 {
     public function __construct(
         public ?string $code = null,

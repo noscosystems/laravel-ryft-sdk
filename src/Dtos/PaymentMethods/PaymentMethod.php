@@ -7,7 +7,7 @@ use Nosco\Ryft\Dto;
 use Nosco\Ryft\Dtos\Payments\CustomerAddress;
 use Nosco\Ryft\Enums\PaymentMethods\PaymentMethodType;
 
-readonly class PaymentMethod extends Dto
+class PaymentMethod extends Dto
 {
     public function __construct(
         public ?string $id = null,

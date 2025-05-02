@@ -2,8 +2,12 @@
 
 namespace Nosco\Ryft\Requests\Disputes;
 
+use Nosco\Ryft\Dtos\Disputes\Dispute;
+use Nosco\Ryft\Dtos\Disputes\DisputeEvidence;
 use Nosco\Ryft\Request;
+use Nosco\Ryft\Traits\Requests\Disputes\ReturnsDispute;
 use Saloon\Enums\Method;
+use Saloon\Traits\Body\HasJsonBody;
 
 /**
  * disputeRemoveEvidenceById.
@@ -13,6 +17,9 @@ use Saloon\Enums\Method;
  */
 class DisputeRemoveEvidenceById extends Request
 {
+    use HasJsonBody;
+    use ReturnsDispute;
+
     protected Method $method = Method::DELETE;
 
     public function resolveEndpoint(): string
@@ -25,5 +32,11 @@ class DisputeRemoveEvidenceById extends Request
      */
     public function __construct(
         protected string $disputeId,
+        protected DisputeEvidence $evidence,
     ) {}
+
+    protected function defaultBody(): array
+    {
+        return $this->evidence->toArray();
+    }
 }

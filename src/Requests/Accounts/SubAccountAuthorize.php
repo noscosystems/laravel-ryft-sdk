@@ -2,9 +2,11 @@
 
 namespace Nosco\Ryft\Requests\Accounts;
 
+use Nosco\Ryft\Dtos\Accounts\AccountAuthorizationUrl;
 use Nosco\Ryft\Request;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
+use Saloon\Http\Response;
 use Saloon\Traits\Body\HasJsonBody;
 
 /**
@@ -28,5 +30,13 @@ class SubAccountAuthorize extends Request implements HasBody
         return '/accounts/authorize';
     }
 
-    public function __construct() {}
+    public function __construct(
+        protected string $email,
+        protected string $redirectUrl,
+    ) {}
+
+    public function createDtoFromResponse(Response $response): ?AccountAuthorizationUrl
+    {
+        return AccountAuthorizationUrl::fromResponse($response);
+    }
 }

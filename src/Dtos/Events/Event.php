@@ -8,7 +8,7 @@ use Nosco\Ryft\Dto;
 use Nosco\Ryft\Enums\EventType;
 use Nosco\Ryft\Support\Helpers;
 
-readonly class Event extends Dto
+class Event extends Dto
 {
     /**
      * @param Collection<EventEndpoint>|null $endpoints

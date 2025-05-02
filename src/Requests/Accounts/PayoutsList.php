@@ -2,6 +2,7 @@
 
 namespace Nosco\Ryft\Requests\Accounts;
 
+use Nosco\Ryft\Dtos\Payouts\Payout;
 use Nosco\Ryft\Request;
 use Saloon\Enums\Method;
 
@@ -50,5 +51,10 @@ class PayoutsList extends Request
             'startTimestamp' => $this->startTimestamp,
             'endTimestamp' => $this->endTimestamp,
         ]);
+    }
+
+    public function createDtoFromResponse(Response $response): mixed
+    {
+        return Payout::fromPaginatedResponse($response);
     }
 }

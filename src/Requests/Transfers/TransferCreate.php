@@ -2,7 +2,9 @@
 
 namespace Nosco\Ryft\Requests\Transfers;
 
+use Nosco\Ryft\Dtos\Transfers\Transfer;
 use Nosco\Ryft\Request;
+use Nosco\Ryft\Traits\Requests\Transfers\ReturnsTransfer;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Traits\Body\HasJsonBody;
@@ -15,6 +17,7 @@ use Saloon\Traits\Body\HasJsonBody;
 class TransferCreate extends Request implements HasBody
 {
     use HasJsonBody;
+    use ReturnsTransfer;
 
     protected Method $method = Method::POST;
 
@@ -23,5 +26,10 @@ class TransferCreate extends Request implements HasBody
         return '/transfers';
     }
 
-    public function __construct() {}
+    public function __construct(protected Transfer $transfer) {}
+
+    protected function defaultBody(): array
+    {
+        return $this->transfer->toArray();
+    }
 }

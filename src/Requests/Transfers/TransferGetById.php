@@ -3,6 +3,7 @@
 namespace Nosco\Ryft\Requests\Transfers;
 
 use Nosco\Ryft\Request;
+use Nosco\Ryft\Traits\Requests\Transfers\ReturnsTransfer;
 use Saloon\Enums\Method;
 
 /**
@@ -12,6 +13,8 @@ use Saloon\Enums\Method;
  */
 class TransferGetById extends Request
 {
+    use ReturnsTransfer;
+
     protected Method $method = Method::GET;
 
     public function resolveEndpoint(): string

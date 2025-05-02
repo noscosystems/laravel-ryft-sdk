@@ -10,7 +10,7 @@ use Nosco\Ryft\Dtos\Accounts\AccountDocument;
 use Nosco\Ryft\Enums\Gender;
 use Nosco\Ryft\Support\Helpers;
 
-readonly class Person extends Dto
+class Person extends Dto
 {
     /**
      * @param Collection<string>|null          $nationalities

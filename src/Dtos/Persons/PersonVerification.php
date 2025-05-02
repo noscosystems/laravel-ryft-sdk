@@ -10,7 +10,7 @@ use Nosco\Ryft\Dtos\Accounts\VerificationError;
 use Nosco\Ryft\Enums\Accounts\VerificationStatus;
 use Nosco\Ryft\Support\Helpers;
 
-readonly class PersonVerification extends Dto
+class PersonVerification extends Dto
 {
     /**
      * @param Collection<RequiredField>|null     $requiredFields

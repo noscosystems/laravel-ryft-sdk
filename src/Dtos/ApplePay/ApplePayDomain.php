@@ -5,7 +5,7 @@ namespace Nosco\Ryft\Dtos\ApplePay;
 use DateTimeInterface;
 use Nosco\Ryft\Dto;
 
-readonly class ApplePayDomain extends Dto
+class ApplePayDomain extends Dto
 {
     public function __construct(
         public ?string $id = null,

@@ -3,6 +3,7 @@
 namespace Nosco\Ryft\Requests\PayoutMethods;
 
 use Nosco\Ryft\Request;
+use Nosco\Ryft\Traits\Requests\PayoutMethods\ReturnsPayoutMethod;
 use Saloon\Enums\Method;
 
 /**
@@ -12,6 +13,8 @@ use Saloon\Enums\Method;
  */
 class PayoutMethodDelete extends Request
 {
+    use ReturnsPayoutMethod;
+
     protected Method $method = Method::DELETE;
 
     public function resolveEndpoint(): string

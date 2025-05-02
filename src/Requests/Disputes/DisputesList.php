@@ -2,8 +2,10 @@
 
 namespace Nosco\Ryft\Requests\Disputes;
 
+use Nosco\Ryft\Dtos\Disputes\Dispute;
 use Nosco\Ryft\Request;
 use Saloon\Enums\Method;
+use Saloon\Http\Response;
 
 /**
  * disputesList.
@@ -43,5 +45,10 @@ class DisputesList extends Request
             'limit' => $this->limit,
             'startsAfter' => $this->startsAfter,
         ]);
+    }
+
+    public function createDtoFromResponse(Response $response): mixed
+    {
+        return Dispute::fromPaginatedResponse($response);
     }
 }

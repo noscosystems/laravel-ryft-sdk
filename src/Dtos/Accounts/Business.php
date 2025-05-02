@@ -7,7 +7,7 @@ use Illuminate\Support\Collection;
 use Nosco\Ryft\Dto;
 use Nosco\Ryft\Enums\Accounts\BusinessType;
 
-readonly class Business extends Dto
+class Business extends Dto
 {
     /**
      * @param Collection<string>|null $tradingCountries

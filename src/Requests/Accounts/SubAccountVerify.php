@@ -3,6 +3,7 @@
 namespace Nosco\Ryft\Requests\Accounts;
 
 use Nosco\Ryft\Request;
+use Nosco\Ryft\Traits\Requests\Accounts\ReturnsAccount;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Traits\Body\HasJsonBody;
@@ -18,6 +19,7 @@ use Saloon\Traits\Body\HasJsonBody;
 class SubAccountVerify extends Request implements HasBody
 {
     use HasJsonBody;
+    use ReturnsAccount;
 
     protected Method $method = Method::POST;
 

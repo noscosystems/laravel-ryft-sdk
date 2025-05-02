@@ -4,7 +4,7 @@ namespace Nosco\Ryft\Dtos\Subscriptions;
 
 use Nosco\Ryft\Dto;
 
-readonly class RecurringInterval extends Dto
+class RecurringInterval extends Dto
 {
     public function __construct(
         public ?string $unit = null,

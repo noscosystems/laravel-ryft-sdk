@@ -2,8 +2,10 @@
 
 namespace Nosco\Ryft\Requests\Files;
 
+use Nosco\Ryft\Dtos\Files\File;
 use Nosco\Ryft\Request;
 use Saloon\Enums\Method;
+use Saloon\Http\Response;
 
 /**
  * filesList.
@@ -40,5 +42,10 @@ class FilesList extends Request
             'limit' => $this->limit,
             'startsAfter' => $this->startsAfter,
         ]);
+    }
+
+    public function createDtoFromResponse(Response $response): mixed
+    {
+        return File::fromPaginatedResponse($response);
     }
 }

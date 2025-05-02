@@ -12,7 +12,7 @@ use Nosco\Ryft\Enums\Payments\PaymentError;
 use Nosco\Ryft\Enums\Payments\PaymentStatus;
 use Nosco\Ryft\Enums\Payments\PaymentType;
 
-readonly class PaymentSession extends Dto
+class PaymentSession extends Dto
 {
     /**
      * @param Collection<string>|null $enabledPaymentMethods

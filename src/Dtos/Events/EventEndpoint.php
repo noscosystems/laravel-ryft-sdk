@@ -4,7 +4,7 @@ namespace Nosco\Ryft\Dtos\Events;
 
 use Nosco\Ryft\Dto;
 
-readonly class EventEndpoint extends Dto
+class EventEndpoint extends Dto
 {
     public function __construct(
         public ?string $webhookId = null,

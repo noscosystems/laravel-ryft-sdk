@@ -8,7 +8,7 @@ use Nosco\Ryft\Dto;
 use Nosco\Ryft\Enums\Accounts\CapabilityStatus;
 use Nosco\Ryft\Support\Helpers;
 
-readonly class AccountCapability extends Dto
+class AccountCapability extends Dto
 {
     /**
      * @param Collection<RequiredField>|null $requiredFields

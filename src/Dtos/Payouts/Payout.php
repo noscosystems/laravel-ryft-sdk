@@ -10,7 +10,7 @@ use Nosco\Ryft\Enums\Payouts\AccountPayoutStatus;
 use Nosco\Ryft\Enums\Payouts\PayoutScheme;
 use Nosco\Ryft\Enums\Payouts\ScheduleType;
 
-readonly class Payout extends Dto
+class Payout extends Dto
 {
     public function __construct(
         public ?string $id = null,

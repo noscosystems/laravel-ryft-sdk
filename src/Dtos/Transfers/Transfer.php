@@ -9,7 +9,7 @@ use Nosco\Ryft\Dtos\Accounts\Account;
 use Nosco\Ryft\Enums\Transfers\TransferStatus;
 use Nosco\Ryft\Support\Helpers;
 
-readonly class Transfer extends Dto
+class Transfer extends Dto
 {
     /**
      * @param Collection<TransferError>|null $errors

@@ -2,7 +2,9 @@
 
 namespace Nosco\Ryft\Requests\Customers;
 
+use Nosco\Ryft\Dtos\Customers\Customer;
 use Nosco\Ryft\Request;
+use Nosco\Ryft\Traits\Requests\Customers\ReturnsCustomer;
 use Saloon\Contracts\Body\HasBody;
 use Saloon\Enums\Method;
 use Saloon\Traits\Body\HasJsonBody;
@@ -15,6 +17,7 @@ use Saloon\Traits\Body\HasJsonBody;
 class CustomerUpdateById extends Request implements HasBody
 {
     use HasJsonBody;
+    use ReturnsCustomer;
 
     protected Method $method = Method::PATCH;
 
@@ -28,5 +31,11 @@ class CustomerUpdateById extends Request implements HasBody
      */
     public function __construct(
         protected string $customerId,
+        protected Customer $customer,
     ) {}
+
+    protected function defaultBody(): array
+    {
+        return $this->customer->toArray();
+    }
 }

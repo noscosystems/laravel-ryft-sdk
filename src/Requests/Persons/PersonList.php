@@ -2,8 +2,12 @@
 
 namespace Nosco\Ryft\Requests\Persons;
 
+use Illuminate\Support\Collection;
+use Nosco\Ryft\Dtos\Accounts\Account;
+use Nosco\Ryft\Dtos\Persons\Person;
 use Nosco\Ryft\Request;
 use Saloon\Enums\Method;
+use Saloon\Http\Response;
 
 /**
  * personList.
@@ -34,6 +38,15 @@ class PersonList extends Request
 
     public function defaultQuery(): array
     {
-        return array_filter(['ascending' => $this->ascending, 'limit' => $this->limit, 'startsAfter' => $this->startsAfter]);
+        return array_filter([
+            'ascending' => $this->ascending,
+            'limit' => $this->limit,
+            'startsAfter' => $this->startsAfter,
+        ]);
+    }
+
+    public function createDtoFromResponse(Response $response): Collection
+    {
+        return Person::fromPaginatedResponse($response);
     }
 }

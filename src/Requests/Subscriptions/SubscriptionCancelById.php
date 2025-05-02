@@ -3,6 +3,7 @@
 namespace Nosco\Ryft\Requests\Subscriptions;
 
 use Nosco\Ryft\Request;
+use Nosco\Ryft\Traits\Requests\Subscriptions\ReturnsSubscription;
 use Saloon\Enums\Method;
 
 /**
@@ -13,6 +14,8 @@ use Saloon\Enums\Method;
  */
 class SubscriptionCancelById extends Request
 {
+    use ReturnsSubscription;
+
     protected Method $method = Method::DELETE;
 
     public function resolveEndpoint(): string

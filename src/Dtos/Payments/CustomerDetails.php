@@ -4,7 +4,7 @@ namespace Nosco\Ryft\Dtos\Payments;
 
 use Nosco\Ryft\Dto;
 
-readonly class CustomerDetails extends Dto
+class CustomerDetails extends Dto
 {
     public function __construct(
         public ?string $id = null,

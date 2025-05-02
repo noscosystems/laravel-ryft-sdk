@@ -4,7 +4,7 @@ namespace Nosco\Ryft\Dtos\Disputes;
 
 use Nosco\Ryft\Dto;
 
-readonly class TextEntries extends Dto
+class TextEntries extends Dto
 {
     public function __construct(
         public ?string $billingAddress = null,

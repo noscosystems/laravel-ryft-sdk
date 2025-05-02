@@ -2,6 +2,7 @@
 
 namespace Nosco\Ryft\Requests\ApplePay;
 
+use Nosco\Ryft\Dtos\ApplePay\ApplePayDomain;
 use Nosco\Ryft\Request;
 use Saloon\Enums\Method;
 
@@ -32,6 +33,15 @@ class ApplePayWebDomainsList extends Request
 
     public function defaultQuery(): array
     {
-        return array_filter(['ascending' => $this->ascending, 'limit' => $this->limit, 'startsAfter' => $this->startsAfter]);
+        return array_filter([
+            'ascending' => $this->ascending,
+            'limit' => $this->limit,
+            'startsAfter' => $this->startsAfter,
+        ]);
+    }
+
+    public function createDtoFromResponse($response): mixed
+    {
+        return ApplePayDomain::fromPaginatedResponse($response);
     }
 }

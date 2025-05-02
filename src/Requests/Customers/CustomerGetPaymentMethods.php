@@ -2,8 +2,10 @@
 
 namespace Nosco\Ryft\Requests\Customers;
 
+use Nosco\Ryft\Dtos\Payments\PaymentMethod;
 use Nosco\Ryft\Request;
 use Saloon\Enums\Method;
+use Saloon\Http\Response;
 
 /**
  * customerGetPaymentMethods.
@@ -25,4 +27,9 @@ class CustomerGetPaymentMethods extends Request
     public function __construct(
         protected string $customerId,
     ) {}
+
+    public function createDtoFromResponse(Response $response): mixed
+    {
+        return PaymentMethod::fromPaginatedResponse($response);
+    }
 }

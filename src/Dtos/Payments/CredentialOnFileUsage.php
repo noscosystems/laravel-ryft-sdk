@@ -6,7 +6,7 @@ use Nosco\Ryft\Dto;
 use Nosco\Ryft\Enums\Payments\Initiator;
 use Nosco\Ryft\Enums\Payments\Sequence;
 
-readonly class CredentialOnFileUsage extends Dto
+class CredentialOnFileUsage extends Dto
 {
     public function __construct(
         public ?Initiator $initiator = null,

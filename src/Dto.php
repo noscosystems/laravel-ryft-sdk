@@ -7,14 +7,17 @@ use DateTimeInterface;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Collection;
+use JsonException;
 use JsonSerializable;
 use Nosco\Ryft\Support\Cast;
 use Nosco\Ryft\Support\Helpers;
 use ReflectionClass;
 use Saloon\Http\Response;
 
-abstract readonly class Dto implements Arrayable, Jsonable, JsonSerializable
+abstract class Dto implements Arrayable, Jsonable, JsonSerializable
 {
+    private ?Response $response = null;
+
     public static function fromArray(Collection|array|null $data): ?static
     {
         if (!$data = Helpers::wrap($data)) {
@@ -42,17 +45,22 @@ abstract readonly class Dto implements Arrayable, Jsonable, JsonSerializable
             ->filter();
     }
 
+    /**
+     * @throws JsonException
+     */
     public static function fromResponse(Response $response): ?static
     {
         if ($response->failed()) {
             return null;
         }
 
-        return static::fromArray($response->json());
+        return static::fromArray($response->json())->setResponse($response);
     }
 
     /**
      * @return Collection<static>
+     *
+     * @throws JsonException
      */
     public static function fromPaginatedResponse(Response $response, string $itemsKey = 'items'): Collection
     {
@@ -107,6 +115,21 @@ abstract readonly class Dto implements Arrayable, Jsonable, JsonSerializable
     public function dump(): static
     {
         dump($this);
+
+        return $this;
+    }
+
+    /**
+     * Get the response instance that was used to create this DTO.
+     */
+    public function response(): ?Response
+    {
+        return $this->response;
+    }
+
+    protected function setResponse(Response $response): static
+    {
+        $this->response = $response;
 
         return $this;
     }

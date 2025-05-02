@@ -2,8 +2,10 @@
 
 namespace Nosco\Ryft\Requests\PlatformFees;
 
+use Nosco\Ryft\Dtos\PlatformFees\PlatformFee;
 use Nosco\Ryft\Request;
 use Saloon\Enums\Method;
+use Saloon\Http\Response;
 
 /**
  * platformFeeGetById.
@@ -25,4 +27,9 @@ class PlatformFeeGetById extends Request
     public function __construct(
         protected string $platformFeeId,
     ) {}
+
+    public function createDtoFromResponse(Response $response): ?PlatformFee
+    {
+        return PlatformFee::fromResponse($response);
+    }
 }
