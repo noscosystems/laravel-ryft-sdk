@@ -4,6 +4,8 @@ namespace Nosco\Ryft\Dtos\Payments;
 
 use Nosco\Ryft\Dto;
 use Nosco\Ryft\Dtos\PaymentMethods\Card;
+use Nosco\Ryft\Dtos\PaymentMethods\PaymentMethod;
+use Nosco\Ryft\Dtos\PaymentMethods\PaymentMethodOptions;
 use Nosco\Ryft\Dtos\PaymentMethods\Wallet;
 
 class PaymentSessionAttempt extends Dto

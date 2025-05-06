@@ -2,6 +2,8 @@
 
 namespace Nosco\Ryft\Resource;
 
+use Illuminate\Support\Collection;
+use Nosco\Ryft\Dtos\Persons\Person;
 use Nosco\Ryft\Requests\Persons\PersonCreate;
 use Nosco\Ryft\Requests\Persons\PersonDeleteById;
 use Nosco\Ryft\Requests\Persons\PersonGetById;
@@ -20,14 +22,25 @@ class Persons extends Resource
      * They are returned in sorted (by epoch) order (default is newest first).
      *
      * @param string      $id          the account id of one of your sub accounts
-     * @param bool|null   $ascending   Control the order (newest or oldest) in which the persons are returned. `false` will arrange the results with newest first whereas `true` shows oldest first.
-     * @param string|null $startsAfter A token to identify where to resume a subsequent paginated query. The value of the `paginationToken` field from that response should be supplied here, to retrieve the next page of results.
+     * @param bool|null   $ascending   Control the order (newest or oldest) in which the persons are returned.
+     *                                 `false` will arrange the results with newest first whereas `true` shows oldest first.
+     * @param string|null $startsAfter A token to identify where to resume a subsequent paginated query.
+     *                                 The value of the `paginationToken` field from that response should be supplied here,
+     *                                 to retrieve the next page of results.
+     *
+     * @return Collection<Person>
      *
      * @link https://api-reference.ryftpay.com/#tag/Persons/operation/personList Documentation
      */
-    public function list(string $id, ?bool $ascending = null, ?int $limit = null, ?string $startsAfter = null): Response
-    {
-        return $this->connector->send(new PersonList($id, $ascending, $limit, $startsAfter));
+    public function list(
+        string $id,
+        ?bool $ascending = null,
+        ?int $limit = null,
+        ?string $startsAfter = null
+    ): Collection {
+        return $this->connector
+            ->send(new PersonList($id, $ascending, $limit, $startsAfter))
+            ->dtoOrFail();
     }
 
     /**
@@ -46,9 +59,11 @@ class Persons extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Persons/operation/personCreate Documentation
      */
-    public function create(string $id): Response
+    public function create(string $id, Person $person): Person
     {
-        return $this->connector->send(new PersonCreate($id));
+        return $this->connector
+            ->send(new PersonCreate($id, $person))
+            ->dtoOrFail();
     }
 
     /**
@@ -61,9 +76,11 @@ class Persons extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Persons/operation/personGetById Documentation
      */
-    public function get(string $id, string $personId): Response
+    public function get(string $id, string $personId): Person
     {
-        return $this->connector->send(new PersonGetById($id, $personId));
+        return $this->connector
+            ->send(new PersonGetById($id, $personId))
+            ->dtoOrFail();
     }
 
     /**
@@ -76,9 +93,11 @@ class Persons extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Persons/operation/personDeleteById Documentation
      */
-    public function delete(string $id, string $personId): Response
+    public function delete(string $id, string $personId): Person
     {
-        return $this->connector->send(new PersonDeleteById($id, $personId));
+        return $this->connector
+            ->send(new PersonDeleteById($id, $personId))
+            ->dtoOrFail();
     }
 
     /**
@@ -94,8 +113,10 @@ class Persons extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Persons/operation/personUpdateById Documentation
      */
-    public function update(string $id, string $personId): Response
+    public function update(string $id, string $personId, Person $person): Person
     {
-        return $this->connector->send(new PersonUpdateById($id, $personId));
+        return $this->connector
+            ->send(new PersonUpdateById($id, $personId, $person))
+            ->dtoOrFail();
     }
 }

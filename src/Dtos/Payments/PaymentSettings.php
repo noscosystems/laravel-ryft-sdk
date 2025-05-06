@@ -3,6 +3,7 @@
 namespace Nosco\Ryft\Dtos\Payments;
 
 use Nosco\Ryft\Dto;
+use Nosco\Ryft\Dtos\PaymentMethods\PaymentMethodOptions;
 
 class PaymentSettings extends Dto
 {

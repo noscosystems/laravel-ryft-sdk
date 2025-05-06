@@ -2,6 +2,7 @@
 
 namespace Nosco\Ryft\Resource;
 
+use Illuminate\Support\Collection;
 use Nosco\Ryft\Dtos\Webhooks\Webhook;
 use Nosco\Ryft\Requests\Webhooks\WebhookCreate;
 use Nosco\Ryft\Requests\Webhooks\WebhookDeleteById;
@@ -20,11 +21,15 @@ class Webhooks extends Resource
      *
      * They are returned in sorted (by epoch) order (default is newest first).
      *
+     * @return Collection<Webhook>
+     *
      * @link https://api-reference.ryftpay.com/#tag/Webhooks/operation/webhooksList Documentation
      */
-    public function list(): Response
+    public function list(): Collection
     {
-        return $this->connector->send(new WebhooksList);
+        return $this->connector
+            ->send(new WebhooksList)
+            ->dtoOrFail();
     }
 
     /**
@@ -34,9 +39,11 @@ class Webhooks extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Webhooks/operation/webhookCreate Documentation
      */
-    public function create(Webhook $webhookEndpoint): Response
+    public function create(Webhook $webhookEndpoint): Webhook
     {
-        return $this->connector->send(new WebhookCreate($webhookEndpoint));
+        return $this->connector
+            ->send(new WebhookCreate($webhookEndpoint))
+            ->dtoOrFail();
     }
 
     /**
@@ -48,9 +55,11 @@ class Webhooks extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Webhooks/operation/webhookGetById Documentation
      */
-    public function get(string $webhookId): Response
+    public function get(string $webhookId): Webhook
     {
-        return $this->connector->send(new WebhookGetById($webhookId));
+        return $this->connector
+            ->send(new WebhookGetById($webhookId))
+            ->dtoOrFail();
     }
 
     /**
@@ -62,9 +71,11 @@ class Webhooks extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Webhooks/operation/webhookDeleteById Documentation
      */
-    public function delete(string $webhookId): Response
+    public function delete(string $webhookId): Webhook
     {
-        return $this->connector->send(new WebhookDeleteById($webhookId));
+        return $this->connector
+            ->send(new WebhookDeleteById($webhookId))
+            ->dtoOrFail();
     }
 
     /**
@@ -76,8 +87,10 @@ class Webhooks extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Webhooks/operation/webhookUpdateById Documentation
      */
-    public function update(string $webhookId, Webhook $webhookEndpoint): Response
+    public function update(string $webhookId, Webhook $webhookEndpoint): Webhook
     {
-        return $this->connector->send(new WebhookUpdateById($webhookId, $webhookEndpoint));
+        return $this->connector
+            ->send(new WebhookUpdateById($webhookId, $webhookEndpoint))
+            ->dtoOrFail();
     }
 }

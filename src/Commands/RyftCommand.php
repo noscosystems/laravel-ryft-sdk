@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 
 class RyftCommand extends Command
 {
-    public $signature = 'laravel-ryft';
+    public $signature = 'ryft';
 
     public $description = 'My command';
 

@@ -4,8 +4,8 @@ namespace Nosco\Ryft\Dtos\Events;
 
 use Illuminate\Support\Collection;
 use Nosco\Ryft\Dto;
+use Nosco\Ryft\Dtos\PaymentMethods\PaymentMethod;
 use Nosco\Ryft\Dtos\Payments\CustomerDetails;
-use Nosco\Ryft\Dtos\Payments\PaymentMethod;
 use Nosco\Ryft\Dtos\Subscriptions\PausedPaymentDetails;
 
 class EventData extends Dto

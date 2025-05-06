@@ -34,4 +34,9 @@ class PaymentSessionUpdate extends Request implements HasBody
         protected string $paymentSessionId,
         protected PaymentSession $paymentSession,
     ) {}
+
+    protected function defaultBody(): array
+    {
+        return $this->paymentSession->toArray();
+    }
 }

@@ -2,7 +2,7 @@
 
 namespace Nosco\Ryft\Requests\Customers;
 
-use Nosco\Ryft\Dtos\Payments\PaymentMethod;
+use Nosco\Ryft\Dtos\PaymentMethods\PaymentMethod;
 use Nosco\Ryft\Request;
 use Saloon\Enums\Method;
 use Saloon\Http\Response;

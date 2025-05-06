@@ -2,12 +2,12 @@
 
 namespace Nosco\Ryft\Traits\Requests\ApplePay;
 
-use Nosco\Ryft\Dtos\ApplePay\ApplePayDomain;
+use Nosco\Ryft\Dtos\ApplePay\ApplePayWebDomain;
 
 trait ReturnsApplePayDomain
 {
-    public function createDtoFromResponse($response): ?ApplePayDomain
+    public function createDtoFromResponse($response): ?ApplePayWebDomain
     {
-        return ApplePayDomain::fromResponse($response);
+        return ApplePayWebDomain::fromResponse($response);
     }
 }

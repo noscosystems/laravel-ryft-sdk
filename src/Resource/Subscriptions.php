@@ -2,6 +2,10 @@
 
 namespace Nosco\Ryft\Resource;
 
+use Illuminate\Support\Collection;
+use Nosco\Ryft\Dtos\Payments\PaymentSession;
+use Nosco\Ryft\Dtos\Subscriptions\PausedPaymentDetails;
+use Nosco\Ryft\Dtos\Subscriptions\Subscription;
 use Nosco\Ryft\Requests\Subscriptions\SubscriptionCancelById;
 use Nosco\Ryft\Requests\Subscriptions\SubscriptionCreate;
 use Nosco\Ryft\Requests\Subscriptions\SubscriptionGetById;
@@ -20,11 +24,20 @@ class Subscriptions extends Resource
      *
      * Used to fetch a paginated list of subscriptions
      *
-     * @param int|null    $startTimestamp The start timestamp (inclusive), it must be before the endTimestamp. If not provided will default to midnight on the current date (UTC).
-     * @param int|null    $endTimestamp   The timestamp when to return payment sessions up to (inclusive), it must be after the startTimestamp. If not provided it will default to the current time (UTC).
-     * @param bool|null   $ascending      Control the order (newest or oldest) in which the subscriptions are returned. `false` will arrange the results with newest first, whereas `true` shows oldest first. The default is `false`.
-     * @param int|null    $limit          Control how many items are return in a given page The max limit we allow is `25`. The default is `10`.
-     * @param string|null $startsAfter    A token to identify where to resume a subsequent paginated query. The value of the `paginationToken` field from that response should be supplied here, to retrieve the next page of results for that timestamp range.
+     * @param int|null    $startTimestamp The start timestamp (inclusive), it must be before the endTimestamp.
+     *                                    If not provided will default to midnight on the current date (UTC).
+     * @param int|null    $endTimestamp   The timestamp when to return payment sessions up to (inclusive),
+     *                                    it must be after the startTimestamp. If not provided it will default to the current time (UTC).
+     * @param bool|null   $ascending      Control the order (newest or oldest) in which the subscriptions are returned.
+     *                                    `false` will arrange the results with newest first, whereas `true` shows oldest first.
+     *                                    The default is `false`.
+     * @param int|null    $limit          Control how many items are return in a given page The max limit we allow is `25`.
+     *                                    The default is `10`.
+     * @param string|null $startsAfter    A token to identify where to resume a subsequent paginated query.
+     *                                    The value of the `paginationToken` field from that response should be supplied here,
+     *                                    to retrieve the next page of results for that timestamp range.
+     *
+     * @return Collection<Subscription>
      *
      * @link https://api-reference.ryftpay.com/#tag/Subscriptions/operation/subscriptionsList Documentation
      */
@@ -34,8 +47,10 @@ class Subscriptions extends Resource
         ?bool $ascending = null,
         ?int $limit = null,
         ?string $startsAfter = null,
-    ): Response {
-        return $this->connector->send(new SubscriptionsList($startTimestamp, $endTimestamp, $ascending, $limit, $startsAfter));
+    ): Collection {
+        return $this->connector
+            ->send(new SubscriptionsList($startTimestamp, $endTimestamp, $ascending, $limit, $startsAfter))
+            ->dtoOrFail();
     }
 
     /**
@@ -45,9 +60,11 @@ class Subscriptions extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Subscriptions/operation/subscriptionCreate Documentation
      */
-    public function create(): Response
+    public function create(Subscription $subscription): Subscription
     {
-        return $this->connector->send(new SubscriptionCreate);
+        return $this->connector
+            ->send(new SubscriptionCreate($subscription))
+            ->dtoOrFail();
     }
 
     /**
@@ -59,9 +76,11 @@ class Subscriptions extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Subscriptions/operation/subscriptionGetById Documentation
      */
-    public function get(string $subscriptionId): Response
+    public function get(string $subscriptionId): Subscription
     {
-        return $this->connector->send(new SubscriptionGetById($subscriptionId));
+        return $this->connector
+            ->send(new SubscriptionGetById($subscriptionId))
+            ->dtoOrFail();
     }
 
     /**
@@ -73,9 +92,11 @@ class Subscriptions extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Subscriptions/operation/subscriptionUpdateById Documentation
      */
-    public function update(string $subscriptionId): Response
+    public function update(string $subscriptionId, Subscription $subscription): Subscription
     {
-        return $this->connector->send(new SubscriptionUpdateById($subscriptionId));
+        return $this->connector
+            ->send(new SubscriptionUpdateById($subscriptionId, $subscription))
+            ->dtoOrFail();
     }
 
     /**
@@ -94,9 +115,11 @@ class Subscriptions extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Subscriptions/operation/subscriptionPauseById Documentation
      */
-    public function pause(string $subscriptionId): Response
+    public function pause(string $subscriptionId, PausedPaymentDetails $pausedPaymentDetails): Subscription
     {
-        return $this->connector->send(new SubscriptionPauseById($subscriptionId));
+        return $this->connector
+            ->send(new SubscriptionPauseById($subscriptionId, $pausedPaymentDetails))
+            ->dtoOrFail();
     }
 
     /**
@@ -108,9 +131,11 @@ class Subscriptions extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Subscriptions/operation/subscriptionResumeById Documentation
      */
-    public function resume(string $subscriptionId): Response
+    public function resume(string $subscriptionId): Subscription
     {
-        return $this->connector->send(new SubscriptionResumeById($subscriptionId));
+        return $this->connector
+            ->send(new SubscriptionResumeById($subscriptionId))
+            ->dtoOrFail();
     }
 
     /**
@@ -126,9 +151,11 @@ class Subscriptions extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Subscriptions/operation/subscriptionCancelById Documentation
      */
-    public function cancel(string $subscriptionId): Response
+    public function cancel(string $subscriptionId): Subscription
     {
-        return $this->connector->send(new SubscriptionCancelById($subscriptionId));
+        return $this->connector
+            ->send(new SubscriptionCancelById($subscriptionId))
+            ->dtoOrFail();
     }
 
     /**
@@ -137,11 +164,21 @@ class Subscriptions extends Resource
      * Used to fetch a paginated list of the payment sessions making up the subscription
      *
      * @param string      $subscriptionId Subscription to retrieve
-     * @param int|null    $startTimestamp The timestamp when to return payment sessions from (inclusive), it must be before the endTimestamp. If not provided it will default to 0
-     * @param int|null    $endTimestamp   The timestamp when to return payment sessions up to (inclusive), it must be after the startTimestamp. If not provided it will default to the current time (UTC).
-     * @param bool|null   $ascending      Control the order (newest or oldest) in which the payment sessions are returned. `false` will arrange the results with newest first, whereas `true` shows oldest first. The default is `false`.
-     * @param int|null    $limit          Control how many items are return in a given page The max limit we allow is `25`. The default is `10`.
-     * @param string|null $startsAfter    A token to identify where to resume a subsequent paginated query. The value of the `paginationToken` field from that response should be supplied here, to retrieve the next page of results.
+     * @param int|null    $startTimestamp The timestamp when to return payment sessions from (inclusive),
+     *                                    it must be before the endTimestamp. If not provided it will default to 0
+     * @param int|null    $endTimestamp   The timestamp when to return payment sessions up to (inclusive),
+     *                                    it must be after the startTimestamp. If not provided it will default
+     *                                    to the current time (UTC).
+     * @param bool|null   $ascending      Control the order (newest or oldest) in which the payment sessions are returned.
+     *                                    `false` will arrange the results with newest first,
+     *                                    whereas `true` shows oldest first. The default is `false`.
+     * @param int|null    $limit          Control how many items are return in a given page
+     *                                    The max limit we allow is `25`. The default is `10`.
+     * @param string|null $startsAfter    A token to identify where to resume a subsequent paginated query.
+     *                                    The value of the `paginationToken` field from that response should be supplied here,
+     *                                    to retrieve the next page of results.
+     *
+     * @return Collection<PaymentSession>
      *
      * @link https://api-reference.ryftpay.com/#tag/Subscriptions/operation/subscriptionsListPaymentSessions Documentation
      */
@@ -152,7 +189,16 @@ class Subscriptions extends Resource
         ?bool $ascending = null,
         ?int $limit = null,
         ?string $startsAfter = null,
-    ): Response {
-        return $this->connector->send(new SubscriptionsListPaymentSessions($subscriptionId, $startTimestamp, $endTimestamp, $ascending, $limit, $startsAfter));
+    ): Collection {
+        return $this->connector
+            ->send(new SubscriptionsListPaymentSessions(
+                $subscriptionId,
+                $startTimestamp,
+                $endTimestamp,
+                $ascending,
+                $limit,
+                $startsAfter
+            ))
+            ->dtoOrFail();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Nosco\Ryft\Requests\Persons;
 
+use Nosco\Ryft\Dtos\Persons\Person;
 use Nosco\Ryft\Request;
 use Nosco\Ryft\Traits\Requests\Persons\ReturnsPerson;
 use Saloon\Contracts\Body\HasBody;
@@ -32,5 +33,11 @@ class PersonUpdateById extends Request implements HasBody
     public function __construct(
         protected string $id,
         protected string $personId,
+        protected Person $person,
     ) {}
+
+    protected function defaultBody(): array
+    {
+        return $this->person->toArray();
+    }
 }

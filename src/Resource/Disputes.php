@@ -2,6 +2,9 @@
 
 namespace Nosco\Ryft\Resource;
 
+use Illuminate\Support\Collection;
+use Nosco\Ryft\Dtos\Disputes\Dispute;
+use Nosco\Ryft\Dtos\Disputes\DisputeEvidence;
 use Nosco\Ryft\Requests\Disputes\DisputeAcceptById;
 use Nosco\Ryft\Requests\Disputes\DisputeAddEvidenceById;
 use Nosco\Ryft\Requests\Disputes\DisputeChallengeById;
@@ -15,10 +18,18 @@ class Disputes extends Resource
 {
     /**
      * @param int|null    $startTimestamp The start timestamp (inclusive), it must be before the endTimestamp.
-     * @param int|null    $endTimestamp   The timestamp when to return payment sessions up to (inclusive), it must be after the startTimestamp.
-     * @param bool|null   $ascending      Control the order (newest or oldest) in which the disputes are returned. `false` will arrange the results with newest first, whereas `true` shows oldest first. The default is `false`.
-     * @param int|null    $limit          Control how many items are return in a given page The max limit we allow is `25`. The default is `10`.
-     * @param string|null $startsAfter    A token to identify where to resume a subsequent paginated query. The value of the `paginationToken` field from that response should be supplied here, to retrieve the next page of results for that timestamp range.
+     * @param int|null    $endTimestamp   The timestamp when to return payment sessions up to (inclusive),
+     *                                    it must be after the startTimestamp.
+     * @param bool|null   $ascending      Control the order (newest or oldest) in which the disputes are returned.
+     *                                    `false` will arrange the results with newest first,
+     *                                    whereas `true` shows oldest first. The default is `false`.
+     * @param int|null    $limit          Control how many items are return in a given page
+     *                                    The max limit we allow is `25`. The default is `10`.
+     * @param string|null $startsAfter    A token to identify where to resume a subsequent paginated query.
+     *                                    The value of the `paginationToken` field from that response should be supplied here,
+     *                                    to retrieve the next page of results for that timestamp range.
+     *
+     * @return Collection<Dispute>
      */
     public function list(
         ?int $startTimestamp = null,
@@ -26,47 +37,59 @@ class Disputes extends Resource
         ?bool $ascending = null,
         ?int $limit = null,
         ?string $startsAfter = null,
-    ): Response {
-        return $this->connector->send(new DisputesList($startTimestamp, $endTimestamp, $ascending, $limit, $startsAfter));
+    ): Collection {
+        return $this->connector
+            ->send(new DisputesList($startTimestamp, $endTimestamp, $ascending, $limit, $startsAfter))
+            ->dtoOrFail();
     }
 
     /**
      * @param string $disputeId Dispute to retrieve
      */
-    public function get(string $disputeId): Response
+    public function get(string $disputeId): Dispute
     {
-        return $this->connector->send(new DisputeGetById($disputeId));
+        return $this->connector
+            ->send(new DisputeGetById($disputeId))
+            ->dtoOrFail();
     }
 
     /**
      * @param string $disputeId Dispute to accept
      */
-    public function accept(string $disputeId): Response
+    public function accept(string $disputeId): Dispute
     {
-        return $this->connector->send(new DisputeAcceptById($disputeId));
+        return $this->connector
+            ->send(new DisputeAcceptById($disputeId))
+            ->dtoOrFail();
     }
 
     /**
      * @param string $disputeId Dispute to remove evidence from
      */
-    public function removeEvidence(string $disputeId): Response
+    public function removeEvidence(string $disputeId, DisputeEvidence $evidence): Dispute
     {
-        return $this->connector->send(new DisputeRemoveEvidenceById($disputeId));
+        return $this->connector
+            ->send(new DisputeRemoveEvidenceById($disputeId, $evidence))
+            ->dtoOrFail();
     }
 
     /**
      * @param string $disputeId Dispute to attach evidence to
      */
-    public function addEvidence(string $disputeId): Response
+    public function addEvidence(string $disputeId, DisputeEvidence $evidence): Dispute
     {
-        return $this->connector->send(new DisputeAddEvidenceById($disputeId));
+        return $this->connector
+            ->send(new DisputeAddEvidenceById($disputeId, $evidence))
+            ->dtoOrFail();
     }
 
     /**
      * @param string $disputeId Dispute to challenge
      */
-    public function challenge(string $disputeId): Response
+    public function challenge(string $disputeId): Dispute
     {
-        return $this->connector->send(new DisputeChallengeById($disputeId));
+        return $this->connector
+            ->send(new DisputeChallengeById($disputeId))
+            ->dtoOrFail();
     }
 }

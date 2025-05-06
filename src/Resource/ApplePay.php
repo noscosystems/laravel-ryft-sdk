@@ -2,6 +2,9 @@
 
 namespace Nosco\Ryft\Resource;
 
+use Illuminate\Support\Collection;
+use Nosco\Ryft\Dtos\ApplePay\ApplePaySession;
+use Nosco\Ryft\Dtos\ApplePay\ApplePayWebDomain;
 use Nosco\Ryft\Requests\ApplePay\ApplePayCreateSession;
 use Nosco\Ryft\Requests\ApplePay\ApplePayWebDomainDeleteById;
 use Nosco\Ryft\Requests\ApplePay\ApplePayWebDomainGetById;
@@ -15,15 +18,27 @@ class ApplePay extends Resource
     /**
      * List the web domains you have registered for Apple Pay.
      *
-     * @param bool|null   $ascending   Control the order (newest or oldest) in which the payment sessions are returned. `false` will arrange the results with newest first, whereas `true` shows oldest first. The default is `false`.
-     * @param int|null    $limit       Control how many items are return in a given page The max limit Ryft allow is `50`. The default is `20`.
-     * @param string|null $startsAfter A token to identify where to resume a subsequent paginated query. The value of the `paginationToken` field from that response should be supplied here, to retrieve the next page of results for that timestamp range.
+     * @param bool|null   $ascending   Control the order (newest or oldest) in which the payment sessions are returned.
+     *                                 `false` will arrange the results with newest first,
+     *                                 whereas `true` shows oldest first. The default is `false`.
+     * @param int|null    $limit       Control how many items are return in a given page
+     *                                 The max limit Ryft allow is `50`. The default is `20`.
+     * @param string|null $startsAfter A token to identify where to resume a subsequent paginated query.
+     *                                 The value of the `paginationToken` field from that response should be supplied here,
+     *                                 to retrieve the next page of results for that timestamp range.
+     *
+     * @return Collection<ApplePayWebDomain>
      *
      * @link https://api-reference.ryftpay.com/#tag/Apple-Pay/operation/applePayWebDomainsList Documentation
      */
-    public function listWebDomains(?bool $ascending = null, ?int $limit = null, ?string $startsAfter = null): Response
-    {
-        return $this->connector->send(new ApplePayWebDomainsList($ascending, $limit, $startsAfter));
+    public function listWebDomains(
+        ?bool $ascending = null,
+        ?int $limit = null,
+        ?string $startsAfter = null
+    ): Collection {
+        return $this->connector
+            ->send(new ApplePayWebDomainsList($ascending, $limit, $startsAfter))
+            ->dtoOrFail();
     }
 
     /**
@@ -38,11 +53,15 @@ class ApplePay extends Resource
      *
      * **Important**: the `Content-Type` of the hosted file must be `application/octet-stream`.
      *
+     * @param string $domainName The domain name you want to register for Apple Pay.
+     *
      * @link https://api-reference.ryftpay.com/#tag/Apple-Pay/operation/applePayWebDomainRegister Documentation
      */
-    public function registerWebDomain(): Response
+    public function registerWebDomain(string $domainName): ApplePayWebDomain
     {
-        return $this->connector->send(new ApplePayWebDomainRegister);
+        return $this->connector
+            ->send(new ApplePayWebDomainRegister($domainName))
+            ->dtoOrFail();
     }
 
     /**
@@ -54,9 +73,11 @@ class ApplePay extends Resource
      *
      * @param string $id Apple Pay web domain ID to retrieve
      */
-    public function getWebDomain(string $id): Response
+    public function getWebDomain(string $id): ApplePayWebDomain
     {
-        return $this->connector->send(new ApplePayWebDomainGetById($id));
+        return $this->connector
+            ->send(new ApplePayWebDomainGetById($id))
+            ->dtoOrFail();
     }
 
     /**
@@ -68,9 +89,11 @@ class ApplePay extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Apple-Pay/operation/applePayWebDomainDeleteById Documentation
      */
-    public function deleteWebDomain(string $id): Response
+    public function deleteWebDomain(string $id): ApplePayWebDomain
     {
-        return $this->connector->send(new ApplePayWebDomainDeleteById($id));
+        return $this->connector
+            ->send(new ApplePayWebDomainDeleteById($id))
+            ->dtoOrFail();
     }
 
     /**
@@ -81,10 +104,17 @@ class ApplePay extends Resource
      *  - you want to rely on Ryft's Apple Pay processing certificate
      *  - have an existing integration or want to implement Apple Pay via Ryft's API (without using Ryft's SDKs)
      *
+     * @param string $displayName This is the name displayed within the Apple Pay payment sheet.
+     *                            Must contain UTF-8 characters.
+     * @param string $domainName  The domain name you have verified for Apple Pay (omit the protocol).
+     *                            This should match `window.location.hostname`.
+     *
      * @link https://api-reference.ryftpay.com/#tag/Apple-Pay/operation/applePayCreateSession Documentation
      */
-    public function createSession(): Response
+    public function createSession(string $displayName, string $domainName): ApplePaySession
     {
-        return $this->connector->send(new ApplePayCreateSession);
+        return $this->connector
+            ->send(new ApplePayCreateSession($displayName, $domainName))
+            ->dtoOrFail();
     }
 }

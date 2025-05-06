@@ -2,11 +2,13 @@
 
 namespace Nosco\Ryft\Resource;
 
+use Illuminate\Support\Collection;
+use Nosco\Ryft\Dtos\PlatformFees\PlatformFee;
+use Nosco\Ryft\Dtos\PlatformFees\PlatformFeeRefund;
 use Nosco\Ryft\Requests\PlatformFees\PlatformFeeGetById;
 use Nosco\Ryft\Requests\PlatformFees\PlatformFeeGetList;
 use Nosco\Ryft\Requests\PlatformFees\PlatformFeeGetRefunds;
 use Nosco\Ryft\Resource;
-use Saloon\Http\Response;
 
 class PlatformFees extends Resource
 {
@@ -17,13 +19,18 @@ class PlatformFees extends Resource
      *
      * They are returned in sorted (by epoch) order (default is newest first).
      *
-     * @param bool|null $ascending Control the order (newest or oldest) in which the platform fees are returned. `false` will arrange the results with newest first whereas `true` shows oldest first
+     * @param bool|null $ascending Control the order (newest or oldest) in which the platform fees are returned.
+     *                             `false` will arrange the results with newest first whereas `true` shows oldest first
+     *
+     * @return Collection<PlatformFee>
      *
      * @link https://api-reference.ryftpay.com/#tag/Platform-Fees/operation/platformFeeGetList Documentation
      */
-    public function list(?bool $ascending = null, ?int $limit = null): Response
+    public function list(?bool $ascending = null, ?int $limit = null): Collection
     {
-        return $this->connector->send(new PlatformFeeGetList($ascending, $limit));
+        return $this->connector
+            ->send(new PlatformFeeGetList($ascending, $limit))
+            ->dtoOrFail();
     }
 
     /**
@@ -35,9 +42,11 @@ class PlatformFees extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Platform-Fees/operation/platformFeeGetById Documentation
      */
-    public function get(string $platformFeeId): Response
+    public function get(string $platformFeeId): PlatformFee
     {
-        return $this->connector->send(new PlatformFeeGetById($platformFeeId));
+        return $this->connector
+            ->send(new PlatformFeeGetById($platformFeeId))
+            ->dtoOrFail();
     }
 
     /**
@@ -47,10 +56,14 @@ class PlatformFees extends Resource
      *
      * @param string $platformFeeId PlatformFee to retrieve refunds for
      *
+     * @return Collection<PlatformFeeRefund>
+     *
      * @link https://api-reference.ryftpay.com/#tag/Platform-Fees/operation/platformFeeGetRefunds Documentation
      */
-    public function getRefunds(string $platformFeeId): Response
+    public function getRefunds(string $platformFeeId): Collection
     {
-        return $this->connector->send(new PlatformFeeGetRefunds($platformFeeId));
+        return $this->connector
+            ->send(new PlatformFeeGetRefunds($platformFeeId))
+            ->dtoOrFail();
     }
 }

@@ -3,6 +3,7 @@
 namespace Nosco\Ryft\Resource;
 
 use DateTimeInterface;
+use Illuminate\Support\Collection;
 use Nosco\Ryft\Dtos\Payments\PaymentSession;
 use Nosco\Ryft\Dtos\Payments\PaymentSessionAttempt;
 use Nosco\Ryft\Dtos\Payments\PaymentSessionContinue;
@@ -29,11 +30,27 @@ class Payments extends Resource
      *
      * This is used to fetch payment sessions within a timestamp range, paginated
      *
-     * @param DateTimeInterface|int|null $startTimestamp The timestamp when to return payment sessions from (inclusive), it must be before the endTimestamp. If not provided it will default to midnight on the current date (UTC).
-     * @param DateTimeInterface|int|null $endTimestamp   The timestamp when to return payment sessions up to (inclusive), it must be after the startTimestamp. If not provided it will default to the current time (UTC).
-     * @param bool                       $ascending      Control the order (newest or oldest) in which the payment sessions are returned. `false` will arrange the results with newest first, whereas `true` shows oldest first. The default is `false`.
-     * @param int|null                   $limit          Control how many items are return in a given page The max limit we allow is `50`. The default is `10`.
-     * @param string|null                $startsAfter    A token to identify the payment session to start querying after. This is most commonly used to get the next page of results after a previous response did not return all payment sessions, due to the imposed `limit`. The value of the `paginationToken` field from that response should be supplied here, to retrieve the next page of results for that timestamp range.
+     * @param DateTimeInterface|int|null $startTimestamp The timestamp when to return payment sessions from (inclusive),
+     *                                                   it must be before the endTimestamp.
+     *                                                   If not provided it will default to midnight on the current date (UTC).
+     * @param DateTimeInterface|int|null $endTimestamp   The timestamp when to return payment sessions up to (inclusive),
+     *                                                   it must be after the startTimestamp.
+     *                                                   If not provided it will default to the current time (UTC).
+     * @param bool                       $ascending      Control the order (newest or oldest) in which
+     *                                                   the payment sessions are returned.
+     *                                                   `false` will arrange the results with newest first,
+     *                                                   whereas `true` shows oldest first. The default is `false`.
+     * @param int|null                   $limit          Control how many items are return in a given page
+     *                                                   The max limit we allow is `50`. The default is `10`.
+     * @param string|null                $startsAfter    A token to identify the payment session to start querying after.
+     *                                                   This is most commonly used to get the next page of results
+     *                                                   after a previous response did not return all payment sessions,
+     *                                                   due to the imposed `limit`.
+     *                                                   The value of the `paginationToken` field from that response
+     *                                                   should be supplied here, to retrieve the next page of results
+     *                                                   for that timestamp range.
+     *
+     * @return Collection<PaymentSession>
      *
      * @link https://api-reference.ryftpay.com/#tag/Payments/operation/paymentSessionGetBetweenTimestamps Documentation
      */
@@ -43,11 +60,19 @@ class Payments extends Resource
         ?bool $ascending = null,
         ?int $limit = null,
         ?string $startsAfter = null,
-    ): Response {
+    ): Collection {
         $startTimestamp = Helpers::timestamp($startTimestamp);
         $endTimestamp = Helpers::timestamp($endTimestamp);
 
-        return $this->connector->send(new PaymentSessionGetBetweenTimestamps($startTimestamp, $endTimestamp, $ascending, $limit, $startsAfter));
+        return $this->connector
+            ->send(new PaymentSessionGetBetweenTimestamps(
+                $startTimestamp,
+                $endTimestamp,
+                $ascending,
+                $limit,
+                $startsAfter
+            ))
+            ->dtoOrFail();
     }
 
     /**
@@ -59,9 +84,11 @@ class Payments extends Resource
      * @see attempt() attempt-payment endpoint
      * @link https://api-reference.ryftpay.com/#tag/Payments/operation/paymentSessionCreate Documentation
      */
-    public function create(PaymentSession $paymentSession): Response
+    public function create(PaymentSession $paymentSession): PaymentSession
     {
-        return $this->connector->send(new PaymentSessionCreate($paymentSession));
+        return $this->connector
+            ->send(new PaymentSessionCreate($paymentSession))
+            ->dtoOrFail();
     }
 
     /**
@@ -73,9 +100,11 @@ class Payments extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Payments/operation/paymentSessionGet Documentation
      */
-    public function get(string $paymentSessionId): Response
+    public function get(string $paymentSessionId): PaymentSession
     {
-        return $this->connector->send(new PaymentSessionGet($paymentSessionId));
+        return $this->connector
+            ->send(new PaymentSessionGet($paymentSessionId))
+            ->dtoOrFail();
     }
 
     /**
@@ -90,9 +119,11 @@ class Payments extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Payments/operation/paymentSessionUpdate Documentation
      */
-    public function update(string $paymentSessionId, PaymentSession $paymentSession): Response
+    public function update(string $paymentSessionId, PaymentSession $paymentSession): PaymentSession
     {
-        return $this->connector->send(new PaymentSessionUpdate($paymentSessionId, $paymentSession));
+        return $this->connector
+            ->send(new PaymentSessionUpdate($paymentSessionId, $paymentSession))
+            ->dtoOrFail();
     }
 
     /**
@@ -107,9 +138,11 @@ class Payments extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Payments/operation/paymentSessionAttemptPayment Documentation
      */
-    public function attempt(PaymentSessionAttempt $attempt): Response
+    public function attempt(PaymentSessionAttempt $attempt): PaymentSession
     {
-        return $this->connector->send(new PaymentSessionAttemptPayment($attempt));
+        return $this->connector
+            ->send(new PaymentSessionAttemptPayment($attempt))
+            ->dtoOrFail();
     }
 
     /**
@@ -121,9 +154,11 @@ class Payments extends Resource
      * @see attempt() attempt-payment endpoint
      * @link https://api-reference.ryftpay.com/#tag/Payments/operation/paymentSessionContinuePayment Documentation
      */
-    public function continue(PaymentSessionContinue $paymentSessionContinue): Response
+    public function continue(PaymentSessionContinue $paymentSessionContinue): PaymentSession
     {
-        return $this->connector->send(new PaymentSessionContinuePayment($paymentSessionContinue));
+        return $this->connector
+            ->send(new PaymentSessionContinuePayment($paymentSessionContinue))
+            ->dtoOrFail();
     }
 
     /**
@@ -132,9 +167,18 @@ class Payments extends Resource
      * List the transaction(s) for a particular payment
      *
      * @param string      $paymentSessionId Payment ID to list transactions for
-     * @param bool|null   $ascending        Control the order (newest or oldest) in which the transactions are returned. `false` will arrange the results with newest first, whereas `true` shows oldest first. The default is `false`.
-     * @param int|null    $limit            Control how many items are return in a given page The max limit we allow is `50`. The default is `10`.
-     * @param string|null $startsAfter      A token to identify the item to start querying after. This is most commonly used to get the next page of results after a previous response did not return all items, due to the imposed `limit`. The value of the `paginationToken` field from that response should be supplied here, to retrieve the next page of results for that timestamp range.
+     * @param bool|null   $ascending        Control the order (newest or oldest) in which the transactions are returned.
+     *                                      `false` will arrange the results with newest first,
+     *                                      whereas `true` shows oldest first. The default is `false`.
+     * @param int|null    $limit            Control how many items are return in a given page
+     *                                      The max limit we allow is `50`. The default is `10`.
+     * @param string|null $startsAfter      A token to identify the item to start querying after.
+     *                                      This is most commonly used to get the next page of results after
+     *                                      a previous response did not return all items, due to the imposed `limit`.
+     *                                      The value of the `paginationToken` field from that response should be supplied here,
+     *                                      to retrieve the next page of results for that timestamp range.
+     *
+     * @return Collection<PaymentTransaction>
      *
      * @link https://api-reference.ryftpay.com/#tag/Payments/operation/paymentSessionListTransactions Documentation
      */
@@ -143,8 +187,10 @@ class Payments extends Resource
         ?bool $ascending = null,
         ?int $limit = null,
         ?string $startsAfter = null,
-    ): Response {
-        return $this->connector->send(new PaymentSessionListTransactions($paymentSessionId, $ascending, $limit, $startsAfter));
+    ): Collection {
+        return $this->connector
+            ->send(new PaymentSessionListTransactions($paymentSessionId, $ascending, $limit, $startsAfter))
+            ->dtoOrFail();
     }
 
     /**
@@ -157,9 +203,11 @@ class Payments extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Payments/operation/paymentSessionGetTransactionById Documentation
      */
-    public function getTransaction(string $paymentSessionId, string $paymentTransactionId): Response
+    public function getTransaction(string $paymentSessionId, string $paymentTransactionId): PaymentTransaction
     {
-        return $this->connector->send(new PaymentSessionGetTransactionById($paymentSessionId, $paymentTransactionId));
+        return $this->connector
+            ->send(new PaymentSessionGetTransactionById($paymentSessionId, $paymentTransactionId))
+            ->dtoOrFail();
     }
 
     /**
@@ -173,9 +221,11 @@ class Payments extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Payments/operation/paymentSessionCaptureById Documentation
      */
-    public function capture(string $paymentSessionId, PaymentTransaction $paymentTransaction): Response
+    public function capture(string $paymentSessionId, PaymentTransaction $paymentTransaction): PaymentTransaction
     {
-        return $this->connector->send(new PaymentSessionCaptureById($paymentSessionId, $paymentTransaction));
+        return $this->connector
+            ->send(new PaymentSessionCaptureById($paymentSessionId, $paymentTransaction))
+            ->dtoOrFail();
     }
 
     /**
@@ -192,9 +242,11 @@ class Payments extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Payments/operation/paymentSessionVoidById Documentation
      */
-    public function void(string $paymentSessionId): Response
+    public function void(string $paymentSessionId): PaymentTransaction
     {
-        return $this->connector->send(new PaymentSessionVoidById($paymentSessionId));
+        return $this->connector
+            ->send(new PaymentSessionVoidById($paymentSessionId))
+            ->dtoOrFail();
     }
 
     /**
@@ -207,8 +259,10 @@ class Payments extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Payments/operation/paymentSessionCreateRefund Documentation
      */
-    public function createRefund(string $paymentSessionId, PaymentTransaction $paymentTransaction): Response
+    public function createRefund(string $paymentSessionId, PaymentTransaction $paymentTransaction): PaymentTransaction
     {
-        return $this->connector->send(new PaymentSessionCreateRefund($paymentSessionId, $paymentTransaction));
+        return $this->connector
+            ->send(new PaymentSessionCreateRefund($paymentSessionId, $paymentTransaction))
+            ->dtoOrFail();
     }
 }

@@ -5,6 +5,7 @@ namespace Nosco\Ryft\Dtos\Payments;
 use DateTimeInterface;
 use Illuminate\Support\Collection;
 use Nosco\Ryft\Dto;
+use Nosco\Ryft\Dtos\PaymentMethods\PaymentMethod;
 use Nosco\Ryft\Enums\Payments\AuthorizationType;
 use Nosco\Ryft\Enums\Payments\CaptureFlow;
 use Nosco\Ryft\Enums\Payments\EntryMode;

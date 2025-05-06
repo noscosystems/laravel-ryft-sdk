@@ -33,7 +33,9 @@ class SubAccountUpdate extends Request implements HasBody
     public function __construct(
         protected string $id,
         protected Account $account,
-    ) {}
+    ) {
+        $this->account->id = null;
+    }
 
     protected function defaultBody(): array
     {

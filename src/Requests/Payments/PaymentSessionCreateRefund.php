@@ -34,4 +34,9 @@ class PaymentSessionCreateRefund extends Request implements HasBody
         protected string $paymentSessionId,
         protected PaymentTransaction $paymentTransaction,
     ) {}
+
+    protected function defaultBody(): array
+    {
+        return $this->paymentTransaction->toArray();
+    }
 }

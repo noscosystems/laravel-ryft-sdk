@@ -2,7 +2,7 @@
 
 namespace Nosco\Ryft\Requests\ApplePay;
 
-use Nosco\Ryft\Dtos\ApplePay\ApplePayDomain;
+use Nosco\Ryft\Dtos\ApplePay\ApplePayWebDomain;
 use Nosco\Ryft\Request;
 use Nosco\Ryft\Traits\Requests\ApplePay\ReturnsApplePayDomain;
 use Saloon\Enums\Method;
@@ -32,6 +32,6 @@ class ApplePayWebDomainGetById extends Request
 
     public function createDtoFromResponse($response): mixed
     {
-        return ApplePayDomain::fromResponse($response);
+        return ApplePayWebDomain::fromResponse($response);
     }
 }

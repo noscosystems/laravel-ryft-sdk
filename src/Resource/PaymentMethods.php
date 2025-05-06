@@ -2,11 +2,11 @@
 
 namespace Nosco\Ryft\Resource;
 
+use Nosco\Ryft\Dtos\PaymentMethods\PaymentMethod;
 use Nosco\Ryft\Requests\PaymentMethods\PaymentMethodDeleteById;
 use Nosco\Ryft\Requests\PaymentMethods\PaymentMethodGetById;
 use Nosco\Ryft\Requests\PaymentMethods\PaymentMethodUpdateById;
 use Nosco\Ryft\Resource;
-use Saloon\Http\Response;
 
 class PaymentMethods extends Resource
 {
@@ -19,9 +19,11 @@ class PaymentMethods extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Payment-Methods/operation/paymentMethodGetById Documentation
      */
-    public function get(string $paymentMethodId): Response
+    public function get(string $paymentMethodId): PaymentMethod
     {
-        return $this->connector->send(new PaymentMethodGetById($paymentMethodId));
+        return $this->connector
+            ->send(new PaymentMethodGetById($paymentMethodId))
+            ->dtoOrFail();
     }
 
     /**
@@ -37,9 +39,11 @@ class PaymentMethods extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Payment-Methods/operation/paymentMethodDeleteById Documentation
      */
-    public function delete(string $paymentMethodId): Response
+    public function delete(string $paymentMethodId): PaymentMethod
     {
-        return $this->connector->send(new PaymentMethodDeleteById($paymentMethodId));
+        return $this->connector
+            ->send(new PaymentMethodDeleteById($paymentMethodId))
+            ->dtoOrFail();
     }
 
     /**
@@ -51,8 +55,10 @@ class PaymentMethods extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Payment-Methods/operation/paymentMethodUpdateById Documentation
      */
-    public function update(string $paymentMethodId): Response
+    public function update(string $paymentMethodId, PaymentMethod $paymentMethod): PaymentMethod
     {
-        return $this->connector->send(new PaymentMethodUpdateById($paymentMethodId));
+        return $this->connector
+            ->send(new PaymentMethodUpdateById($paymentMethodId, $paymentMethod))
+            ->dtoOrFail();
     }
 }

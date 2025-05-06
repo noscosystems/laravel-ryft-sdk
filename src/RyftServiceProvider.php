@@ -16,7 +16,7 @@ class RyftServiceProvider extends PackageServiceProvider
          * More info: https://github.com/spatie/laravel-package-tools
          */
         $package
-            ->name('laravel-ryft')
+            ->name('ryft')
             ->hasConfigFile()
             ->hasViews()
             ->hasMigrations()

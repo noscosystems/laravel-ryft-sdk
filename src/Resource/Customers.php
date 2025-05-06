@@ -2,6 +2,9 @@
 
 namespace Nosco\Ryft\Resource;
 
+use Illuminate\Support\Collection;
+use Nosco\Ryft\Dtos\Customers\Customer;
+use Nosco\Ryft\Dtos\PaymentMethods\PaymentMethod;
 use Nosco\Ryft\Requests\Customers\CustomerCreate;
 use Nosco\Ryft\Requests\Customers\CustomerDeleteById;
 use Nosco\Ryft\Requests\Customers\CustomerGetById;
@@ -16,12 +19,23 @@ class Customers extends Resource
     /**
      * Used to fetch a paginated list of one or more Customers.
      *
-     * @param string|null $email          A case insensitive email to search by. Note that emails are unique per `Customer` so you can expect a single item within the response. Any other query parameters will be ignored if this is provided.
+     * @param string|null $email          A case insensitive email to search by.
+     *                                    Note that emails are unique per `Customer` so you can expect
+     *                                    a single item within the response.
+     *                                    Any other query parameters will be ignored if this is provided.
      * @param int|null    $startTimestamp The start timestamp (inclusive), it must be before the endTimestamp.
-     * @param int|null    $endTimestamp   The timestamp when to return payment sessions up to (inclusive), it must be after the startTimestamp.
-     * @param bool|null   $ascending      Control the order (newest or oldest) in which the items are returned. `false` will arrange the results with newest first, whereas `true` shows oldest first. The default is `false`.
-     * @param int|null    $limit          Control how many items are return in a given page The max limit we allow is `25`. The default is `10`.
-     * @param string|null $startsAfter    A token to identify where to resume a subsequent paginated query. The value of the `paginationToken` field from that response should be supplied here, to retrieve the next page of results for that timestamp range.
+     * @param int|null    $endTimestamp   The timestamp when to return payment sessions up to (inclusive),
+     *                                    it must be after the startTimestamp.
+     * @param bool|null   $ascending      Control the order (newest or oldest) in which the items are returned.
+     *                                    `false` will arrange the results with newest first,
+     *                                    whereas `true` shows oldest first. The default is `false`.
+     * @param int|null    $limit          Control how many items are return in a given page
+     *                                    The max limit we allow is `25`. The default is `10`.
+     * @param string|null $startsAfter    A token to identify where to resume a subsequent paginated query.
+     *                                    The value of the `paginationToken` field from that response should be supplied here,
+     *                                    to retrieve the next page of results for that timestamp range.
+     *
+     * @return Collection<Customer>
      *
      * @link https://api-reference.ryftpay.com/#tag/Customers/operation/customersList Documentation
      */
@@ -32,8 +46,10 @@ class Customers extends Resource
         ?bool $ascending = null,
         ?int $limit = null,
         ?string $startsAfter = null,
-    ): Response {
-        return $this->connector->send(new CustomersList($email, $startTimestamp, $endTimestamp, $ascending, $limit, $startsAfter));
+    ): Collection {
+        return $this->connector
+            ->send(new CustomersList($email, $startTimestamp, $endTimestamp, $ascending, $limit, $startsAfter))
+            ->dtoOrFail();
     }
 
     /**
@@ -43,9 +59,11 @@ class Customers extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Customers/operation/customerCreate Documentation
      */
-    public function create(): Response
+    public function create(Customer $customer): Customer
     {
-        return $this->connector->send(new CustomerCreate);
+        return $this->connector
+            ->send(new CustomerCreate($customer))
+            ->dtoOrFail();
     }
 
     /**
@@ -57,9 +75,11 @@ class Customers extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Customers/operation/customerGetById Documentation
      */
-    public function get(string $customerId): Response
+    public function get(string $customerId): Customer
     {
-        return $this->connector->send(new CustomerGetById($customerId));
+        return $this->connector
+            ->send(new CustomerGetById($customerId))
+            ->dtoOrFail();
     }
 
     /**
@@ -71,9 +91,11 @@ class Customers extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Customers/operation/customerDeleteById Documentation
      */
-    public function delete(string $customerId): Response
+    public function delete(string $customerId): Customer
     {
-        return $this->connector->send(new CustomerDeleteById($customerId));
+        return $this->connector
+            ->send(new CustomerDeleteById($customerId))
+            ->dtoOrFail();
     }
 
     /**
@@ -85,9 +107,11 @@ class Customers extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Customers/operation/customerUpdateById Documentation
      */
-    public function update(string $customerId): Response
+    public function update(string $customerId, Customer $customer): Customer
     {
-        return $this->connector->send(new CustomerUpdateById($customerId));
+        return $this->connector
+            ->send(new CustomerUpdateById($customerId, $customer))
+            ->dtoOrFail();
     }
 
     /**
@@ -97,10 +121,14 @@ class Customers extends Resource
      *
      * @param string $customerId Customer whose payment methods to retrieve
      *
+     * @return Collection<PaymentMethod>
+     *
      * @link https://api-reference.ryftpay.com/#tag/Customers/operation/customerGetPaymentMethods Documentation
      */
-    public function listPaymentMethods(string $customerId): Response
+    public function listPaymentMethods(string $customerId): Collection
     {
-        return $this->connector->send(new CustomerGetPaymentMethods($customerId));
+        return $this->connector
+            ->send(new CustomerGetPaymentMethods($customerId))
+            ->dtoOrFail();
     }
 }

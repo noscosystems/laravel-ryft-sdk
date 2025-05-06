@@ -2,7 +2,7 @@
 
 namespace Nosco\Ryft\Requests\PaymentMethods;
 
-use Nosco\Ryft\Dtos\Payments\PaymentMethod;
+use Nosco\Ryft\Dtos\PaymentMethods\PaymentMethod;
 use Nosco\Ryft\Request;
 use Nosco\Ryft\Traits\Requests\PaymentMethods\ReturnsPaymentMethod;
 use Saloon\Contracts\Body\HasBody;

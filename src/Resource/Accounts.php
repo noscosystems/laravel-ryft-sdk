@@ -2,6 +2,9 @@
 
 namespace Nosco\Ryft\Resource;
 
+use Illuminate\Support\Collection;
+use Nosco\Ryft\Dtos\Accounts\Account;
+use Nosco\Ryft\Dtos\Payouts\Payout;
 use Nosco\Ryft\Requests\Accounts\PayoutCreate;
 use Nosco\Ryft\Requests\Accounts\PayoutGetById;
 use Nosco\Ryft\Requests\Accounts\PayoutsList;
@@ -11,7 +14,6 @@ use Nosco\Ryft\Requests\Accounts\SubAccountGetById;
 use Nosco\Ryft\Requests\Accounts\SubAccountUpdate;
 use Nosco\Ryft\Requests\Accounts\SubAccountVerify;
 use Nosco\Ryft\Resource;
-use Saloon\Http\Response;
 
 class Accounts extends Resource
 {
@@ -22,9 +24,11 @@ class Accounts extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Accounts/operation/subAccountCreate Documentation
      */
-    public function create(): Response
+    public function create(Account $account): Account
     {
-        return $this->connector->send(new SubAccountCreate);
+        return $this->connector
+            ->send(new SubAccountCreate($account))
+            ->dtoOrFail();
     }
 
     /**
@@ -36,9 +40,11 @@ class Accounts extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Accounts/operation/subAccountGetById Documentation
      */
-    public function get(string $id): Response
+    public function get(string $id): Account
     {
-        return $this->connector->send(new SubAccountGetById($id));
+        return $this->connector
+            ->send(new SubAccountGetById($id))
+            ->dtoOrFail();
     }
 
     /**
@@ -48,13 +54,16 @@ class Accounts extends Resource
      *
      * This API can only be accessed for `NonHosted` sub accounts.
      *
-     * @param string $id the account id of one of your sub accounts
+     * @param string  $id      the account id of one of your sub accounts
+     * @param Account $account Information to update the sub account with
      *
      * @link https://api-reference.ryftpay.com/#tag/Accounts/operation/subAccountUpdate Documentation
      */
-    public function update(string $id): Response
+    public function update(string $id, Account $account): Account
     {
-        return $this->connector->send(new SubAccountUpdate($id));
+        return $this->connector
+            ->send(new SubAccountUpdate($id, $account))
+            ->dtoOrFail();
     }
 
     /**
@@ -70,9 +79,11 @@ class Accounts extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Accounts/operation/subAccountVerify Documentation
      */
-    public function verify(string $id): Response
+    public function verify(string $id): Account
     {
-        return $this->connector->send(new SubAccountVerify($id));
+        return $this->connector
+            ->send(new SubAccountVerify($id))
+            ->dtoOrFail();
     }
 
     /**
@@ -88,6 +99,8 @@ class Accounts extends Resource
      * @param int|null    $startTimestamp The start timestamp (inclusive), it must be before the endTimestamp.
      * @param int|null    $endTimestamp   The timestamp when to return payouts up to (inclusive), it must be after the startTimestamp.
      *
+     * @return Collection<Payout>
+     *
      * @link https://api-reference.ryftpay.com/#tag/Accounts/operation/payoutsList Documentation
      */
     public function listPayouts(
@@ -99,17 +112,19 @@ class Accounts extends Resource
         ?string $endDate = null,
         ?int $startTimestamp = null,
         ?int $endTimestamp = null,
-    ): Response {
-        return $this->connector->send(new PayoutsList(
-            $id,
-            $ascending,
-            $limit,
-            $startsAfter,
-            $startDate,
-            $endDate,
-            $startTimestamp,
-            $endTimestamp
-        ));
+    ): Collection {
+        return $this->connector
+            ->send(new PayoutsList(
+                $id,
+                $ascending,
+                $limit,
+                $startsAfter,
+                $startDate,
+                $endDate,
+                $startTimestamp,
+                $endTimestamp
+            ))
+            ->dtoOrFail();
     }
 
     /**
@@ -130,9 +145,11 @@ class Accounts extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Accounts/operation/payoutCreate Documentation
      */
-    public function createPayout(string $id): Response
+    public function createPayout(string $id, Payout $payout): Account
     {
-        return $this->connector->send(new PayoutCreate($id));
+        return $this->connector
+            ->send(new PayoutCreate($id, $payout))
+            ->dtoOrFail();
     }
 
     /**
@@ -145,9 +162,11 @@ class Accounts extends Resource
      *
      * @link https://api-reference.ryftpay.com/#tag/Accounts/operation/payoutGetById Documentation
      */
-    public function getPayout(string $id, string $payoutId): Response
+    public function getPayout(string $id, string $payoutId): Payout
     {
-        return $this->connector->send(new PayoutGetById($id, $payoutId));
+        return $this->connector
+            ->send(new PayoutGetById($id, $payoutId))
+            ->dtoOrFail();
     }
 
     /**
@@ -165,8 +184,10 @@ class Accounts extends Resource
      * @see AccountLinks::create() for account-links endpoint
      * @link https://api-reference.ryftpay.com/#tag/Accounts/operation/subAccountAuthorize Documentation
      */
-    public function authorize(): Response
+    public function authorize(string $email, string $redirectUrl): Account
     {
-        return $this->connector->send(new SubAccountAuthorize);
+        return $this->connector
+            ->send(new SubAccountAuthorize($email, $redirectUrl))
+            ->dtoOrFail();
     }
 }
