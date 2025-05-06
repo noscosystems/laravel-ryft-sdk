@@ -23,6 +23,8 @@ class Accounts extends Resource
      * This is for registering new users onto your platform that will act as one of your 'sub' accounts.
      *
      * @link https://api-reference.ryftpay.com/#tag/Accounts/operation/subAccountCreate Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function create(Account $account): Account
     {
@@ -39,6 +41,8 @@ class Accounts extends Resource
      * @param string $id the account id of one of your sub accounts
      *
      * @link https://api-reference.ryftpay.com/#tag/Accounts/operation/subAccountGetById Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function get(string $id): Account
     {
@@ -58,6 +62,8 @@ class Accounts extends Resource
      * @param Account $account Information to update the sub account with
      *
      * @link https://api-reference.ryftpay.com/#tag/Accounts/operation/subAccountUpdate Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function update(string $id, Account $account): Account
     {
@@ -78,6 +84,8 @@ class Accounts extends Resource
      * @param string $id the account id of one of your sub accounts
      *
      * @link https://api-reference.ryftpay.com/#tag/Accounts/operation/subAccountVerify Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function verify(string $id): Account
     {
@@ -102,6 +110,8 @@ class Accounts extends Resource
      * @return Collection<Payout>
      *
      * @link https://api-reference.ryftpay.com/#tag/Accounts/operation/payoutsList Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function listPayouts(
         string $id,
@@ -144,6 +154,8 @@ class Accounts extends Resource
      * @param string $id the account id of one of your sub accounts
      *
      * @link https://api-reference.ryftpay.com/#tag/Accounts/operation/payoutCreate Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function createPayout(string $id, Payout $payout): Account
     {
@@ -161,6 +173,8 @@ class Accounts extends Resource
      * @param string $payoutId Payout to retrieve
      *
      * @link https://api-reference.ryftpay.com/#tag/Accounts/operation/payoutGetById Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function getPayout(string $id, string $payoutId): Payout
     {
@@ -183,6 +197,8 @@ class Accounts extends Resource
      *
      * @see AccountLinks::create() for account-links endpoint
      * @link https://api-reference.ryftpay.com/#tag/Accounts/operation/subAccountAuthorize Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function authorize(string $email, string $redirectUrl): Account
     {

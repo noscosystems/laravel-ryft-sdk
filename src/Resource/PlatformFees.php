@@ -25,6 +25,8 @@ class PlatformFees extends Resource
      * @return Collection<PlatformFee>
      *
      * @link https://api-reference.ryftpay.com/#tag/Platform-Fees/operation/platformFeeGetList Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function list(?bool $ascending = null, ?int $limit = null): Collection
     {
@@ -41,6 +43,8 @@ class PlatformFees extends Resource
      * @param string $platformFeeId PlatformFee to retrieve
      *
      * @link https://api-reference.ryftpay.com/#tag/Platform-Fees/operation/platformFeeGetById Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function get(string $platformFeeId): PlatformFee
     {
@@ -59,6 +63,8 @@ class PlatformFees extends Resource
      * @return Collection<PlatformFeeRefund>
      *
      * @link https://api-reference.ryftpay.com/#tag/Platform-Fees/operation/platformFeeGetRefunds Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function getRefunds(string $platformFeeId): Collection
     {

@@ -18,6 +18,8 @@ class AccountLinks extends Resource
      * @param string $redirectUrl The URL to redirect back to on completion or cancellation of the verification detail
      *
      * @link https://api-reference.ryftpay.com/#tag/Account-Links/operation/accountLinksCreate Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function create(string $accountId, string $redirectUrl): AccountAuthorizationUrl
     {

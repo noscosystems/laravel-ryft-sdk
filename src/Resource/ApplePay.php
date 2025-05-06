@@ -30,6 +30,8 @@ class ApplePay extends Resource
      * @return Collection<ApplePayWebDomain>
      *
      * @link https://api-reference.ryftpay.com/#tag/Apple-Pay/operation/applePayWebDomainsList Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function listWebDomains(
         ?bool $ascending = null,
@@ -56,6 +58,8 @@ class ApplePay extends Resource
      * @param string $domainName The domain name you want to register for Apple Pay.
      *
      * @link https://api-reference.ryftpay.com/#tag/Apple-Pay/operation/applePayWebDomainRegister Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function registerWebDomain(string $domainName): ApplePayWebDomain
     {
@@ -72,6 +76,8 @@ class ApplePay extends Resource
      * @link https://api-reference.ryftpay.com/#tag/Apple-Pay/operation/applePayWebDomainGetById Documentation
      *
      * @param string $id Apple Pay web domain ID to retrieve
+     *
+     * @throws \LogicException on request failure
      */
     public function getWebDomain(string $id): ApplePayWebDomain
     {
@@ -88,6 +94,8 @@ class ApplePay extends Resource
      * @param string $id Apple Pay web domain ID to delete
      *
      * @link https://api-reference.ryftpay.com/#tag/Apple-Pay/operation/applePayWebDomainDeleteById Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function deleteWebDomain(string $id): ApplePayWebDomain
     {
@@ -110,6 +118,8 @@ class ApplePay extends Resource
      *                            This should match `window.location.hostname`.
      *
      * @link https://api-reference.ryftpay.com/#tag/Apple-Pay/operation/applePayCreateSession Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function createSession(string $displayName, string $domainName): ApplePaySession
     {

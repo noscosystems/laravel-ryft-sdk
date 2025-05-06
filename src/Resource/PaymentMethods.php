@@ -18,6 +18,8 @@ class PaymentMethods extends Resource
      * @param string $paymentMethodId Payment Method to retrieve
      *
      * @link https://api-reference.ryftpay.com/#tag/Payment-Methods/operation/paymentMethodGetById Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function get(string $paymentMethodId): PaymentMethod
     {
@@ -38,6 +40,8 @@ class PaymentMethods extends Resource
      * @param string $paymentMethodId Payment Method to delete
      *
      * @link https://api-reference.ryftpay.com/#tag/Payment-Methods/operation/paymentMethodDeleteById Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function delete(string $paymentMethodId): PaymentMethod
     {
@@ -54,6 +58,8 @@ class PaymentMethods extends Resource
      * @param string $paymentMethodId Payment Method to update
      *
      * @link https://api-reference.ryftpay.com/#tag/Payment-Methods/operation/paymentMethodUpdateById Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function update(string $paymentMethodId, PaymentMethod $paymentMethod): PaymentMethod
     {

@@ -40,6 +40,8 @@ class Subscriptions extends Resource
      * @return Collection<Subscription>
      *
      * @link https://api-reference.ryftpay.com/#tag/Subscriptions/operation/subscriptionsList Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function list(
         ?int $startTimestamp = null,
@@ -59,6 +61,8 @@ class Subscriptions extends Resource
      * Use to create a Subscription (whereby Ryft manage the automatic scheduling and billing of a recurring payment series)
      *
      * @link https://api-reference.ryftpay.com/#tag/Subscriptions/operation/subscriptionCreate Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function create(Subscription $subscription): Subscription
     {
@@ -75,6 +79,8 @@ class Subscriptions extends Resource
      * @param string $subscriptionId Subscription to retrieve
      *
      * @link https://api-reference.ryftpay.com/#tag/Subscriptions/operation/subscriptionGetById Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function get(string $subscriptionId): Subscription
     {
@@ -91,6 +97,8 @@ class Subscriptions extends Resource
      * @param string $subscriptionId Subscription to retrieve
      *
      * @link https://api-reference.ryftpay.com/#tag/Subscriptions/operation/subscriptionUpdateById Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function update(string $subscriptionId, Subscription $subscription): Subscription
     {
@@ -114,6 +122,8 @@ class Subscriptions extends Resource
      * @param string $subscriptionId Subscription to pause
      *
      * @link https://api-reference.ryftpay.com/#tag/Subscriptions/operation/subscriptionPauseById Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function pause(string $subscriptionId, PausedPaymentDetails $pausedPaymentDetails): Subscription
     {
@@ -130,6 +140,8 @@ class Subscriptions extends Resource
      * @param string $subscriptionId Subscription to resume
      *
      * @link https://api-reference.ryftpay.com/#tag/Subscriptions/operation/subscriptionResumeById Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function resume(string $subscriptionId): Subscription
     {
@@ -150,6 +162,8 @@ class Subscriptions extends Resource
      * @param string $subscriptionId Subscription to cancel
      *
      * @link https://api-reference.ryftpay.com/#tag/Subscriptions/operation/subscriptionCancelById Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function cancel(string $subscriptionId): Subscription
     {
@@ -181,6 +195,8 @@ class Subscriptions extends Resource
      * @return Collection<PaymentSession>
      *
      * @link https://api-reference.ryftpay.com/#tag/Subscriptions/operation/subscriptionsListPaymentSessions Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function listPaymentSessions(
         string $subscriptionId,

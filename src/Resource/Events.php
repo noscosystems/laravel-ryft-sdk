@@ -23,6 +23,8 @@ class Events extends Resource
      * @return Collection<Event>
      *
      * @link https://api-reference.ryftpay.com/#tag/Events/operation/eventGetList Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function list(?bool $ascending = null, ?int $limit = null): Collection
     {
@@ -39,6 +41,8 @@ class Events extends Resource
      * @param string $eventId Event to retrieve
      *
      * @link https://api-reference.ryftpay.com/#tag/Events/operation/eventGetById Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function get(string $eventId): Event
     {

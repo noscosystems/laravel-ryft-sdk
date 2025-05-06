@@ -53,6 +53,8 @@ class Payments extends Resource
      * @return Collection<PaymentSession>
      *
      * @link https://api-reference.ryftpay.com/#tag/Payments/operation/paymentSessionGetBetweenTimestamps Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function list(
         DateTimeInterface|int|null $startTimestamp = null,
@@ -83,6 +85,8 @@ class Payments extends Resource
      *
      * @see attempt() attempt-payment endpoint
      * @link https://api-reference.ryftpay.com/#tag/Payments/operation/paymentSessionCreate Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function create(PaymentSession $paymentSession): PaymentSession
     {
@@ -99,6 +103,8 @@ class Payments extends Resource
      * @param string $paymentSessionId Payment ID to retrieve
      *
      * @link https://api-reference.ryftpay.com/#tag/Payments/operation/paymentSessionGet Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function get(string $paymentSessionId): PaymentSession
     {
@@ -118,6 +124,8 @@ class Payments extends Resource
      * @param string $paymentSessionId Payment ID to update
      *
      * @link https://api-reference.ryftpay.com/#tag/Payments/operation/paymentSessionUpdate Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function update(string $paymentSessionId, PaymentSession $paymentSession): PaymentSession
     {
@@ -137,6 +145,8 @@ class Payments extends Resource
      * Please contact your account manager if you want to opt for this.
      *
      * @link https://api-reference.ryftpay.com/#tag/Payments/operation/paymentSessionAttemptPayment Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function attempt(PaymentSessionAttempt $attempt): PaymentSession
     {
@@ -153,6 +163,8 @@ class Payments extends Resource
      *
      * @see attempt() attempt-payment endpoint
      * @link https://api-reference.ryftpay.com/#tag/Payments/operation/paymentSessionContinuePayment Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function continue(PaymentSessionContinue $paymentSessionContinue): PaymentSession
     {
@@ -181,6 +193,8 @@ class Payments extends Resource
      * @return Collection<PaymentTransaction>
      *
      * @link https://api-reference.ryftpay.com/#tag/Payments/operation/paymentSessionListTransactions Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function listTransactions(
         string $paymentSessionId,
@@ -202,6 +216,8 @@ class Payments extends Resource
      * @param string $paymentTransactionId Payment transaction Id to retrieve
      *
      * @link https://api-reference.ryftpay.com/#tag/Payments/operation/paymentSessionGetTransactionById Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function getTransaction(string $paymentSessionId, string $paymentTransactionId): PaymentTransaction
     {
@@ -220,6 +236,8 @@ class Payments extends Resource
      * @param string $paymentSessionId Payment ID to update
      *
      * @link https://api-reference.ryftpay.com/#tag/Payments/operation/paymentSessionCaptureById Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function capture(string $paymentSessionId, PaymentTransaction $paymentTransaction): PaymentTransaction
     {
@@ -241,6 +259,8 @@ class Payments extends Resource
      * @param string $paymentSessionId Payment ID to void
      *
      * @link https://api-reference.ryftpay.com/#tag/Payments/operation/paymentSessionVoidById Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function void(string $paymentSessionId): PaymentTransaction
     {
@@ -258,6 +278,8 @@ class Payments extends Resource
      * @param string $paymentSessionId Payment ID to refund
      *
      * @link https://api-reference.ryftpay.com/#tag/Payments/operation/paymentSessionCreateRefund Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function createRefund(string $paymentSessionId, PaymentTransaction $paymentTransaction): PaymentTransaction
     {

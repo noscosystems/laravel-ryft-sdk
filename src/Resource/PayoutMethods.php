@@ -32,6 +32,8 @@ class PayoutMethods extends Resource
      * @return Collection<PayoutMethod>
      *
      * @link https://api-reference.ryftpay.com/#tag/Payout-Methods/operation/payoutMethodsList Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function list(
         string $id,
@@ -55,6 +57,8 @@ class PayoutMethods extends Resource
      * @param string $id the account id of one of your sub accounts
      *
      * @link https://api-reference.ryftpay.com/#tag/Payout-Methods/operation/payoutMethodCreate Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function create(string $id, PayoutMethod $payoutMethod): PayoutMethod
     {
@@ -72,6 +76,8 @@ class PayoutMethods extends Resource
      * @param string $payoutMethodId Payout method to retrieve
      *
      * @link https://api-reference.ryftpay.com/#tag/Payout-Methods/operation/payoutMethodGet Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function get(string $id, string $payoutMethodId): PayoutMethod
     {
@@ -89,6 +95,8 @@ class PayoutMethods extends Resource
      * @param string $payoutMethodId Payout method to retrieve
      *
      * @link https://api-reference.ryftpay.com/#tag/Payout-Methods/operation/payoutMethodDelete Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function delete(string $id, string $payoutMethodId): PayoutMethod
     {
@@ -106,6 +114,8 @@ class PayoutMethods extends Resource
      * @param string $payoutMethodId Payout method to retrieve
      *
      * @link https://api-reference.ryftpay.com/#tag/Payout-Methods/operation/payoutMethodUpdate Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function update(string $id, string $payoutMethodId, PayoutMethod $payoutMethod): PayoutMethod
     {

@@ -30,6 +30,8 @@ class Files extends Resource
      * @return Collection<File>
      *
      * @link https://api-reference.ryftpay.com/#tag/Files/operation/filesList Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function list(?string $category = null, ?bool $ascending = null, ?int $limit = null, ?string $startsAfter = null): Collection
     {
@@ -47,6 +49,8 @@ class Files extends Resource
      *  - upload KYB/KYC documents for sub accounts
      *
      * @link https://api-reference.ryftpay.com/#tag/Files/operation/fileCreate Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function create(File $file): File
     {
@@ -63,6 +67,8 @@ class Files extends Resource
      * @param string $fileId File to retrieve
      *
      * @link https://api-reference.ryftpay.com/#tag/Files/operation/fileGetById Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function get(string $fileId): File
     {

@@ -29,6 +29,8 @@ class Transfers extends Resource
      * @return Collection<Transfer>
      *
      * @link https://api-reference.ryftpay.com/#tag/Transfers/operation/transfersList Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function list(?bool $ascending = null, ?int $limit = null, ?string $startsAfter = null): Collection
     {
@@ -43,6 +45,8 @@ class Transfers extends Resource
      * Used to initiate a transfer of money between Ryft accounts.
      *
      * @link https://api-reference.ryftpay.com/#tag/Transfers/operation/transfersCreate Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function create(Transfer $transfer): Transfer
     {
@@ -59,6 +63,8 @@ class Transfers extends Resource
      * @param string $id Transfer to retrieve
      *
      * @link https://api-reference.ryftpay.com/#tag/Transfers/operation/transfersGetById Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function get(string $id): Transfer
     {

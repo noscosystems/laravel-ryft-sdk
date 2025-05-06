@@ -31,6 +31,8 @@ class Persons extends Resource
      * @return Collection<Person>
      *
      * @link https://api-reference.ryftpay.com/#tag/Persons/operation/personList Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function list(
         string $id,
@@ -58,6 +60,8 @@ class Persons extends Resource
      * @param string $id the account id of one of your sub accounts
      *
      * @link https://api-reference.ryftpay.com/#tag/Persons/operation/personCreate Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function create(string $id, Person $person): Person
     {
@@ -75,6 +79,8 @@ class Persons extends Resource
      * @param string $personId Person to retrieve
      *
      * @link https://api-reference.ryftpay.com/#tag/Persons/operation/personGetById Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function get(string $id, string $personId): Person
     {
@@ -92,6 +98,8 @@ class Persons extends Resource
      * @param string $personId Person to delete
      *
      * @link https://api-reference.ryftpay.com/#tag/Persons/operation/personDeleteById Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function delete(string $id, string $personId): Person
     {
@@ -112,6 +120,8 @@ class Persons extends Resource
      * @param string $personId Person to update
      *
      * @link https://api-reference.ryftpay.com/#tag/Persons/operation/personUpdateById Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function update(string $id, string $personId, Person $person): Person
     {

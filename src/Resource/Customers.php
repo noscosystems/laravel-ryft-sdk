@@ -38,6 +38,8 @@ class Customers extends Resource
      * @return Collection<Customer>
      *
      * @link https://api-reference.ryftpay.com/#tag/Customers/operation/customersList Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function list(
         ?string $email = null,
@@ -58,6 +60,8 @@ class Customers extends Resource
      * This is for creating customers within your Ryft account (to enable features such as saved payment methods)
      *
      * @link https://api-reference.ryftpay.com/#tag/Customers/operation/customerCreate Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function create(Customer $customer): Customer
     {
@@ -74,6 +78,8 @@ class Customers extends Resource
      * @param string $customerId Customer to retrieve
      *
      * @link https://api-reference.ryftpay.com/#tag/Customers/operation/customerGetById Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function get(string $customerId): Customer
     {
@@ -90,6 +96,8 @@ class Customers extends Resource
      * @param string $customerId Customer to delete
      *
      * @link https://api-reference.ryftpay.com/#tag/Customers/operation/customerDeleteById Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function delete(string $customerId): Customer
     {
@@ -106,6 +114,8 @@ class Customers extends Resource
      * @param string $customerId Customer to update
      *
      * @link https://api-reference.ryftpay.com/#tag/Customers/operation/customerUpdateById Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function update(string $customerId, Customer $customer): Customer
     {
@@ -124,6 +134,8 @@ class Customers extends Resource
      * @return Collection<PaymentMethod>
      *
      * @link https://api-reference.ryftpay.com/#tag/Customers/operation/customerGetPaymentMethods Documentation
+     *
+     * @throws \LogicException on request failure
      */
     public function listPaymentMethods(string $customerId): Collection
     {

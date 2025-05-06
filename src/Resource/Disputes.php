@@ -30,6 +30,8 @@ class Disputes extends Resource
      *                                    to retrieve the next page of results for that timestamp range.
      *
      * @return Collection<Dispute>
+     *
+     * @throws \LogicException on request failure
      */
     public function list(
         ?int $startTimestamp = null,
@@ -45,6 +47,8 @@ class Disputes extends Resource
 
     /**
      * @param string $disputeId Dispute to retrieve
+     *
+     * @throws \LogicException on request failure
      */
     public function get(string $disputeId): Dispute
     {
@@ -55,6 +59,8 @@ class Disputes extends Resource
 
     /**
      * @param string $disputeId Dispute to accept
+     *
+     * @throws \LogicException on request failure
      */
     public function accept(string $disputeId): Dispute
     {
@@ -65,6 +71,8 @@ class Disputes extends Resource
 
     /**
      * @param string $disputeId Dispute to remove evidence from
+     *
+     * @throws \LogicException on request failure
      */
     public function removeEvidence(string $disputeId, DisputeEvidence $evidence): Dispute
     {
@@ -75,6 +83,8 @@ class Disputes extends Resource
 
     /**
      * @param string $disputeId Dispute to attach evidence to
+     *
+     * @throws \LogicException on request failure
      */
     public function addEvidence(string $disputeId, DisputeEvidence $evidence): Dispute
     {
@@ -85,6 +95,8 @@ class Disputes extends Resource
 
     /**
      * @param string $disputeId Dispute to challenge
+     *
+     * @throws \LogicException on request failure
      */
     public function challenge(string $disputeId): Dispute
     {
