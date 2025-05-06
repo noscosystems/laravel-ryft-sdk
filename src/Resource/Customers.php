@@ -2,6 +2,7 @@
 
 namespace Nosco\Ryft\Resource;
 
+use DateTimeInterface;
 use Illuminate\Support\Collection;
 use Nosco\Ryft\Dtos\Customers\Customer;
 use Nosco\Ryft\Dtos\PaymentMethods\PaymentMethod;
@@ -19,21 +20,21 @@ class Customers extends Resource
     /**
      * Used to fetch a paginated list of one or more Customers.
      *
-     * @param string|null $email          A case insensitive email to search by.
-     *                                    Note that emails are unique per `Customer` so you can expect
-     *                                    a single item within the response.
-     *                                    Any other query parameters will be ignored if this is provided.
-     * @param int|null    $startTimestamp The start timestamp (inclusive), it must be before the endTimestamp.
-     * @param int|null    $endTimestamp   The timestamp when to return payment sessions up to (inclusive),
-     *                                    it must be after the startTimestamp.
-     * @param bool|null   $ascending      Control the order (newest or oldest) in which the items are returned.
-     *                                    `false` will arrange the results with newest first,
-     *                                    whereas `true` shows oldest first. The default is `false`.
-     * @param int|null    $limit          Control how many items are return in a given page
-     *                                    The max limit we allow is `25`. The default is `10`.
-     * @param string|null $startsAfter    A token to identify where to resume a subsequent paginated query.
-     *                                    The value of the `paginationToken` field from that response should be supplied here,
-     *                                    to retrieve the next page of results for that timestamp range.
+     * @param string|null            $email          A case insensitive email to search by.
+     *                                               Note that emails are unique per `Customer` so you can expect
+     *                                               a single item within the response.
+     *                                               Any other query parameters will be ignored if this is provided.
+     * @param DateTimeInterface|null $startTimestamp The start timestamp (inclusive), it must be before the endTimestamp.
+     * @param DateTimeInterface|null $endTimestamp   The timestamp when to return payment sessions up to (inclusive),
+     *                                               it must be after the startTimestamp.
+     * @param bool|null              $ascending      Control the order (newest or oldest) in which the items are returned.
+     *                                               `false` will arrange the results with newest first,
+     *                                               whereas `true` shows oldest first. The default is `false`.
+     * @param int|null               $limit          Control how many items are return in a given page
+     *                                               The max limit we allow is `25`. The default is `10`.
+     * @param string|null            $startsAfter    A token to identify where to resume a subsequent paginated query.
+     *                                               The value of the `paginationToken` field from that response should be supplied here,
+     *                                               to retrieve the next page of results for that timestamp range.
      *
      * @return Collection<Customer>
      *
@@ -43,12 +44,15 @@ class Customers extends Resource
      */
     public function list(
         ?string $email = null,
-        ?int $startTimestamp = null,
-        ?int $endTimestamp = null,
+        ?DateTimeInterface $startTimestamp = null,
+        ?DateTimeInterface $endTimestamp = null,
         ?bool $ascending = null,
         ?int $limit = null,
         ?string $startsAfter = null,
     ): Collection {
+        $startTimestamp = $startTimestamp?->getTimestamp();
+        $endTimestamp = $endTimestamp?->getTimestamp();
+
         return $this->connector
             ->send(new CustomersList($email, $startTimestamp, $endTimestamp, $ascending, $limit, $startsAfter))
             ->dtoOrFail();
