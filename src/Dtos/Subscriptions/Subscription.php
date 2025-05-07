@@ -30,5 +30,6 @@ class Subscription extends Dto
         public ?CancelledPaymentDetails $cancelDetail = null,
         public ?BillingDetails $billingDetail = null,
         public ?DateTimeInterface $createdTimestamp = null,
+        public ?DateTimeInterface $lastUpdatedTimestamp = null,
     ) {}
 }

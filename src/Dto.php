@@ -79,6 +79,9 @@ abstract class Dto implements Arrayable, Jsonable, JsonSerializable
                 if (is_array($property)) {
                     return collect($property);
                 }
+                if ($property instanceof Collection) {
+                    return $property->isEmpty() ? null : $property;
+                }
                 if ($property instanceof BackedEnum) {
                     return $property->value;
                 }
@@ -88,7 +91,7 @@ abstract class Dto implements Arrayable, Jsonable, JsonSerializable
 
                 return $property;
             })
-            ->filter()
+            ->filter(fn (mixed $property) => $property !== null && $property !== [])
             ->toArray();
     }
 

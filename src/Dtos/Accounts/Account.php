@@ -4,6 +4,7 @@ namespace Nosco\Ryft\Dtos\Accounts;
 
 use DateTimeInterface;
 use Illuminate\Support\Collection;
+use Nosco\Ryft\Contracts\RyftAccount;
 use Nosco\Ryft\Dto;
 use Nosco\Ryft\Enums\Accounts\AccountEntityType;
 use Nosco\Ryft\Enums\Accounts\AccountOnboardingFlow;
@@ -11,7 +12,7 @@ use Nosco\Ryft\Enums\Accounts\AccountStatus;
 use Nosco\Ryft\Enums\Accounts\AccountType;
 use Nosco\Ryft\Support\Helpers;
 
-class Account extends Dto
+class Account extends Dto implements RyftAccount
 {
     public function __construct(
         public ?string $id = null,
@@ -29,6 +30,7 @@ class Account extends Dto
         public ?AccountSettings $settings = null,
         public ?TermsOfService $termsOfService = null,
         public ?DateTimeInterface $createdTimestamp = null,
+        public ?DateTimeInterface $lastUpdatedTimestamp = null,
     ) {}
 
     public static function fromArray(array|Collection|null $data): ?static
@@ -42,5 +44,10 @@ class Account extends Dto
         ]);
 
         return parent::fromArray($data);
+    }
+
+    public function ryftId(): ?string
+    {
+        return $this->id;
     }
 }

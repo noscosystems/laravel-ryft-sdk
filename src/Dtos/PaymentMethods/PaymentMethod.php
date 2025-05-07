@@ -20,6 +20,7 @@ class PaymentMethod extends Dto
         public ?PaymentMethodChecks $checks = null,
         public ?string $customerId = null,
         public ?DateTimeInterface $createdTimestamp = null,
+        public ?DateTimeInterface $lastUpdatedTimestamp = null,
         public ?string $cvc = null,
         public ?TokenizedDetails $tokenizedDetails = null,
     ) {}

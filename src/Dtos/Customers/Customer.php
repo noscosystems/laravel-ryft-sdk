@@ -18,5 +18,6 @@ class Customer extends Dto
         public ?Collection $metadata = null,
         public ?string $defaultPaymentMethod = null,
         public ?DateTimeInterface $createdTimestamp = null,
+        public ?DateTimeInterface $lastUpdatedTimestamp = null,
     ) {}
 }

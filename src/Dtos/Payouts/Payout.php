@@ -28,6 +28,7 @@ class Payout extends Dto
         public ?PayoutCalculation $payoutCalculation = null,
         public ?PayoutScheme $scheme = null,
         public ?DateTimeInterface $createdTimestamp = null,
+        public ?DateTimeInterface $lastUpdatedTimestamp = null,
         public ?DateTimeInterface $scheduledTimestamp = null,
         public ?DateTimeInterface $completedTimestamp = null,
     ) {}
