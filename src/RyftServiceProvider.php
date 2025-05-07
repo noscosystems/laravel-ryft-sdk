@@ -2,7 +2,7 @@
 
 namespace Nosco\Ryft;
 
-use Nosco\Ryft\Commands\RyftCommand;
+use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -18,8 +18,12 @@ class RyftServiceProvider extends PackageServiceProvider
         $package
             ->name('ryft')
             ->hasConfigFile()
-            ->hasViews()
-            ->hasMigrations()
-            ->hasCommand(RyftCommand::class);
+            ->discoversMigrations()
+            ->hasInstallCommand(function (InstallCommand $command) {
+                $command
+                    ->publishConfigFile()
+                    ->publishMigrations()
+                    ->copyAndRegisterServiceProviderInApp();
+            });
     }
 }
