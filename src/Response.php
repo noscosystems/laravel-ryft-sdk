@@ -3,7 +3,7 @@
 namespace Nosco\Ryft;
 
 use Illuminate\Support\Collection;
-use Nosco\Ryft\Dtos\Payments\Error;
+use Nosco\Ryft\Dtos\Error;
 use Saloon\Http\Response as SaloonResponse;
 
 class Response extends SaloonResponse
@@ -13,8 +13,7 @@ class Response extends SaloonResponse
      */
     public function errors(): Collection
     {
-        return $this->collect('errors')
-            ->map(fn (array $error): Error => Error::fromArray($error));
+        return Error::fromPaginatedResponse($this);
     }
 
     public function id(): ?string

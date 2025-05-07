@@ -27,6 +27,8 @@ class Ryft extends Connector implements HasPagination
 {
     use HasCursorPagination;
 
+    protected ?string $response = Response::class;
+
     public function resolveBaseUrl(): string
     {
         return $this->sandboxed()
