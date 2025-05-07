@@ -50,8 +50,7 @@ trait ManagesCustomer
 
         $dto = static::ryft()->customers()->create($ryftCustomer);
 
-        $this->ryft_customer_id = $dto->id;
-        $this->save();
+        $this->setRyftId($dto->id);
 
         return $dto;
     }
@@ -68,8 +67,7 @@ trait ManagesCustomer
             ->customers()
             ->update($this->ryftId(), Customer::fromArray($options));
 
-        $this->ryft_customer_id = $ryftCustomer->id;
-        $this->save();
+        $this->setRyftId($ryftCustomer->id);
 
         return $ryftCustomer;
     }
@@ -81,6 +79,21 @@ trait ManagesCustomer
     public function syncRyftCustomer(): Customer
     {
         return $this->updateRyftCustomer($this->defaultRyftCustomerOptions());
+    }
+
+    /**
+     * @throws InvalidCustomer when this customer is missing their Ryft ID
+     * @throws LogicException  when request to Ryft fails
+     */
+    public function deleteRyftCustomer(): Customer
+    {
+        $this->assertRyftCustomerExists();
+
+        $ryftCustomer = static::ryft()->customers()->delete($this->ryftId());
+
+        $this->setRyftId(null);
+
+        return $ryftCustomer;
     }
 
     /**
@@ -180,5 +193,12 @@ trait ManagesCustomer
             'homePhoneNumber' => $this->ryftHomePhone(),
             'metadata' => $this->ryftMetadata(),
         ];
+    }
+
+    private function setRyftId(?string $id): void
+    {
+        $this->ryft_customer_id = $id;
+
+        $this->save();
     }
 }
