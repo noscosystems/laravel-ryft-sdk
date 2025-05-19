@@ -13,17 +13,13 @@ return new class extends Migration
                 ->nullable()
                 ->after('id');
 
-            $table->string('ryft_sub_account_id')
+            $table->string('ryft_account_id')
                 ->nullable()
                 ->after('ryft_customer_id');
 
-            $table->string('home_phone')
+            $table->string('ryft_account_type')
                 ->nullable()
-                ->after('email');
-
-            $table->string('mobile_phone')
-                ->nullable()
-                ->after('home_phone');
+                ->after('ryft_account_id');
         });
     }
 

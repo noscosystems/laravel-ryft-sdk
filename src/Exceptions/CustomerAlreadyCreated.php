@@ -4,12 +4,12 @@ namespace Nosco\Ryft\Exceptions;
 
 use Exception;
 use Illuminate\Database\Eloquent\Model;
-use Nosco\Ryft\Contracts\RyftCustomer;
+use Nosco\Ryft\Traits\Concerns\InteractsWithCustomer;
 
 class CustomerAlreadyCreated extends Exception
 {
     /**
-     * @param Model&RyftCustomer $owner
+     * @param Model&InteractsWithCustomer $owner
      */
     public static function exists(mixed $owner): static
     {

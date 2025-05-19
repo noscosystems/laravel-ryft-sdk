@@ -13,28 +13,8 @@ use Nosco\Ryft\Exceptions\InvalidCustomer;
  */
 trait ManagesCustomer
 {
+    use InteractsWithCustomer;
     use InteractsWithRyft;
-
-    /**
-     * @throws InvalidCustomer when this customer is missing their Ryft ID
-     */
-    public function assertRyftCustomerExists(): void
-    {
-        if (!$this->hasRyftId()) {
-            throw InvalidCustomer::notYetCreated($this);
-        }
-    }
-
-    /**
-     * @throws InvalidCustomer when this customer is missing their Ryft ID
-     * @throws LogicException  when request to Ryft fails
-     */
-    public function asRyftCustomer(): Customer
-    {
-        $this->assertRyftCustomerExists();
-
-        return static::ryft()->customers()->get($this->ryftId());
-    }
 
     /**
      * @throws CustomerAlreadyCreated when this customer already exists in Ryft
@@ -129,16 +109,6 @@ trait ManagesCustomer
             : $this->createAsRyftCustomer($options);
     }
 
-    public function ryftId(): ?string
-    {
-        return $this->ryft_customer_id ?? null;
-    }
-
-    public function hasRyftId(): bool
-    {
-        return !is_null($this->ryftId());
-    }
-
     public function ryftFirstName(): ?string
     {
         if (!isset($this->name) && !isset($this->first_name)) {
@@ -197,7 +167,9 @@ trait ManagesCustomer
 
     private function setRyftId(?string $id): void
     {
-        $this->ryft_customer_id = $id;
+        $this->forceFill([
+            'ryft_customer_id' => $id,
+        ]);
 
         $this->save();
     }

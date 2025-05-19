@@ -5,6 +5,7 @@ namespace Nosco\Ryft\Resource;
 use DateTimeInterface;
 use Illuminate\Support\Collection;
 use Nosco\Ryft\Dtos\Accounts\Account;
+use Nosco\Ryft\Dtos\Accounts\AccountAuthorizationUrl;
 use Nosco\Ryft\Dtos\Payouts\Payout;
 use Nosco\Ryft\Requests\Accounts\PayoutCreate;
 use Nosco\Ryft\Requests\Accounts\PayoutGetById;
@@ -213,7 +214,7 @@ class Accounts extends Resource
      *
      * @throws \LogicException on request failure
      */
-    public function authorize(string $email, string $redirectUrl): Account
+    public function authorize(string $email, string $redirectUrl): AccountAuthorizationUrl
     {
         return $this->connector
             ->send(new SubAccountAuthorize($email, $redirectUrl))
