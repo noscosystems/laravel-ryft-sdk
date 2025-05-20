@@ -29,7 +29,9 @@ trait ManagesAccount
             $account->metadata = collect();
         }
 
-        $account->metadata->put('id', $this->id);
+        $account->metadata = $account->metadata
+            ->put('owner_id', $this->id ?? null)
+            ->take(5);
 
         $account = static::ryft()->accounts()->create($account);
 

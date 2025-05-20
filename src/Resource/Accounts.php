@@ -171,7 +171,7 @@ class Accounts extends Resource
      *
      * @throws \LogicException on request failure
      */
-    public function createPayout(string $id, Payout $payout): Account
+    public function createPayout(string $id, Payout $payout): Payout
     {
         return $this->connector
             ->send(new PayoutCreate($id, $payout))

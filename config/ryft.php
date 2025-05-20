@@ -21,6 +21,8 @@ return [
 
     'currency' => env('RYFT_CURRENCY', env('APP_CURRENCY', 'USD')),
 
+    'country' => env('RYFT_COUNTRY', env('APP_COUNTRY', 'US')),
+
     'database' => [
         'users_table' => env('RYFT_USERS_TABLE', 'users'),
     ],
