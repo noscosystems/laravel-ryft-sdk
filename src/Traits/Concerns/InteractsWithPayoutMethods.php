@@ -16,7 +16,7 @@ trait InteractsWithPayoutMethods
 
     public function getDefaultPayoutMethodId(): ?string
     {
-        return $this->ryft_payout_method_id;
+        return $this->ryft_payout_method_id ?? null;
     }
 
     /**
