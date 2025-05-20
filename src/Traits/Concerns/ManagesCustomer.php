@@ -118,7 +118,7 @@ trait ManagesCustomer
             return $this->first_name;
         }
 
-        return explode(' ', $this->name)[0] ?? null;
+        return explode(' ', $this->name ?? '')[0] ?? null;
     }
 
     public function ryftLastName(): ?string
@@ -130,7 +130,7 @@ trait ManagesCustomer
             return $this->last_name;
         }
 
-        return explode(' ', $this->name)[1] ?? null;
+        return explode(' ', $this->name ?? '')[1] ?? null;
     }
 
     public function ryftEmail(): ?string

@@ -2,7 +2,6 @@
 
 namespace Nosco\Ryft\Traits\Concerns;
 
-use Nosco\Ryft\Dtos\PayoutMethods\PayoutMethod;
 use Nosco\Ryft\Dtos\Payouts\Payout;
 use Nosco\Ryft\Exceptions\InvalidAccount;
 use Nosco\Ryft\Exceptions\InvalidAmount;
@@ -17,13 +16,13 @@ trait PerformsPayouts
     /**
      * Creates a manual payout for the this account.
      *
-     * @param PayoutMethod|string|null $payoutMethod Uses default method set on the owner if `null`
+     * @param ?string $payoutMethod Uses default method set on the owner if `null`
      *
      * @throws InvalidAccount
      * @throws InvalidAmount
      * @throws InvalidPayoutMethod
      */
-    public function payout(int $amount, PayoutMethod|string|null $payoutMethod = null, array $metadata = []): Payout
+    public function payout(int $amount, ?string $payoutMethod = null, array $metadata = []): Payout
     {
         $this->assertRyftAccountExists();
 

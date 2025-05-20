@@ -21,7 +21,7 @@ trait ManagesAccount
      * @throws AccountAlreadyCreated
      * @throws LogicException
      */
-    public function createRyftAccount(Account $account): Account
+    public function createRyftAccount(Account $account, array $metadata = []): Account
     {
         $this->assertRyftAccountDoesNotExist();
 
@@ -30,7 +30,8 @@ trait ManagesAccount
         }
 
         $account->metadata = $account->metadata
-            ->put('owner_id', $this->id ?? null)
+            ->merge($this->ryftAccountMetadata())
+            ->merge($metadata)
             ->take(5);
 
         $account = static::ryft()->accounts()->create($account);

@@ -59,7 +59,7 @@ trait InteractsWithPaymentMethods
     /**
      * @throws InvalidPaymentMethod when no payment method ID is provided
      */
-    protected function assertValidPaymentMethodId(PaymentMethod|string $paymentMethod): void
+    protected function assertValidPaymentMethodId(string $paymentMethod): void
     {
         $paymentMethod = str($paymentMethod);
 

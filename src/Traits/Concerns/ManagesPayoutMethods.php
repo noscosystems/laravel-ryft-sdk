@@ -48,7 +48,7 @@ trait ManagesPayoutMethods
      * @throws InvalidAccount
      */
     public function updatePayoutMethod(
-        PayoutMethod|string $payoutMethod,
+        string $payoutMethod,
         ?string $name = null,
         ?BankAccount $bankAccount = null,
     ): PayoutMethod {

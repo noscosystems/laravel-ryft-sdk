@@ -3,7 +3,6 @@
 namespace Nosco\Ryft\Traits\Concerns;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Collection;
 use LogicException;
 use Nosco\Ryft\Dtos\Customers\Customer;
 use Nosco\Ryft\Dtos\PaymentMethods\PaymentMethod;
@@ -18,51 +17,6 @@ trait ManagesPaymentMethods
     use InteractsWithCustomer;
     use InteractsWithPaymentMethods;
     use InteractsWithRyft;
-
-    /**
-     * @throws InvalidCustomer
-     * @throws LogicException
-     */
-    public function defaultPaymentMethod(): ?PaymentMethod
-    {
-        if (!$this->hasRyftId()) {
-            return null;
-        }
-
-        $defaultId = $this->asRyftCustomer()->defaultPaymentMethod;
-
-        if (!$defaultId) {
-            return null;
-        }
-
-        return static::paymentMethods()->get($defaultId);
-    }
-
-    public function hasDefaultPaymentMethod(): bool
-    {
-        try {
-            return $this->defaultPaymentMethod() !== null;
-        } catch (InvalidCustomer|LogicException) {
-            return false;
-        }
-    }
-
-    /**
-     * @return Collection<PaymentMethod>
-     */
-    public function paymentMethods(): Collection
-    {
-        if (!$this->hasRyftId()) {
-            return collect();
-        }
-
-        return static::ryft()->customers()->listPaymentMethods($this->ryftId());
-    }
-
-    public function hasPaymentMethod(): bool
-    {
-        return $this->paymentMethods()->isNotEmpty();
-    }
 
     /**
      * @throws InvalidCustomer
@@ -90,7 +44,7 @@ trait ManagesPaymentMethods
      * @throws InvalidCustomer
      * @throws LogicException
      */
-    public function deletePaymentMethod(PaymentMethod|string $paymentMethod): PaymentMethod
+    public function deletePaymentMethod(string $paymentMethod): PaymentMethod
     {
         $this->assertRyftCustomerExists();
         $this->assertValidPaymentMethodId($paymentMethod);
@@ -103,7 +57,7 @@ trait ManagesPaymentMethods
      * @throws InvalidPaymentMethod
      * @throws LogicException
      */
-    public function updateDefaultPaymentMethod(PaymentMethod|string $paymentMethod): Customer
+    public function updateDefaultPaymentMethod(string $paymentMethod): Customer
     {
         $this->assertRyftCustomerExists();
         $this->assertValidPaymentMethodId($paymentMethod);
