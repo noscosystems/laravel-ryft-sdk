@@ -41,6 +41,13 @@ trait InteractsWithAccount
         return static::ryft()->accounts()->get($this->ryftAccountId());
     }
 
+    protected function ryftAccountMetadata(): array
+    {
+        return [
+            'owner_id' => $this->id ?? null,
+        ];
+    }
+
     /**
      * @throws InvalidAccount
      */

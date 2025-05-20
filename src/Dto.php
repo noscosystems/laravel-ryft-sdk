@@ -9,12 +9,14 @@ use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Support\Collection;
 use JsonException;
 use JsonSerializable;
+use Nosco\Ryft\Exceptions\InvalidAttribute;
 use Nosco\Ryft\Support\Cast;
 use Nosco\Ryft\Support\Helpers;
 use ReflectionClass;
 use Saloon\Http\Response;
+use Stringable;
 
-abstract class Dto implements Arrayable, Jsonable, JsonSerializable
+abstract class Dto implements Arrayable, Jsonable, JsonSerializable, Stringable
 {
     private ?Response $response = null;
 
@@ -135,5 +137,17 @@ abstract class Dto implements Arrayable, Jsonable, JsonSerializable
         $this->response = $response;
 
         return $this;
+    }
+
+    /**
+     * @throws InvalidAttribute
+     */
+    public function __toString(): string
+    {
+        if (property_exists(static::class, 'id')) {
+            return $this->id ?? '';
+        }
+
+        throw InvalidAttribute::notExists(static::class, 'id');
     }
 }

@@ -16,6 +16,7 @@ use Nosco\Ryft\Exceptions\InvalidPaymentMethod;
 trait ManagesPaymentMethods
 {
     use InteractsWithCustomer;
+    use InteractsWithPaymentMethods;
     use InteractsWithRyft;
 
     /**
@@ -107,28 +108,8 @@ trait ManagesPaymentMethods
         $this->assertRyftCustomerExists();
         $this->assertValidPaymentMethodId($paymentMethod);
 
-        $paymentMethodId = $paymentMethod instanceof PaymentMethod
-            ? $paymentMethod->id
-            : $paymentMethod;
-
         return static::ryft()
             ->customers()
-            ->update($this->ryftId(), new Customer($paymentMethodId));
-    }
-
-    /**
-     * @throws InvalidPaymentMethod when no payment method ID is provided
-     */
-    protected function assertValidPaymentMethodId(PaymentMethod|string $paymentMethod): void
-    {
-        if ($paymentMethod instanceof PaymentMethod) {
-            $paymentMethod = $paymentMethod->id;
-        }
-        if (!$paymentMethod) {
-            throw InvalidPaymentMethod::idNotProvided();
-        }
-        if (!str($paymentMethod)->isMatch('/^pmt_[0-7][0-9A-HJKMNP-TV-Z]{25}/')) {
-            throw InvalidPaymentMethod::malformedId($paymentMethod);
-        }
+            ->update($this->ryftId(), new Customer(defaultPaymentMethod: $paymentMethod));
     }
 }

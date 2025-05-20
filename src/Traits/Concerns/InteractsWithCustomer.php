@@ -15,7 +15,14 @@ trait InteractsWithCustomer
 
     public function hasRyftId(): bool
     {
-        return !is_null($this->ryftId());
+        return $this->ryftId() !== null;
+    }
+
+    public function ryftMetadata(): array
+    {
+        return [
+            'owner_id' => $this->id ?? null,
+        ];
     }
 
     /**

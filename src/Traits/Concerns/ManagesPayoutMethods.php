@@ -6,11 +6,25 @@ use Nosco\Ryft\Dtos\PayoutMethods\BankAccount;
 use Nosco\Ryft\Dtos\PayoutMethods\PayoutMethod;
 use Nosco\Ryft\Enums\PayoutMethods\PayoutMethodType;
 use Nosco\Ryft\Exceptions\InvalidAccount;
+use Nosco\Ryft\Requests\PayoutMethods\PayoutMethodsList;
+use Saloon\PaginationPlugin\Paginator;
 
 trait ManagesPayoutMethods
 {
     use InteractsWithAccount;
     use InteractsWithRyft;
+
+    /**
+     * @throws InvalidAccount
+     */
+    public function payoutMethods(): Paginator
+    {
+        $this->assertRyftAccountExists();
+
+        return static::ryft()->paginate(new PayoutMethodsList(
+            id: $this->ryftAccountId()
+        ));
+    }
 
     /**
      * @throws InvalidAccount
@@ -40,10 +54,7 @@ trait ManagesPayoutMethods
     ): PayoutMethod {
         $this->assertRyftAccountExists();
 
-        if ($payoutMethod instanceof PayoutMethod) {
-            $payoutMethod = $payoutMethod->id;
-        }
-        if (!$payoutMethod) {
+        if (!str($payoutMethod)->isMatch('/^ac_[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/')) {
             throw InvalidAccount::malformedId($this);
         }
 

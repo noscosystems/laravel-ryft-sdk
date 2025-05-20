@@ -27,10 +27,7 @@ trait PerformsPayouts
     {
         $this->assertRyftAccountExists();
 
-        if ($payoutMethod instanceof PayoutMethod) {
-            $payoutMethod = $payoutMethod->id;
-        }
-        if (!$payoutMethod) {
+        if (str($payoutMethod)->isEmpty()) {
             $this->assertRyftDefaultPayoutMethodExists();
             $payoutMethod = $this->getDefaultPayoutMethodId();
         }
@@ -38,8 +35,9 @@ trait PerformsPayouts
             throw InvalidAmount::zeroOrLess(Payout::class);
         }
 
-        $metadata['owner_id'] ??= $this->id;
-        $metadata = array_slice($metadata, 5, preserve_keys: true);
+        $metadata = collect($this->ryftAccountMetadata())
+            ->merge($metadata)
+            ->take(5);
 
         return static::ryft()
             ->accounts()
@@ -47,7 +45,7 @@ trait PerformsPayouts
                 amount: $amount,
                 currency: config('ryft.currency'),
                 payoutMethodId: $payoutMethod,
-                metadata: collect($metadata),
+                metadata: $metadata,
             ));
     }
 }

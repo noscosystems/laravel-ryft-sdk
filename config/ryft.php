@@ -23,6 +23,13 @@ return [
 
     'country' => env('RYFT_COUNTRY', env('APP_COUNTRY', 'US')),
 
+    'payments' => [
+        'statement' => [
+            'descriptor' => env('RYFT_STATEMENT_DESCRIPTOR'),
+            'city' => env('RYFT_STATEMENT_CITY'),
+        ],
+    ],
+
     'database' => [
         'users_table' => env('RYFT_USERS_TABLE', 'users'),
     ],

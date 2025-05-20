@@ -30,7 +30,7 @@ trait ManagesCustomer
 
         $dto = static::ryft()->customers()->create($ryftCustomer);
 
-        $this->setRyftId($dto->id);
+        $this->setRyftId($dto);
 
         return $dto;
     }
@@ -47,7 +47,7 @@ trait ManagesCustomer
             ->customers()
             ->update($this->ryftId(), Customer::fromArray($options));
 
-        $this->setRyftId($ryftCustomer->id);
+        $this->setRyftId($ryftCustomer);
 
         return $ryftCustomer;
     }
@@ -146,11 +146,6 @@ trait ManagesCustomer
     public function ryftHomePhone(): ?string
     {
         return $this->home_phone ?? null;
-    }
-
-    public function ryftMetadata(): array
-    {
-        return [];
     }
 
     protected function defaultRyftCustomerOptions(): array
