@@ -57,10 +57,13 @@ trait ManagesPaymentMethods
      * @throws InvalidPaymentMethod
      * @throws LogicException
      */
-    public function updateDefaultPaymentMethod(string $paymentMethod): Customer
+    public function updateDefaultPaymentMethod(?string $paymentMethod): Customer
     {
         $this->assertRyftCustomerExists();
-        $this->assertValidPaymentMethodId($paymentMethod);
+
+        if ($paymentMethod !== null) {
+            $this->assertValidPaymentMethodId($paymentMethod);
+        }
 
         return static::ryft()
             ->customers()
