@@ -195,7 +195,7 @@ use function Illuminate\Events\queueable;
 
 class BillableObserver
 {
-    public function created(User $user): void
+    public function updated(User $user): void
     {
         if ($user->hasRyftId()) {
             $user->syncRyftCustomerDetails();
