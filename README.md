@@ -65,6 +65,26 @@ class User extends Authenticatable
 
 ```
 
+### Payable Model
+
+Similarly to the Billable model, you may include the Payable trait in your
+authenticatable model definition. This trait provides methods that allow you to
+perform common tasks relating to paying out to users.
+
+> [!WARNING]
+> If your chosen authenticatable model is not `\App\Models\User`,
+> you must adjust the migration to use your model's table.
+
+```php
+use Nosco\Ryft\Traits\Concerns\Payable;
+
+class User extends Authenticatable
+{
+    use Payable;
+}
+
+```
+
 ### API Keys
 
 You must configure your Ryft API keys for this package to work correctly.
