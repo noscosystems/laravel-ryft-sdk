@@ -226,6 +226,8 @@ Creating Ryft payments is achieved by creating payment sessions. The payment
 session must contain the transaction value and currency, and may include additional
 information [supported by Ryft's API](https://api-reference.ryftpay.com/#tag/Payments/operation/paymentSessionCreate).
 
+#### Creating a subscription
+
 In order to create subscriptions with Ryft, you will need to store at least one
 payment method on Ryft and retrieve its token. There is currently only only
 one approach to store customers' payment methods: by creating a payment.
@@ -344,6 +346,10 @@ Ryft::payments()->continue(new PaymentSessionContinue(
 
 A successful payment is determined by either an `Approved` or `Captured` status.
 You may redirect the user to a success page if either statuses are achieved.
+
+### Payment Methods
+
+###
 
 ## Testing
 
