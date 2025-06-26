@@ -98,13 +98,15 @@ trait ManagesSubscriptions
     public function pauseSubscription(
         string $subscription,
         ?string $reason = null,
-        ?DateTimeInterface $resumeAt = null,
+        ?DateTimeInterface $pauseDate = null,
+        ?DateTimeInterface $resumeDate = null,
     ): Subscription {
         $this->assertValidSubscriptionId($subscription);
 
         return static::ryft()->subscriptions()->pause($subscription, new PausedPaymentDetails(
             reason: $reason,
-            resumeAtTimestamp: $resumeAt?->getTimestamp(),
+            resumeAtTimestamp: $resumeDate?->getTimestamp(),
+            pausedAtTimestamp: $pauseDate?->getTimestamp(),
         ));
     }
 
