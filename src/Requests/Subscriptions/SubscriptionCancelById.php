@@ -5,6 +5,7 @@ namespace Nosco\Ryft\Requests\Subscriptions;
 use Nosco\Ryft\Request;
 use Nosco\Ryft\Traits\Requests\Subscriptions\ReturnsSubscription;
 use Saloon\Enums\Method;
+use Saloon\Traits\Body\HasJsonBody;
 
 /**
  * subscriptionCancelById.
@@ -14,6 +15,7 @@ use Saloon\Enums\Method;
  */
 class SubscriptionCancelById extends Request
 {
+    use HasJsonBody;
     use ReturnsSubscription;
 
     protected Method $method = Method::DELETE;
@@ -28,5 +30,13 @@ class SubscriptionCancelById extends Request
      */
     public function __construct(
         protected string $subscriptionId,
+        protected ?string $reason = null,
     ) {}
+
+    protected function defaultBody(): array
+    {
+        return array_filter([
+            'reason' => $this->reason,
+        ]);
+    }
 }

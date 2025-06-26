@@ -132,9 +132,9 @@ trait ManagesSubscriptions
         return static::ryft()->subscriptions()->resume($subscription);
     }
 
-    public function cancelSubscription(string $subscription): Subscription
+    public function cancelSubscription(string $subscription, ?string $reason = null): Subscription
     {
-        return static::ryft()->subscriptions()->cancel($subscription);
+        return static::ryft()->subscriptions()->cancel($subscription, $reason);
     }
 
     protected function subscriptionStatementDescriptor(): ?string

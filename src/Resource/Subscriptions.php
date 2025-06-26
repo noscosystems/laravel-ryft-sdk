@@ -164,16 +164,17 @@ class Subscriptions extends Resource
      *
      * This state is terminal and cannot be reversed.
      *
-     * @param string $subscriptionId Subscription to cancel
-     *
-     * @link https://api-reference.ryftpay.com/#tag/Subscriptions/operation/subscriptionCancelById Documentation
+     * @param string  $subscriptionId Subscription to cancel
+     * @param ?string $reason         Optional field describing why the subscription is being cancelled.
      *
      * @throws \LogicException on request failure
+     *
+     *@link https://api-reference.ryftpay.com/#tag/Subscriptions/operation/subscriptionCancelById Documentation
      */
-    public function cancel(string $subscriptionId): Subscription
+    public function cancel(string $subscriptionId, ?string $reason = null): Subscription
     {
         return $this->connector
-            ->send(new SubscriptionCancelById($subscriptionId))
+            ->send(new SubscriptionCancelById($subscriptionId, $reason))
             ->dtoOrFail();
     }
 
