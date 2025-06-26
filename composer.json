@@ -4,6 +4,8 @@
     "version": "1.0.0",
     "keywords": [
         "Nosco Management Solutions",
+        "Ryft",
+        "payments",
         "laravel",
         "laravel-ryft"
     ],
@@ -19,7 +21,7 @@
     "require": {
         "php": "^8.2",
         "illuminate/collections": "*",
-        "illuminate/contracts": "^10.0||^11.0||^12.0",
+        "illuminate/contracts": "^11.0||^12.0",
         "illuminate/support": "*",
         "saloonphp/laravel-plugin": "^3.5",
         "saloonphp/pagination-plugin": "^2.2",
