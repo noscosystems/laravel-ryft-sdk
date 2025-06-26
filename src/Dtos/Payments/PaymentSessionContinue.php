@@ -8,6 +8,6 @@ class PaymentSessionContinue extends Dto
 {
     public function __construct(
         public ?string $clientSecret = null,
-
+        public ?ThreeDsRequestContinue $threeDs = null,
     ) {}
 }
