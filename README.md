@@ -349,7 +349,69 @@ You may redirect the user to a success page if either statuses are achieved.
 
 ### Payment Methods
 
-###
+#### Retrieving Payment Methods
+
+The `paymentMethods` on the Billable model fetch and return a collection of
+`Nosco\Ryft\Dtos\PaymentMethods\PaymentMethod` instances directly from Ryft's API:
+
+```php
+$paymentMethods = $user->paymentMethods();
+```
+
+To retrieve a customer's default payment method from the API,
+the `defaultPaymentMethod` method may be used:
+
+```php
+$defaultPaymentMethod = $user->defaultPaymentMethod();
+```
+
+You can retrieve a specific payment method that is attached
+to the Billable model using the `findPaymentMethod` method:
+
+```php
+$paymentMethod = $user->findPaymentMethod($paymentMethodId);
+```
+
+#### Payment Method Presence
+
+To determine if a billable model has a default payment method attached
+to their customer account, invoke the `hasDefaultPaymentMethod` method:
+
+```php
+if ($user->hasDefaultPaymentMethod()) {
+    // ...
+}
+```
+
+You may use the `hasPaymentMethod` method to determine if a Billable model has
+at least one payment method attached to their customer account:
+
+```php
+if ($user->hasPaymentMethod()) {
+    // ...
+}
+```
+
+#### Updating the Default Payment Method
+
+The `updateDefaultPaymentMethod` method may be used to update a user's
+default payment method information to the provided payment method ID:
+
+```php
+$user->updateDefaultPaymentMethod($paymentMethodId);
+```
+
+#### Deleting a payment method
+
+To delete a payment method you may call the `deletePaymentMethod` method on the
+Billable model:
+
+```php
+$user->deleteDefaultPaymentMethod($paymentMethodId);
+```
+
+> [!NOTE]
+> If the Ryft customer is deleted, all of their payment methods will also be deleted.
 
 ## Testing
 
