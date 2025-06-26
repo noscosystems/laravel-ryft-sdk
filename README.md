@@ -226,11 +226,9 @@ Creating Ryft payments is achieved by creating payment sessions. The payment
 session must contain the transaction value and currency, and may include additional
 information [supported by Ryft's API](https://api-reference.ryftpay.com/#tag/Payments/operation/paymentSessionCreate).
 
-#### Creating a subscription
+#### Creating a payment method
 
-In order to create subscriptions with Ryft, you will need to store at least one
-payment method on Ryft and retrieve its token. There is currently only only
-one approach to store customers' payment methods: by creating a payment.
+There is currently only only one approach to store customers' payment methods: by creating a payment.
 
 You may choose to let the user save their card upon payment or initiate a
 zero-value authorization. Please consult [Ryft's documentation to configure the
@@ -351,7 +349,7 @@ You may redirect the user to a success page if either statuses are achieved.
 
 #### Retrieving Payment Methods
 
-The `paymentMethods` on the Billable model fetch and return a collection of
+The `paymentMethods` method on the Billable model fetch and return a collection of
 `Nosco\Ryft\Dtos\PaymentMethods\PaymentMethod` instances directly from Ryft's API:
 
 ```php
@@ -412,6 +410,168 @@ $user->deleteDefaultPaymentMethod($paymentMethodId);
 
 > [!NOTE]
 > If the Ryft customer is deleted, all of their payment methods will also be deleted.
+
+### Subscriptions
+
+#### Creating Subscriptions
+
+> [!IMPORTANT]
+> In order to create subscriptions with Ryft, you will need to store at least
+> one payment method on the user's Ryft customer account.
+
+To create a subscription, first retrieve an instance of your Billable model,
+which typically will be an instance of `App\Models\User`.
+Once you have retrieved the model instance, you may use the `newSubscription`
+method to create the subscription:
+
+```php
+use Nosco\Ryft\Dtos\Subscriptions\RecurringInterval;
+use Nosco\Ryft\Enums\Subscriptions\RecurringIntervalUnit;
+
+// Create a 9.99 USD monthly subscription,
+// starting today, using the default payment method.
+$user->newSubscription(
+    price: 999,
+    interval: new RecurringInterval(
+        unit: RecurringIntervalUnit::MONTHS,
+        count: 1
+    ),
+);
+```
+
+You may specify which payment method to charge subscription fees by supplying
+it in the `paymentMethod` parameter:
+
+```php
+use Nosco\Ryft\Dtos\Subscriptions\RecurringInterval;
+use Nosco\Ryft\Enums\Subscriptions\RecurringIntervalUnit;
+
+$user->newSubscription(
+    price: 999,
+    interval: new RecurringInterval(
+        unit: RecurringIntervalUnit::MONTHS,
+        count: 1
+    ),
+    paymentMethod: 'pmt_01FCTS1XMKH9FF43CAFA4CXT3P',
+);
+```
+
+In cases where you may want the subscription to start at a later date,
+you may supply a `DateTimeInterface` object to the `startDate` parameter:
+
+```php
+use Nosco\Ryft\Dtos\Subscriptions\RecurringInterval;
+use Nosco\Ryft\Enums\Subscriptions\RecurringIntervalUnit;
+
+// Create a 9.99 USD monthly subscription starting at the beginning of next month.
+$user->newSubscription(
+    price: 999,
+    interval: new RecurringInterval(
+        unit: RecurringIntervalUnit::MONTHS,
+        count: 1
+    ),
+    startDate: today()->addMonth()->startOfMonth(),
+);
+```
+
+> [!NOTE]
+> The subscription currency will be the currency configured in your environment
+> variable `RYFT_CURRENCY`.
+
+#### Retrieving Subscriptions
+
+The `subscriptions` method on the Billable model fetch and return a
+Saloon paginated collection of `Nosco\Ryft\Dtos\Subscriptions\Subscription`
+instances directly from Ryft's API:
+
+```php
+$subscriptions = $user->subscriptions();
+```
+
+You may specify the time ranges of start dates when retrieving a list of
+subscriptions by supplying `DateTimeInterface` objects:
+
+```php
+// Subscriptions starting in the next month
+$subscriptions = $user->subscriptions(
+    from: today(),
+    to: today()->addMonth(),
+);
+```
+
+You can retrieve a specific payment method that is attached to the Billable
+model using the `findPaymentMethod` method:
+
+```php
+$user->findSubscription('sub_01FCTS1XMKH9FF43CAFA4CXT3P');
+```
+
+#### Pausing a Subscription
+
+To pause a subscription, call the `pauseSubscription` method on the Billable model:
+
+```php
+$user->pauseSubscription('sub_01FCTS1XMKH9FF43CAFA4CXT3P');
+```
+
+You may optionally specify a reason for the subscription pause
+using the `reason` parameter.
+
+If you or the user wants to temporarily pause a subscription for a known length
+of time, you may specify a future `resumeDate` with a `DateTimeInterface` object:
+
+```php
+// Pause a subscription for one month.
+$user->pauseSubscription(
+    subscription: 'sub_01FCTS1XMKH9FF43CAFA4CXT3P',
+    reason: 'Free month promotion',
+    resumeDate: today()->addMonth(),
+);
+```
+
+To schedule a subscription pause at a future date, specify a future
+`pauseDate` with a `DateTimeInterface` object:
+
+```php
+// Pause a subscription from tomorrow onwards.
+$user->pauseSubscription(
+    subscription: 'sub_01FCTS1XMKH9FF43CAFA4CXT3P',
+    pauseDate: today()->addDay(),
+);
+```
+
+When a subscription is scheduled to be paused and is currently not yet paused,
+you may unschedule it by calling `unscheduleSubscriptionPause` method
+on the Billable model:
+
+```php
+$user->unscheduleSubscriptionPause('sub_01FCTS1XMKH9FF43CAFA4CXT3P');
+```
+
+#### Resuming a Subscription
+
+If a subscription is currently paused, you may resume it by calling
+`resumeSubscription` method on the Billable model:
+
+```php
+$user->resumeSubscription('sub_01FCTS1XMKH9FF43CAFA4CXT3P');
+```
+
+> [!IMPORTANT]
+> Ryft does not allow a cancelled subscription to be resumed. If you want to
+> achieve that effect, you may pause a subscription indefinitely instead.
+
+#### Cancelling a Subscription
+
+To cancel a subscription, call the `cancelSubscription` method on the Billable model.
+Optionally, you may provide the reason for cancellation using the `reason` parameter:
+
+```php
+$user->cancelSubscription(
+    subscription: 'sub_01FCTS1XMKH9FF43CAFA4CXT3P',
+    reason: 'Cancelled by user',
+);
+```
 
 ## Testing
 
