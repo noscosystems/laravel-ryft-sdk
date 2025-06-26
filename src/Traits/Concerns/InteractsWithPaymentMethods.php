@@ -8,6 +8,8 @@ use Nosco\Ryft\Dtos\PaymentMethods\PaymentMethod;
 use Nosco\Ryft\Dtos\Payments\CustomerAddress;
 use Nosco\Ryft\Exceptions\InvalidCustomer;
 use Nosco\Ryft\Exceptions\InvalidPaymentMethod;
+use Saloon\Exceptions\Request\ClientException;
+use Saloon\Exceptions\Request\RequestException;
 
 trait InteractsWithPaymentMethods
 {
@@ -49,6 +51,21 @@ trait InteractsWithPaymentMethods
         }
 
         return static::ryft()->customers()->listPaymentMethods($this->ryftId());
+    }
+
+    public function findPaymentMethod(string $id): ?PaymentMethod
+    {
+        try {
+            return static::ryft()->paymentMethods()->get($id);
+        } catch (LogicException $e) {
+            $previous = $e->getPrevious();
+
+            if ($previous instanceof ClientException) {
+                return null;
+            }
+
+            throw $e;
+        }
     }
 
     public function hasPaymentMethod(): bool
