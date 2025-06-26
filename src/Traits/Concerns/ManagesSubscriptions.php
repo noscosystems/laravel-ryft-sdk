@@ -32,7 +32,7 @@ trait ManagesSubscriptions
             ->paginate(new SubscriptionsList($from?->getTimestamp(), $to?->getTimestamp()));
     }
 
-    public function getSubscription(string $subscription): Subscription
+    public function findSubscription(string $subscription): Subscription
     {
         return static::ryft()->subscriptions()->get($subscription);
     }
