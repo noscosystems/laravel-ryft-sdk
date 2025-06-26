@@ -2,6 +2,10 @@
 
 An SDK for Ryft payments. Built on Saloon PHP, for Laravel.
 
+> [!WARNING]
+> This package is currently in active development. Features may be added,
+> removed, changed, or broken without prior notice.
+
 ## Installation
 
 First, install the package using Composer package manager
@@ -126,8 +130,9 @@ $ryftCustomer = $user->createAsRyftCustomer();
 
 A Ryft customer is required to store payment methods and create subscriptions.
 
-You may provide additional parameters via an `$options` array which are [supported
-by the Ryft API](https://api-reference.ryftpay.com/#tag/Customers/operation/customerCreate):
+You may provide additional parameters
+[supported by the Ryft API](https://api-reference.ryftpay.com/#tag/Customers/operation/customerCreate)
+via an `$options` array:
 
 ```php
 $ryftCustomer = $user->createAsRyftCustomer($options);
