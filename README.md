@@ -220,6 +220,131 @@ Similarly, you may override the `ryftLastName`, `ryftEmail`, `ryftHomePhone`,
 and `ryftMobilePhone` methods. These methods will sync information to
 their corresponding customer parameters when creating or updating a Ryft customer.
 
+### Payments
+
+Creating Ryft payments is achieved by creating payment sessions. The payment
+session must contain the transaction value and currency, and may include additional
+information [supported by Ryft's API](https://api-reference.ryftpay.com/#tag/Payments/operation/paymentSessionCreate).
+
+In order to create subscriptions with Ryft, you will need to store at least one
+payment method on Ryft and retrieve its token. There is currently only only
+one approach to store customers' payment methods: by creating a payment.
+
+You may choose to let the user save their card upon payment or initiate a
+zero-value authorization. Please consult [Ryft's documentation to configure the
+payment session](https://developer.ryftpay.com/docs/integrate/web/embedded-sdk/save-cards-for-future-payments/).
+
+If you are using
+a [server-to-server](https://developer.ryftpay.com/docs/integrate/web/server-to-server/save-cards-for-future-payments/)
+approach, you can specify whether the payment method should be stored by setting `paymentMethodOptions.store` as `true`
+when creating a payment session.
+
+> [!IMPORTANT]
+> Ryft recommends that your application use their embedded payment form.
+> If you want to use a server-to-server approach to attempt payments,
+> your application must be PCI DSS compliant.
+
+#### Creating a payment session
+
+To initiate a payment, you must first create a payment session. You can achieve
+this using the bundled Saloon SDK:
+
+```php
+use Nosco\Ryft\Ryft;
+use Nosco\Ryft\Dtos\Customers\Customer;
+use Nosco\Ryft\Dtos\Payments\PaymentSession;
+
+$paymentSession = Ryft::payments()->create(new PaymentSession(
+    amount: 1000,
+    currency: 'GBP',
+    customerDetails: new Customer(
+        id: $user->ryftId(),
+    ),
+));
+```
+
+Please consult [Ryft's API](https://api-reference.ryftpay.com/#tag/Payments/operation/paymentSessionCreate)
+for supported options and instructions to set-up subscriptions.
+
+> [!NOTE]
+> `customerDetails` must only contain the user's Ryft customer ID if they already
+> have one. Other parameters are for creating a new Ryft customer.
+
+#### Attempting a payment
+
+After a payment session was created, Ryft will return the payment session with
+the `clientSecret` property populated. The `clientSecret` is a unique token for
+interacting with the payment session and it must be supplied when attempting to
+complete the payment session.
+
+You can supply the user's card information when attempting to complete the payment
+session:
+
+```php
+use Nosco\Ryft\Ryft;
+use Nosco\Ryft\Dtos\Payments\PaymentSessionAttempt;
+use Nosco\Ryft\Dtos\PaymentMethods\PaymentMethodOptions;
+use Nosco\Ryft\Dtos\PaymentMethods\Card;
+
+$paymentSession = Ryft::payments()->attempt(new PaymentSessionAttempt(
+    clientSecret: 'ps_01FCTS1XMKH9FF43CAFA4CXT3P_secret_b83f2653-06d7-44a9-a548-5825e8186004',
+    cardDetails: new Card(
+        number: '4444333322221111',
+        expiryMonth: '10',
+        expiryYear: '2028',
+        cvc: '100'
+    ),
+    paymentMethodOptions: new PaymentMethodOptions(
+        store: true,
+    ),
+));
+```
+
+#### Error Handling
+
+Once an attempt is made, you may check if there are any errors returned by Ryft
+regarding the customer's supplied card details by referencing the `lastError`
+property
+with [Ryft's list of possible errors](https://developer.ryftpay.com/docs/integrate/web/server-to-server/#pendingpayment):
+
+```php
+if ($paymentSession->lastError) {
+    // Handle error
+}
+```
+
+There may be a few times
+where [further action is required by the user](https://developer.ryftpay.com/docs/integrate/web/server-to-server/#pendingaction)
+to verify that they are the authorized user of that card. In such cases,
+Ryft will return a `PaymentSessionAttempt` object with the status of
+`PendingAction` and containing a redirect url in the `requiredAction.url` property:
+
+```php
+// Redirect user to 3DS auth flow if required.
+if ($paymentSessionAttempt->requiredAction?->url) {
+    $this->redirect($paymentSessionAttempt->requiredAction->url);
+}
+```
+
+Once the user had successfully complete the 3DS authorization flow,
+you can continue the attempt by supplying the captured 3DS information:
+
+```php
+use Nosco\Ryft\Ryft;
+use Nosco\Ryft\Dtos\Payments\PaymentSessionContinue;
+use Nosco\Ryft\Dtos\Payments\ThreeDsRequestContinue;
+
+Ryft::payments()->continue(new PaymentSessionContinue(
+    clientSecret: 'ps_01FCTS1XMKH9FF43CAFA4CXT3P_secret_b83f2653-06d7-44a9-a548-5825e8186004',
+    threeDs: new ThreeDsRequestContinue(
+        fingerprint: 'ewogICJ0aHJlZURTU2VydmVyVHJhbnNJRCI6ICI4ZjAxNzdhNC0yY2VkLTQ4NjUtODViNy1iYWQ5YmZhMzk4ZDIiLAogICJ0aHJlZURTQ29tcEluZCI6IlkiCn0=',
+    ),
+));
+```
+
+A successful payment is determined by either an `Approved` or `Captured` status.
+You may redirect the user to a success page if either statuses are achieved.
+
 ## Testing
 
 ```bash
