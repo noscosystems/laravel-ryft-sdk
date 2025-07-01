@@ -21,7 +21,7 @@ trait ManagesAccount
      * @throws AccountAlreadyCreated
      * @throws LogicException
      */
-    public function createRyftAccount(Account $account, array $metadata = []): Account
+    public function createAsRyftAccount(Account $account, array $metadata = []): Account
     {
         $this->assertRyftAccountDoesNotExist();
 
