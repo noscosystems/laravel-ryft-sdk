@@ -2,12 +2,12 @@
 
 namespace Nosco\Ryft\Traits\Concerns;
 
-use Nosco\Ryft\Ryft;
+use Nosco\Ryft\RyftConnector;
 
 trait InteractsWithRyft
 {
-    public static function ryft(): Ryft
+    public static function ryft(): RyftConnector
     {
-        return new Ryft;
+        return new RyftConnector;
     }
 }
