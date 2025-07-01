@@ -4,6 +4,7 @@ namespace Nosco\Ryft\Resource;
 
 use DateTimeInterface;
 use Illuminate\Support\Collection;
+use Illuminate\Support\LazyCollection;
 use Nosco\Ryft\Dtos\Customers\Customer;
 use Nosco\Ryft\Dtos\PaymentMethods\PaymentMethod;
 use Nosco\Ryft\Requests\Customers\CustomerCreate;
@@ -36,7 +37,7 @@ class Customers extends Resource
      *                                               The value of the `paginationToken` field from that response should be supplied here,
      *                                               to retrieve the next page of results for that timestamp range.
      *
-     * @return Collection<Customer>
+     * @return LazyCollection<Customer>
      *
      * @link https://api-reference.ryftpay.com/#tag/Customers/operation/customersList Documentation
      *
@@ -49,13 +50,13 @@ class Customers extends Resource
         ?bool $ascending = null,
         ?int $limit = null,
         ?string $startsAfter = null,
-    ): Collection {
+    ): LazyCollection {
         $startTimestamp = $startTimestamp?->getTimestamp();
         $endTimestamp = $endTimestamp?->getTimestamp();
 
         return $this->connector
-            ->send(new CustomersList($email, $startTimestamp, $endTimestamp, $ascending, $limit, $startsAfter))
-            ->dtoOrFail();
+            ->paginate(new CustomersList($email, $startTimestamp, $endTimestamp, $ascending, $limit, $startsAfter))
+            ->collect();
     }
 
     /**

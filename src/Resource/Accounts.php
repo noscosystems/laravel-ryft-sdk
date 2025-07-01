@@ -3,7 +3,7 @@
 namespace Nosco\Ryft\Resource;
 
 use DateTimeInterface;
-use Illuminate\Support\Collection;
+use Illuminate\Support\LazyCollection;
 use Nosco\Ryft\Dtos\Accounts\Account;
 use Nosco\Ryft\Dtos\Accounts\AccountAuthorizationUrl;
 use Nosco\Ryft\Dtos\Payouts\Payout;
@@ -116,7 +116,7 @@ class Accounts extends Resource
      * @param DateTimeInterface|null $endTimestamp   The timestamp when to return payouts up to (inclusive),
      *                                               it must be after the startTimestamp.
      *
-     * @return Collection<Payout>
+     * @return LazyCollection<Payout>
      *
      * @link https://api-reference.ryftpay.com/#tag/Accounts/operation/payoutsList Documentation
      *
@@ -131,14 +131,14 @@ class Accounts extends Resource
         ?DateTimeInterface $endDate = null,
         ?DateTimeInterface $startTimestamp = null,
         ?DateTimeInterface $endTimestamp = null,
-    ): Collection {
+    ): LazyCollection {
         $startDate = $startDate?->format('Y-m-d');
         $endDate = $endDate?->format('Y-m-d');
         $startTimestamp = $startTimestamp?->getTimestamp();
         $endTimestamp = $endTimestamp?->getTimestamp();
 
         return $this->connector
-            ->send(new PayoutsList(
+            ->paginate(new PayoutsList(
                 $id,
                 $ascending,
                 $limit,
@@ -148,7 +148,7 @@ class Accounts extends Resource
                 $startTimestamp,
                 $endTimestamp
             ))
-            ->dtoOrFail();
+            ->collect();
     }
 
     /**

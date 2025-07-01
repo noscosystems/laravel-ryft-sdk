@@ -3,7 +3,7 @@
 namespace Nosco\Ryft\Resource;
 
 use DateTimeInterface;
-use Illuminate\Support\Collection;
+use Illuminate\Support\LazyCollection;
 use Nosco\Ryft\Dtos\Payments\PaymentSession;
 use Nosco\Ryft\Dtos\Payments\PaymentSessionAttempt;
 use Nosco\Ryft\Dtos\Payments\PaymentSessionContinue;
@@ -50,7 +50,7 @@ class Payments extends Resource
      *                                                   should be supplied here, to retrieve the next page of results
      *                                                   for that timestamp range.
      *
-     * @return Collection<PaymentSession>
+     * @return LazyCollection<PaymentSession>
      *
      * @link https://api-reference.ryftpay.com/#tag/Payments/operation/paymentSessionGetBetweenTimestamps Documentation
      *
@@ -62,19 +62,19 @@ class Payments extends Resource
         ?bool $ascending = null,
         ?int $limit = null,
         ?string $startsAfter = null,
-    ): Collection {
+    ): LazyCollection {
         $startTimestamp = Helpers::timestamp($startTimestamp);
         $endTimestamp = Helpers::timestamp($endTimestamp);
 
         return $this->connector
-            ->send(new PaymentSessionGetBetweenTimestamps(
+            ->paginate(new PaymentSessionGetBetweenTimestamps(
                 $startTimestamp,
                 $endTimestamp,
                 $ascending,
                 $limit,
                 $startsAfter
             ))
-            ->dtoOrFail();
+            ->collect();
     }
 
     /**
@@ -190,7 +190,7 @@ class Payments extends Resource
      *                                      The value of the `paginationToken` field from that response should be supplied here,
      *                                      to retrieve the next page of results for that timestamp range.
      *
-     * @return Collection<PaymentTransaction>
+     * @return LazyCollection<PaymentTransaction>
      *
      * @link https://api-reference.ryftpay.com/#tag/Payments/operation/paymentSessionListTransactions Documentation
      *
@@ -201,10 +201,10 @@ class Payments extends Resource
         ?bool $ascending = null,
         ?int $limit = null,
         ?string $startsAfter = null,
-    ): Collection {
+    ): LazyCollection {
         return $this->connector
-            ->send(new PaymentSessionListTransactions($paymentSessionId, $ascending, $limit, $startsAfter))
-            ->dtoOrFail();
+            ->paginate(new PaymentSessionListTransactions($paymentSessionId, $ascending, $limit, $startsAfter))
+            ->collect();
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace Nosco\Ryft\Resource;
 
-use Illuminate\Support\Collection;
+use Illuminate\Support\LazyCollection;
 use Nosco\Ryft\Dtos\Files\File;
 use Nosco\Ryft\Requests\Files\FileCreate;
 use Nosco\Ryft\Requests\Files\FileGetById;
@@ -27,17 +27,21 @@ class Files extends Resource
      *                                 The value of the `paginationToken` field from that response should be supplied here,
      *                                 to retrieve the next page of results for that timestamp range.
      *
-     * @return Collection<File>
+     * @return LazyCollection<File>
      *
      * @link https://api-reference.ryftpay.com/#tag/Files/operation/filesList Documentation
      *
      * @throws \LogicException on request failure
      */
-    public function list(?string $category = null, ?bool $ascending = null, ?int $limit = null, ?string $startsAfter = null): Collection
-    {
+    public function list(
+        ?string $category = null,
+        ?bool $ascending = null,
+        ?int $limit = null,
+        ?string $startsAfter = null
+    ): LazyCollection {
         return $this->connector
-            ->send(new FilesList($category, $ascending, $limit, $startsAfter))
-            ->dtoOrFail();
+            ->paginate(new FilesList($category, $ascending, $limit, $startsAfter))
+            ->collect();
     }
 
     /**

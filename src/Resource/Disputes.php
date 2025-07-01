@@ -3,7 +3,7 @@
 namespace Nosco\Ryft\Resource;
 
 use DateTimeInterface;
-use Illuminate\Support\Collection;
+use Illuminate\Support\LazyCollection;
 use Nosco\Ryft\Dtos\Disputes\Dispute;
 use Nosco\Ryft\Dtos\Disputes\DisputeEvidence;
 use Nosco\Ryft\Requests\Disputes\DisputeAcceptById;
@@ -30,7 +30,7 @@ class Disputes extends Resource
      *                                               The value of the `paginationToken` field from that response should be supplied here,
      *                                               to retrieve the next page of results for that timestamp range.
      *
-     * @return Collection<Dispute>
+     * @return LazyCollection<Dispute>
      *
      * @throws \LogicException on request failure
      */
@@ -40,13 +40,13 @@ class Disputes extends Resource
         ?bool $ascending = null,
         ?int $limit = null,
         ?string $startsAfter = null,
-    ): Collection {
+    ): LazyCollection {
         $startTimestamp = $startTimestamp?->getTimestamp();
         $endTimestamp = $endTimestamp?->getTimestamp();
 
         return $this->connector
-            ->send(new DisputesList($startTimestamp, $endTimestamp, $ascending, $limit, $startsAfter))
-            ->dtoOrFail();
+            ->paginate(new DisputesList($startTimestamp, $endTimestamp, $ascending, $limit, $startsAfter))
+            ->collect();
     }
 
     /**

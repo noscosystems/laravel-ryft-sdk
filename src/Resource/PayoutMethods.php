@@ -2,7 +2,7 @@
 
 namespace Nosco\Ryft\Resource;
 
-use Illuminate\Support\Collection;
+use Illuminate\Support\LazyCollection;
 use Nosco\Ryft\Dtos\PayoutMethods\PayoutMethod;
 use Nosco\Ryft\Requests\PayoutMethods\PayoutMethodCreate;
 use Nosco\Ryft\Requests\PayoutMethods\PayoutMethodDelete;
@@ -29,7 +29,7 @@ class PayoutMethods extends Resource
      *                                 The value of the `paginationToken` field from that response should be supplied here,
      *                                 to retrieve the next page of results.
      *
-     * @return Collection<PayoutMethod>
+     * @return LazyCollection<PayoutMethod>
      *
      * @link https://api-reference.ryftpay.com/#tag/Payout-Methods/operation/payoutMethodsList Documentation
      *
@@ -40,10 +40,10 @@ class PayoutMethods extends Resource
         ?bool $ascending = null,
         ?int $limit = null,
         ?string $startsAfter = null
-    ): Collection {
+    ): LazyCollection {
         return $this->connector
-            ->send(new PayoutMethodsList($id, $ascending, $limit, $startsAfter))
-            ->dtoOrFail();
+            ->paginate(new PayoutMethodsList($id, $ascending, $limit, $startsAfter))
+            ->collect();
     }
 
     /**

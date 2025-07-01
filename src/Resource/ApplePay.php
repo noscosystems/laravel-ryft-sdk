@@ -2,7 +2,7 @@
 
 namespace Nosco\Ryft\Resource;
 
-use Illuminate\Support\Collection;
+use Illuminate\Support\LazyCollection;
 use Nosco\Ryft\Dtos\ApplePay\ApplePaySession;
 use Nosco\Ryft\Dtos\ApplePay\ApplePayWebDomain;
 use Nosco\Ryft\Requests\ApplePay\ApplePayCreateSession;
@@ -27,7 +27,7 @@ class ApplePay extends Resource
      *                                 The value of the `paginationToken` field from that response should be supplied here,
      *                                 to retrieve the next page of results for that timestamp range.
      *
-     * @return Collection<ApplePayWebDomain>
+     * @return LazyCollection<ApplePayWebDomain>
      *
      * @link https://api-reference.ryftpay.com/#tag/Apple-Pay/operation/applePayWebDomainsList Documentation
      *
@@ -37,10 +37,10 @@ class ApplePay extends Resource
         ?bool $ascending = null,
         ?int $limit = null,
         ?string $startsAfter = null
-    ): Collection {
+    ): LazyCollection {
         return $this->connector
-            ->send(new ApplePayWebDomainsList($ascending, $limit, $startsAfter))
-            ->dtoOrFail();
+            ->paginate(new ApplePayWebDomainsList($ascending, $limit, $startsAfter))
+            ->collect();
     }
 
     /**

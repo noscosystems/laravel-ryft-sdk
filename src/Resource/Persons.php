@@ -2,7 +2,7 @@
 
 namespace Nosco\Ryft\Resource;
 
-use Illuminate\Support\Collection;
+use Illuminate\Support\LazyCollection;
 use Nosco\Ryft\Dtos\Persons\Person;
 use Nosco\Ryft\Requests\Persons\PersonCreate;
 use Nosco\Ryft\Requests\Persons\PersonDeleteById;
@@ -28,7 +28,7 @@ class Persons extends Resource
      *                                 The value of the `paginationToken` field from that response should be supplied here,
      *                                 to retrieve the next page of results.
      *
-     * @return Collection<Person>
+     * @return LazyCollection<Person>
      *
      * @link https://api-reference.ryftpay.com/#tag/Persons/operation/personList Documentation
      *
@@ -39,10 +39,10 @@ class Persons extends Resource
         ?bool $ascending = null,
         ?int $limit = null,
         ?string $startsAfter = null
-    ): Collection {
+    ): LazyCollection {
         return $this->connector
-            ->send(new PersonList($id, $ascending, $limit, $startsAfter))
-            ->dtoOrFail();
+            ->paginate(new PersonList($id, $ascending, $limit, $startsAfter))
+            ->collect();
     }
 
     /**

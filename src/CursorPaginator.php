@@ -36,12 +36,9 @@ class CursorPaginator extends \Saloon\PaginationPlugin\CursorPaginator
         return $response->json($this->paginationTokenKey) === null;
     }
 
-    /**
-     * @throws JsonException
-     */
     protected function getPageItems(Response $response, Request $request): array
     {
-        return $response->json($this->paginatedItemsKey);
+        return $response->dtoOrFail();
     }
 
     /**
