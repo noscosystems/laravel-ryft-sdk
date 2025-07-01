@@ -28,7 +28,7 @@ trait PerformsPayouts
 
         if (str($payoutMethod)->isEmpty()) {
             $this->assertRyftDefaultPayoutMethodExists();
-            $payoutMethod = $this->getDefaultPayoutMethodId();
+            $payoutMethod = $this->defaultPayoutMethodId();
         }
         if ($amount <= 0) {
             throw InvalidAmount::zeroOrLess(Payout::class);

@@ -9,12 +9,12 @@ trait InteractsWithPayoutMethods
 {
     use InteractsWithAccount;
     use InteractsWithRyft;
-    public function getPayoutMethod(string $id): PayoutMethod
+    public function findPayoutMethod(string $id): PayoutMethod
     {
         return static::ryft()->payoutMethods()->get($this->ryftAccountId(), $id);
     }
 
-    public function getDefaultPayoutMethodId(): ?string
+    public function defaultPayoutMethodId(): ?string
     {
         return $this->ryft_payout_method_id ?? null;
     }
@@ -24,7 +24,7 @@ trait InteractsWithPayoutMethods
      */
     protected function assertRyftDefaultPayoutMethodExists(): void
     {
-        if (!$this->getDefaultPayoutMethodId()) {
+        if (!$this->defaultPayoutMethodId()) {
             throw InvalidPayoutMethod::defaultNotSet($this);
         }
     }
@@ -36,6 +36,6 @@ trait InteractsWithPayoutMethods
     {
         $this->assertRyftDefaultPayoutMethodExists();
 
-        return $this->getPayoutMethod($this->getDefaultPayoutMethodId());
+        return $this->findPayoutMethod($this->defaultPayoutMethodId());
     }
 }
