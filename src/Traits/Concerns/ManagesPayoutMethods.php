@@ -2,6 +2,7 @@
 
 namespace Nosco\Ryft\Traits\Concerns;
 
+use LogicException;
 use Nosco\Ryft\Dtos\PayoutMethods\BankAccount;
 use Nosco\Ryft\Dtos\PayoutMethods\PayoutMethod;
 use Nosco\Ryft\Enums\PayoutMethods\PayoutMethodType;
@@ -70,7 +71,8 @@ trait ManagesPayoutMethods
     {
         try {
             return $this->payoutMethods()->collect()->isNotEmpty();
-        } catch (InvalidAccount) {
+        } catch (InvalidAccount|LogicException $e) {
+            $this->reportSaloonExceptions($e);
             return false;
         }
     }
