@@ -66,6 +66,15 @@ trait ManagesPayoutMethods
             ));
     }
 
+    public function hasPayoutMethod(): bool
+    {
+        try {
+            return $this->payoutMethods()->collect()->isNotEmpty();
+        } catch (InvalidAccount) {
+            return false;
+        }
+    }
+
     protected function payoutCountry(): string
     {
         return config('ryft.country');
