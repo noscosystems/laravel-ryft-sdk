@@ -2,7 +2,6 @@
 
 namespace Nosco\Ryft;
 
-use Illuminate\Support\Collection;
 use JsonException;
 use Saloon\Http\Connector;
 use Saloon\Http\Request;
@@ -11,14 +10,13 @@ use Saloon\Http\Response;
 class CursorPaginator extends \Saloon\PaginationPlugin\CursorPaginator
 {
     public function __construct(
-        Connector        $connector,
-        Request          $request,
+        Connector $connector,
+        Request $request,
         protected string $paginationTokenKey,
         protected string $paginatedItemsKey,
         protected string $cursorQueryParam,
         protected string $pageLimitQueryParam,
-    )
-    {
+    ) {
         parent::__construct($connector, $request);
     }
 
