@@ -8,6 +8,7 @@ use Nosco\Ryft\Dtos\Persons\Person;
 use Nosco\Ryft\Request;
 use Saloon\Enums\Method;
 use Saloon\Http\Response;
+use Saloon\PaginationPlugin\Contracts\Paginatable;
 
 /**
  * personList.
@@ -15,7 +16,7 @@ use Saloon\Http\Response;
  * Retrieves a list of the persons you've created for one of your sub accounts They are returned in
  * sorted (by epoch) order (default is newest first)
  */
-class PersonList extends Request
+class PersonList extends Request implements Paginatable
 {
     protected Method $method = Method::GET;
 

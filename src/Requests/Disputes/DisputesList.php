@@ -6,13 +6,14 @@ use Nosco\Ryft\Dtos\Disputes\Dispute;
 use Nosco\Ryft\Request;
 use Saloon\Enums\Method;
 use Saloon\Http\Response;
+use Saloon\PaginationPlugin\Contracts\Paginatable;
 
 /**
  * disputesList.
  *
  * Used to fetch a paginated list of disputes
  */
-class DisputesList extends Request
+class DisputesList extends Request implements Paginatable
 {
     protected Method $method = Method::GET;
 

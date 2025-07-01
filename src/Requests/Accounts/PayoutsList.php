@@ -6,13 +6,14 @@ use Nosco\Ryft\Dtos\Payouts\Payout;
 use Nosco\Ryft\Request;
 use Saloon\Enums\Method;
 use Saloon\Http\Response;
+use Saloon\PaginationPlugin\Contracts\Paginatable;
 
 /**
  * payoutsList.
  *
  * Used to fetch a paginated list of payouts for the given sub account
  */
-class PayoutsList extends Request
+class PayoutsList extends Request implements Paginatable
 {
     protected Method $method = Method::GET;
 

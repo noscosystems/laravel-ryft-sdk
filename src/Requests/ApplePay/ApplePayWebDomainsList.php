@@ -5,13 +5,14 @@ namespace Nosco\Ryft\Requests\ApplePay;
 use Nosco\Ryft\Dtos\ApplePay\ApplePayWebDomain;
 use Nosco\Ryft\Request;
 use Saloon\Enums\Method;
+use Saloon\PaginationPlugin\Contracts\Paginatable;
 
 /**
  * applePayWebDomainsList.
  *
  * List the web domains you have registered for Apple Pay
  */
-class ApplePayWebDomainsList extends Request
+class ApplePayWebDomainsList extends Request implements Paginatable
 {
     protected Method $method = Method::GET;
 

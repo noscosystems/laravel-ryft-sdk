@@ -6,6 +6,7 @@ use Nosco\Ryft\Request;
 use Nosco\Ryft\Traits\Requests\PayoutMethods\ReturnsPayoutMethod;
 use Saloon\Enums\Method;
 use Saloon\Http\Response;
+use Saloon\PaginationPlugin\Contracts\Paginatable;
 
 /**
  * payoutMethodsList.
@@ -13,7 +14,7 @@ use Saloon\Http\Response;
  * Retrieves a list of the payout methods you've created for one of your sub accounts They are returned
  * in sorted (by epoch) order (default is newest first)
  */
-class PayoutMethodsList extends Request
+class PayoutMethodsList extends Request implements Paginatable
 {
     use ReturnsPayoutMethod;
 

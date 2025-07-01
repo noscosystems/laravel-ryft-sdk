@@ -6,13 +6,14 @@ use Nosco\Ryft\Dtos\Customers\Customer;
 use Nosco\Ryft\Request;
 use Saloon\Enums\Method;
 use Saloon\Http\Response;
+use Saloon\PaginationPlugin\Contracts\Paginatable;
 
 /**
  * customersList.
  *
  * Used to fetch a paginated list of one or more Customers
  */
-class CustomersList extends Request
+class CustomersList extends Request implements Paginatable
 {
     protected Method $method = Method::GET;
 

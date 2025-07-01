@@ -7,13 +7,14 @@ use Nosco\Ryft\Dtos\Payments\PaymentTransaction;
 use Nosco\Ryft\Request;
 use Saloon\Enums\Method;
 use Saloon\Http\Response;
+use Saloon\PaginationPlugin\Contracts\Paginatable;
 
 /**
  * paymentSessionListTransactions.
  *
  * List the transaction(s) for a particular payment
  */
-class PaymentSessionListTransactions extends Request
+class PaymentSessionListTransactions extends Request implements Paginatable
 {
     protected Method $method = Method::GET;
 

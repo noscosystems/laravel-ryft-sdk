@@ -6,13 +6,14 @@ use Nosco\Ryft\Dtos\Files\File;
 use Nosco\Ryft\Request;
 use Saloon\Enums\Method;
 use Saloon\Http\Response;
+use Saloon\PaginationPlugin\Contracts\Paginatable;
 
 /**
  * filesList.
  *
  * Used to fetch a paginated list of files under your account
  */
-class FilesList extends Request
+class FilesList extends Request implements Paginatable
 {
     protected Method $method = Method::GET;
 
