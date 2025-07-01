@@ -28,12 +28,17 @@ trait InteractsWithPayoutMethods
         return $this->ryft_payout_method_id ?? null;
     }
 
+    public function hasDefaultPayoutMethod(): bool
+    {
+        return !empty($this->defaultPayoutMethodId());
+    }
+
     /**
      * @throws InvalidPayoutMethod
      */
     protected function assertRyftDefaultPayoutMethodExists(): void
     {
-        if (!$this->defaultPayoutMethodId()) {
+        if (!$this->hasDefaultPayoutMethod()) {
             throw InvalidPayoutMethod::defaultNotSet($this);
         }
     }
@@ -41,7 +46,7 @@ trait InteractsWithPayoutMethods
     /**
      * @throws InvalidPayoutMethod
      */
-    public function getDefaultPayoutMethod(): PayoutMethod
+    public function defaultPayoutMethod(): PayoutMethod
     {
         $this->assertRyftDefaultPayoutMethodExists();
 
