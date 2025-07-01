@@ -2,6 +2,8 @@
 
 namespace Nosco\Ryft\Traits\Concerns;
 
+use DateTimeInterface;
+use Illuminate\Support\LazyCollection;
 use Nosco\Ryft\Dtos\Payouts\Payout;
 use Nosco\Ryft\Exceptions\InvalidAccount;
 use Nosco\Ryft\Exceptions\InvalidAmount;
@@ -46,5 +48,21 @@ trait PerformsPayouts
                 payoutMethodId: $payoutMethod,
                 metadata: $metadata,
             ));
+    }
+
+    /**
+     * @throws InvalidAccount
+     */
+    public function payouts(?DateTimeInterface $start = null, ?DateTimeInterface $end = null): LazyCollection
+    {
+        $this->assertRyftAccountExists();
+
+        return static::ryft()
+            ->accounts()
+            ->listPayouts(
+                id: $this->ryftAccountId(),
+                startTimestamp: $start,
+                endTimestamp: $end,
+            );
     }
 }
