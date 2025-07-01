@@ -3,6 +3,7 @@
 namespace Nosco\Ryft\Traits\Concerns;
 
 use DateTimeInterface;
+use LogicException;
 use Nosco\Ryft\Dtos\Payments\CustomerAddress;
 use Nosco\Ryft\Dtos\Subscriptions\PausedPaymentDetails;
 use Nosco\Ryft\Dtos\Subscriptions\RecurringInterval;
@@ -11,6 +12,7 @@ use Nosco\Ryft\Exceptions\InvalidCustomer;
 use Nosco\Ryft\Exceptions\InvalidPayoutMethod;
 use Nosco\Ryft\Exceptions\InvalidSubscription;
 use Nosco\Ryft\Requests\Subscriptions\SubscriptionsList;
+use Nosco\Ryft\Traits\SoftFails;
 use Saloon\PaginationPlugin\Paginator;
 
 trait ManagesSubscriptions
@@ -18,6 +20,7 @@ trait ManagesSubscriptions
     use InteractsWithCustomer;
     use InteractsWithPaymentMethods;
     use InteractsWithRyft;
+    use SoftFails;
 
     /**
      * @param DateTimeInterface|null $from If not provided will default to midnight on the current date (UTC).
@@ -32,9 +35,15 @@ trait ManagesSubscriptions
             ->paginate(new SubscriptionsList($from?->getTimestamp(), $to?->getTimestamp()));
     }
 
-    public function findSubscription(string $subscription): Subscription
+    public function findSubscription(string $subscription): ?Subscription
     {
-        return static::ryft()->subscriptions()->get($subscription);
+        try {
+            return static::ryft()->subscriptions()->get($subscription);
+        } catch (LogicException $e) {
+            $this->reportSaloonExceptions($e);
+
+            return null;
+        }
     }
 
     /**

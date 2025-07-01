@@ -2,16 +2,25 @@
 
 namespace Nosco\Ryft\Traits\Concerns;
 
+use LogicException;
 use Nosco\Ryft\Dtos\PayoutMethods\PayoutMethod;
 use Nosco\Ryft\Exceptions\InvalidPayoutMethod;
+use Nosco\Ryft\Traits\SoftFails;
 
 trait InteractsWithPayoutMethods
 {
     use InteractsWithAccount;
     use InteractsWithRyft;
-    public function findPayoutMethod(string $id): PayoutMethod
+    use SoftFails;
+    public function findPayoutMethod(string $id): ?PayoutMethod
     {
-        return static::ryft()->payoutMethods()->get($this->ryftAccountId(), $id);
+        try {
+            return static::ryft()->payoutMethods()->get($this->ryftAccountId(), $id);
+        } catch (LogicException $e) {
+            $this->reportSaloonExceptions($e);
+
+            return null;
+        }
     }
 
     public function defaultPayoutMethodId(): ?string
