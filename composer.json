@@ -1,7 +1,7 @@
 {
     "name": "noscosystems/laravel-ryft-sdk",
     "description": "An SDK for Ryft payments. Built on Saloon PHP, for Laravel.",
-    "version": "1.0.0",
+    "version": "1.0.0-RC1",
     "keywords": [
         "Nosco Management Solutions",
         "Ryft",
